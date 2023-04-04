@@ -13,91 +13,54 @@
 
     <!-- main content box -->
     <main>
-        <!-- both columns wrapper -->
-        <div class="row m-3">
-            <!-- left column wrapper -->
-            <div id="register" class="w-25 border border-2 bg-dark bg-opacity-25 border-dark rounded-2 ms-5 p-2">
-                <!-- header -->
-                <h3 class="text-primary">New Member Register</h3>
-                    <!-- validation error return -->
-                    {% with messages = get_flashed_messages(category_filter=["register"]) %}
-                        <!-- declare a variable called messages -->
-                        {% if messages %}
-                            <!-- check if there are any messages -->
-                            {% for message in messages %}
-                                <!-- loop through the messages -->
-                                <p>{{message}}</p> <!-- display each message in a paragraph tag -->
-                            {% endfor %}
-                        {% endif %}
-                    {% endwith %}
-                <!-- form start -->
-                <form action='/register' method="POST">
-                    <div class="text-start">
-                        <label for="first_name" class="text-sm-start">First Name:</label>
-                    </div>
-                    <div>
-                        <input type="text" name="first_name" class="form-control bg-light" value="{{session['first_name']}}">
-                    </div>
-                    <div class="text-start">
-                        <label for="last_name" class="text-start">Last Name:</label>
-                    </div>
-                    <div>
-                        <input type="text" name="last_name" class="form-control bg-light" value="{{session['last_name']}}">
-                    </div>
-                    <div class="text-start">
-                        <label for="email">Email:</label>
-                    </div>
-                    <div>
-                        <input type="text" name="email" class="form-control bg-light" value="{{session['email']}}">
-                    </div>
-                    <div class="text-start">
-                        <label for="password">Password:</label>
-                    </div>
-                    <div>
-                        <input type="password" name="password" class="form-control bg-light">
-                    </div>
-                    <div class="text-start">
-                        <label for="confirm_password">Confirm Password:</label>
-                    </div>
-                    <div>
-                        <input type="password" name="confirm_password" class="form-control bg-light">
-                    </div>
-                    <input type="submit" value="Register" class="input text-light mt-1 bg-primary  bg-gradient rounded-2">
-                </form>
-                <!--form END -->
-            </div>
-            <!-- right column wrapper -->
-            <div id="login" class="w-25 border border-2 border-dark bg-dark bg-opacity-25 rounded-2 ms-5 p-2">
-                <!-- header -->
-                <h3 class="text-success">Member Login</h3>
+
+
+        <!-- OUTSIDE Logo -->
+        <img class="outside" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="get_outside">
+
+
+
+        <div class="background">
+        
+            <div class="login_container">
+
+                <!-- Login Form Wrapper -->
+                <div class="login">
+                    <!-- header -->
+                    <h3 class="text-success">Login to Get OUTSIDE</h3>
                     <!-- validation error return -->
                     {% with messages = get_flashed_messages(category_filter=["login"]) %}
                         <!-- declare a variable called messages -->
                         {% if messages %}
                             <!-- check if there are any messages -->
                             {% for message in messages %}
-                                <!-- loop through the messages -->
-                                <p>{{message}}</p> <!-- display each message in a paragraph tag -->
+                            <!-- loop through the messages -->
+                                <p class="error">{{message}}</p> <!-- display each message in a paragraph tag -->
                             {% endfor %}
                         {% endif %}
                     {% endwith %}
-                <!-- form start -->
-                <form action='/login' method="POST">
-                    <div class="text-start">
-                    <label for="email">Email:</label>
-                    </div>
-                    <div>
-                        <input type="text" name="email" class="form-control bg-light" value="{{session['email2']}}">
-                    </div>
-                    <div class="text-start">
-                        <label for="password">Password:</label>
-                    </div>
-                    <div>
-                        <input type="password" name="password" class="form-control bg-light">
-                    </div>
-                    <input type="submit" value="Login" class="input mt-1 text-light bg-success bg-gradient rounded-2">
-                </form>
+                    <!-- form start -->
+                    <form action='/login' method="POST">
+                        <div class="text-start">
+                            <label for="email">Email:</label>
+                        </div>
+                        <div>
+                            <input type="text" name="email" class="form-control bg-light" value="{{session['email2']}}">
+                        </div>
+                        <div class="text-start">
+                            <label for="password">Password:</label>
+                        </div>
+                        <div>
+                            <input type="password" name="password" class="form-control bg-light">
+                        </div>
+
+                        <div class="flex">
+                            <button type="submit" value="Login" class="input mt-1 text-light bg-success bg-gradient rounded-2">Get OUTSIDE</button>
+                            <p>Not a member yet? <a href="/getoutside/register">Sign Up!</a></p>
+                        </div>
+                    </form>
                 <!--form END -->
+                </div>
             </div>
         </div>
     </main>

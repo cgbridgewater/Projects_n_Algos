@@ -6,7 +6,7 @@ from flask_app.models.users import User
 
 
 ### ROUTE FOR DASHBOARD -- READ BY USER_ID  (WORKING)
-@app.route('/dashboard')
+@app.route('/getoutside')
 def dashboard():
     if 'user_id' not in session:
         msg = "you must be logged in!"

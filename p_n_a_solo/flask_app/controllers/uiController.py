@@ -5,14 +5,22 @@ from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 
 
-
-
 ### HOME ROUTE
 @app.route('/')
 def index():
+    return redirect("/getoutside/login")
+
+
+### LOGIN ROUTE
+@app.route('/getoutside/login')
+def login_page():
     return render_template("login.html")
 
 
+### LOGIN ROUTE
+@app.route('/getoutside/register')
+def register_page():
+    return render_template("register.html")
 
 
 ### ROUTE FOR REGISTRATION
@@ -23,7 +31,7 @@ def register():
         session["first_name"] = request.form["first_name"] ### HOLDING FORM DATA FOR RESUBMIT
         session["last_name"] = request.form["last_name"] ### HOLDING FORM DATA FOR RESUBMIT
         session["email"] = request.form["email"] ### HOLDING FORM DATA FOR RESUBMIT
-        return redirect('/')# redirect to the route where the user form is rendered if there are errors:
+        return redirect('/getoutside/register')# redirect to the route where the user form is rendered if there are errors:
     pw_hash = bcrypt.generate_password_hash(request.form['password'])    ### hash password once validations are passed
     print(pw_hash) 
     data = {
@@ -37,7 +45,7 @@ def register():
     session.pop("last_name", None)   ### clear form place holder sessions
     session.pop("email", None)       ### clear form place holder sessions
     session['user_id'] = user_id     ### start user id session to prove logged in
-    return redirect("/dashboard")    ### go to dashboard if no validation errors
+    return redirect("/getoutside")    ### go to dashboard if no validation errors
 
 
 
@@ -51,16 +59,16 @@ def login():
     user_in_db = User.email_exists(data) ###email exists in db check
     if not user_in_db:
         flash("Invalid Email/Password", "login")
-        return redirect("/")  ### redirect if fails
+        return redirect("/getoutside/login")  ### redirect if fails
     if not bcrypt.check_password_hash(user_in_db.password, request.form['password']): ###check hashed pw
         flash("Invalid Email/Password", "login")
-        return redirect("/") ### redirect if fails
+        return redirect("/getoutside/login") ### redirect if fails
     if not User.validate_login(request.form):
     # if there are errors:
-        return redirect('/') # redirect to the route where the user form is rendered.
+        return redirect('/getoutside/login') # redirect to the route where the user form is rendered.
     session["user_id"] = user_in_db.id   ### create session to test logged in
     session.pop("email2", None)    ### pop log in session
-    return redirect("/dashboard")   ### else no validation errors:
+    return redirect("/getoutside")   ### else no validation errors:
 
 
 
@@ -69,7 +77,7 @@ def login():
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect("/")
+    return redirect("/getoutside/login")
 
 
 

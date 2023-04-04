@@ -4,6 +4,9 @@ import re
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$') 
 
 
+
+
+
 ### USER CLASS
 class User:
     def __init__(self,data):
@@ -82,7 +85,7 @@ class User:
     @classmethod 
     def email_exists(cls,data):
         query = "SELECT * FROM users WHERE email = %(email)s;"
-        result = connectToMySQL("login_registration_schema").query_db(query,data)
+        result = connectToMySQL("test_app").query_db(query,data)
         if len(result) < 1:
             return False   #didn't find a matching user
         return cls(result[0])
@@ -93,14 +96,14 @@ class User:
     @classmethod
     def save(cls,data):
         query = "INSERT INTO users (first_name, last_name, email, password) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s );"
-        return connectToMySQL('login_registration_schema').query_db(query,data)
+        return connectToMySQL('test_app').query_db(query,data)
 
 
 ### GET USER BY ID (WORKING)
     @classmethod
     def get_user_by_id(cls,data):
         query = "SELECT * FROM users WHERE id = %(id)s;"
-        result = connectToMySQL('login_registration_schema').query_db(query,data)
+        result = connectToMySQL('test_app').query_db(query,data)
         if len(result) == 0: #if no users found, return an empty list
             return None
         else: # if at least one user found
@@ -111,7 +114,7 @@ class User:
     @classmethod
     def delete_user(cls,data):
         query = "DELETE FROM users WHERE id = %(id)s;"
-        return connectToMySQL('login_registration_schema').query_db(query,data) 
+        return connectToMySQL('test_app').query_db(query,data) 
 
 
 
@@ -119,7 +122,7 @@ class User:
     @classmethod
     def update_user_by_id(cls,data):
         query = "UPDATE users SET first_name = %(first_name)s, last_name = %(last_name)s, email = %(email)s WHERE id = %(id)s;"
-        return connectToMySQL('login_registration_schema').query_db(query,data)
+        return connectToMySQL('test_app').query_db(query,data)
 
 
 
@@ -132,7 +135,7 @@ class User:
     @classmethod
     def get_friends(cls,data):
         query = "SELECT * FROM users WHERE id <> %(id)s;"
-        results = connectToMySQL('login_registration_schema').query_db(query,data)
+        results = connectToMySQL('test_app').query_db(query,data)
         print(results)
         users = []
         for i in results:
