@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{user.first_name.upper()}}'s profile</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/userdash.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body class="bg-secondary bg-gradient bg-opacity-10">
+
+    <!-- main wrapper -->
+    <main>
+
+        <!-- logo bar -->
+        <div>
+            <img class="logo" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="getOUTSIDE">
+        </div>
+        
+        <!-- top wrapper -->
+        <div class="top_wrapper">
+
+            <!-- user image/name box -->
+            <div class="image_box">
+                <!-- user name -->
+                <h1 class="user">{{user.first_name.upper()}}'s profile</h1>
+                <!--  Profile Image Container -->
+                <div class="image">
+                    <img class="profile_img" src="https://cdn-icons-png.flaticon.com/512/20/20079.png" alt="user icon">
+                </div>
+                <!-- logout / update -->
+                <div class="button_flex">
+                    <button class="bg-warning mp-1"><a href="/logout" class="text-decoration-none text-light">Log Out</a></button>
+                    <button class="bg-success mp-1"><a href="/dashboard/edit" class="text-decoration-none text-light">Update</a></button>
+                </div>
+            </div>
+            <!-- End Profile Image Container -->
+
+            <!-- User Data -->
+            <div class="profile_info">  
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td><h4>Name:</h4></td>
+                        <td><h4>{{ user.first_name }} {{ user.last_name }}</h4></td>
+                    </tr>
+                    <!-- <tr>
+                        <td><h4>User Name</h4></td>
+                        <td><h4>{{user.user_name}}</h4></td>
+                    </tr> -->
+                    <tr>
+                        <td><h4>Email:</h4></td>
+                        <td><h4>{{ user.email }}</h4></td>
+                    </tr>
+                    <tr>
+                        <td><h4>Member Since:</h4></td>
+                        <td><h4>{{ user.created_at.strftime("%B %e, %Y %I:%M %p") }}</h4></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>  
+            <!-- End User Data -->
+            
+            <!-- Friend List container -->
+            <div class="friend_list_container">
+                <!-- find friend button -->
+                <div>
+                    <button  class="find_friend"><a href="/dashboard/friends" class="text-decoration-none text-light">Find Friends</a></button>
+                </div>   
+                <!-- friends list -->
+                <div>
+                    <h4>
+                        My Friends
+                    </h4>
+                    <div>
+                        <ul>
+                            <li><a class="link" href="#">Mike</a></li>
+                            <li><a class="link" href="#">Tim</a></li>
+                            <li><a class="link" href="#">John</a></li>
+                            <li><a class="link" href="#">Ronald</a></li>
+                            <li><a class="link" href="#">Frank</a></li>
+                        </ul>
+                    </div>
+                </div> 
+            </div>
+            <!-- End Friend List -->
+        </div>
+        <!-- End Wrapper -->
+
+        <hr class="spacer">
+
+        <!-- Activities Container -->
+        <div class="activity_container">
+            <!-- Left Box -->
+            <div class="friend_left">
+                <!-- title and button -->
+                <div>
+                    <button  class="add_activity"><a href="#" class="text-decoration-none text-light">Add Activity</a></button>
+                    <h4>Activities I'm Leading</h4>    
+                </div>
+                <!-- activity list -->
+                <div class="activity_links">
+                    <h5>
+                        <a class="link" href="#">Skiing At Mt. Bachelor on April 7th</a>
+                    </h5>
+                    <h5>
+                        <a class="link" href="#">Hiking Smith Rock on May 7th</a>
+                    </h5>
+                    <h5>
+                        <a class="link" href="#">Mountain Biking at Alsea Falls on June 2nd</a>
+                    </h5>
+                    <h5>
+                        <a class="link" href="#">Skiing At Mt. Bachelor on April 7th</a>
+                    </h5>
+                    <h5>
+                        <a class="link" href="#">Hiking Smith Rock on May 7th</a>
+                    </h5>
+                    <h5>
+                        <a class="link" href="#">Mountain Biking at Alsea Falls on June 2nd</a>
+                    </h5>
+                    <h5>
+                        <a class="link" href="#">Skiing At Mt. Bachelor on April 7th</a>
+                    </h5>
+                    <h5>
+                        <a class="link" href="#">Hiking Smith Rock on May 7th</a>
+                    </h5>
+                    <h5>
+                        <a class="link" href="#">Mountain Biking at Alsea Falls on June 2nd</a>
+                    </h5>
+                </div>
+            </div>
+            
+            <!-- Right Box -->
+            <div class="friend_right">
+                <!-- title and button-->
+                <div>
+                    <button  class="all_activities"><a href="#" class="text-decoration-none text-light">See All Friends Activities</a></button>
+                    <h4>Activities I'm Joining</h4>
+                </div>
+                <!-- activity list -->
+                <div class="activity_links">
+                    <h5>
+                        <a class="link" href="#">Mike is going Hiking at Crescent Lake on June 15th</a>
+                    </h5>
+                    <h5>
+                        <a class="link" href="#">Steve is going Mountain Biking at Oakridge on June 17th</a>
+                    </h5>
+                    <h5>
+                        <a class="link" href="#">Mac is going Running at Pre's Trail on June 18th</a>
+                    </h5>
+                    <h5>
+                        <a class="link" href="#">Mike is going Hiking at Crescent Lake on June 15th</a>
+                    </h5>
+                    <h5>
+                        <a class="link" href="#">Steve is going Mountain Biking at Oakridge on June 17th</a>
+                    </h5>
+                    <h5>
+                        <a class="link" href="#">Mac is going Running at Pre's Trail on June 18th</a>
+                    </h5>
+                    <h5>
+                        <a class="link" href="#">Mike is going Hiking at Crescent Lake on June 15th</a>
+                    </h5>
+                    <h5>
+                        <a class="link" href="#">Steve is going Mountain Biking at Oakridge on June 17th</a>
+                    </h5>
+                    <h5>
+                        <a class="link" href="#">Mac is going Running at Pre's Trail on June 18th</a>
+                    </h5>
+                </div>
+                <!-- end activity list -->
+            </div>
+            <!-- end right box -->
+        </div>
+        <!-- Activities Container -->
+
+
+    </main>
+    <!-- End Main -->
+</body>
+
+</html>

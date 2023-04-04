@@ -5,9 +5,9 @@ from flask_app.models.users import User
 
 
 
-### ROUTE FOR DASHBOARD -- READ BY USER_ID  (WORKING)
+### ROUTE FOR HOME PAGE -- READ BY USER_ID  (WORKING)
 @app.route('/getoutside')
-def dashboard():
+def home():
     if 'user_id' not in session:
         msg = "you must be logged in!"
         return redirect('/logout')
@@ -15,6 +15,18 @@ def dashboard():
         'id': session['user_id']
     }
     return render_template("dashboard.html", user = User.get_user_by_id(data))
+
+
+### ROUTE FOR USER DASHBOARD -- READ BY USER_ID  (WORKING)
+@app.route('/getoutside/athlete')
+def dashboard():
+    if 'user_id' not in session:
+        msg = "you must be logged in!"
+        return redirect('/logout')
+    data ={
+        'id': session['user_id']
+    }
+    return render_template("userdashboard.html", user = User.get_user_by_id(data))
 
 
 
