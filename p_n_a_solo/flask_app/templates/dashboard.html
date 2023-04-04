@@ -19,39 +19,37 @@
         <div>
             <img class="logo" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="getOUTSIDE">
         </div>
-                
-
+        
+        
         <!-- welcome -->
         <div class="welcome">
-            <h2>Welcome {{user.first_name}}, here is what your friends are up to!</h2>
+            <div class="flex">
+                <h6 class="time">It's time to</h6>
+                <h2 class="outside">Get OUTSIDE!</h2>
+            </div>
+            <button class="bg-primary m-1"><a href="/getoutside/athlete" class="text-decoration-none text-light"> {{user.first_name}}s Page</a></button>
         </div>
 
         <!-- main wrapper -->
         <div class="wrapper ms-3">
 
             <!-- table -->
-            <table class="table table-hover">
+            <table class="activity_table">
                 <tr>
                     <th>Name</th>
-                    <th>Email</th>
-                    <th>Member Since</th>
-                    <th>Last Updated On</th>
-                    <th>Actions</th>
+                    <th>Activity</th>
+                    <th>Date</th>
+                    <th>Location</th>
+                    <th>Join?</th>
                 </tr>
                 <tr>
-                    <td>{{ user.first_name }} {{ user.last_name }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.created_at.strftime("%B %e, %Y") }}</td>
-                    <td>{{ user.updated_at.strftime("%B %e, %Y %I:%M %p") }}</td>
+                    <td>Bart Simpson</td>
+                    <td>Skate Boarding</td>
+                    <td>Downtown Springfield</td>
+                    <td>April 7th, 2023</td>
                     <td>
-                        <button class="bg-primary m-1"><a href="/getoutside/athlete/update"
-                                class="text-decoration-none text-light">Update</a></button>
-                        <button class="bg-warning m-1"><a href="/logout" class="text-decoration-none text-light">Log
-                                Out</a></button>
-                        <button class="bg-danger m-1"><a href="/dashboard/delete"
-                                class="text-decoration-none text-light">Delete Profile</a></button>
-                        <button class="bg-success m-1"><a href="/dashboard/friends"
-                                class="text-decoration-none text-light">See All Friends</a></button>
+                        <button class="bg-success m-1"><a href="#" class="text-decoration-none text-light">Join!</a></button>
+                        <button class="bg-primary"><a href="/getoutside/activity/" class="text-decoration-none text-light">Details</a></button>
                     </td>
                 </tr>
             </table><!-- Table END -->

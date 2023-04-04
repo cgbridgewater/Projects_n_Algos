@@ -26,7 +26,7 @@ def dashboard():
     data ={
         'id': session['user_id']
     }
-    return render_template("userdashboard.html", user = User.get_user_by_id(data))
+    return render_template("user_dashboard.html", user = User.get_user_by_id(data))
 
 
 
@@ -46,14 +46,14 @@ def delete_user():
 
 
     ### ROUTE TO EDIT USER FORM BY USER_ID (WORKING)
-@app.route('/dashboard/edit/')
+@app.route('/getoutside/athlete/update')
 def edit_user():
     if 'user_id' not in session:
         return redirect('/logout')
     data ={
         'id': session['user_id']
     }
-    return render_template("edit.html", user = User.get_user_by_id(data))
+    return render_template("user_update.html", user = User.get_user_by_id(data))
 
 
 
@@ -70,9 +70,9 @@ def update_user():
         "email": request.form["email"]
         }
     if not User.validate_update(data):
-        return redirect('/dashboard/edit/')
+        return redirect('/getoutside/athlete/update')
     User.update_user_by_id(data)
-    return redirect("/dashboard") 
+    return redirect("/getoutside/athlete") 
 
 
 
