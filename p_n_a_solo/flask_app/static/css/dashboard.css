@@ -7,6 +7,8 @@
 
 .flex {
     display: flex;
+    justify-content: space-between;
+    padding: 5px;
 }
 
 .time{
@@ -22,19 +24,24 @@
 
 .welcome {
     margin-top: 20px;
-    /* margin-left: 10%; */
+    margin-left: 10%;
     display: flex;
-    justify-content: space-evenly;
+}
+
+.wrapper {
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 3%;    
+
 }
 
 .activity_table {
-    width: 50%;
+    width: 100%;
     border: 3px solid green;
     border-radius: 10px;
     background-color: lightgray;
     opacity:75%;
     margin: 0 auto;
-    margin-top: 3%;    
 }
 
 th,td {
