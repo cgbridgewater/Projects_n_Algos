@@ -48,8 +48,6 @@ def register():
     return redirect("/getoutside")    ### go to dashboard if no validation errors
 
 
-
-
 ### ROUTE FOR LOGIN
 @app.route('/login', methods= ['POST'])
 def login():
@@ -71,15 +69,11 @@ def login():
     return redirect("/getoutside")   ### else no validation errors:
 
 
-
-
 ### ROUTE FOR LOGOUT 
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect("/getoutside/login")
-
-
 
 
 ### CATCH ALL DINO GAME  (WORKING)

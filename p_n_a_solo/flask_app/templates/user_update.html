@@ -15,71 +15,78 @@
     <!-- main wrapper -->
     <main>
 
-        
-        
+
         <!-- logo bar -->
         <div>
             <img class="logo" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="getOUTSIDE">
         </div>
-        
-        
-        
 
-            <!-- edit form start-->
-            <form class="border border-2 border-success rounded rounded-2 w-25 m-auto mt-5 p-3 bg-gradient bg-dark bg-opacity-10 " action="/dashboard/editing" method="POST">
-                
-                <h1 class="text-center fs-2">Update {{user.first_name}}'s Information</h1>
-                <!-- validation error message -->
-                {% with messages = get_flashed_messages(category_filter=["update"]) %}
-                    <!-- declare a variable called messages -->
+
+        <!-- edit form start-->
+        <form class="border border-2 border-success rounded rounded-2 w-25 m-auto mt-5 p-3 bg-gradient bg-dark bg-opacity-10 " action="/getoutside/athlete/editing" method="POST">
+            
+            <h1 class="text-center fs-2">Update {{user.first_name}}'s Information</h1>
+            <!-- validation error message -->
+            {% with messages = get_flashed_messages(category_filter=["update"]) %}
+                <!-- declare a variable called messages -->
+                {% if messages %}
+                    <!-- check if there are any messages -->
+                    {% for message in messages %}
+                        <!-- loop through the messages -->
+                        <p class="error">{{message}}</p> <!-- display each message in a paragraph tag -->
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <div class="text-center m-1">
+                <!-- hidden id -->
+                <input type="hidden" name="id" value="{{user.id}}">
+                <!-- First Name -->
+                <label for="first_name">Update First Name</label>
+                <input type="text" name="first_name" placeholder="First Name" value="{{user.first_name}}" >
+            </div>
+            <div class="text-center m-1">
+                <!-- Last Name -->
+                <label for="last_name">Update Last Name</label>
+                <input type="text" name="last_name" placeholder="Last Name" value="{{user.last_name}}" >
+            </div>
+            <!-- <div class="text-center m-1"> -->
+                <!-- cookie type -->
+                <!-- <label for="user_name">Update User Name</label> -->
+                <!-- <input type="text" name="user_name" placeholder="User Name" value="{{user.user_name}}" > -->
+            <!-- </div> -->
+            <div class="text-center m-1">
+                <!-- number of boxes -->
+                <label for="email">Update Email</label>
+                <input type="email" name="email" placeholder="email" value="{{user.email}}">
+            </div>  
+            <div class="text-center">
+                <!-- submit button -->
+                <a href="/getoutside/athlete" class="btn btn-sm bg-success border border-1 border-dark" role="button">Return To Profile</a>
+                <input class="btn btn-sm bg-warning border border-1 border-dark" type="submit" value="Update">
+                <a href="/getoutside/delete" class="btn btn-sm bg-danger border border-1 border-dark" role="button">Delete Profile</a>
+            </div>
+        </form>
+
+
+        <!-- <form  class="border border-2 border-success rounded rounded-2 w-25 m-auto mt-5 p-3 bg-gradient bg-dark bg-opacity-10" action="/getoutside/addimage" method="POST" enctype="multipart/form-data">
+            <p>
+                {% with messages = get_flashed_messages() %}
                     {% if messages %}
-                        <!-- check if there are any messages -->
-                        {% for message in messages %}
-                            <!-- loop through the messages -->
-                            <p class="error">{{message}}</p> <!-- display each message in a paragraph tag -->
-                        {% endfor %}
+                        <ul>
+                            {% for message in messages%}
+                                <p class="error">{{ message }}</p>
+                            {% endfor %}
+                        </ul>
                     {% endif %}
                 {% endwith %}
-                <div class="text-center m-1">
-                    <!-- hidden id -->
-                    <input type="hidden" name="id" value="{{user.id}}">
-                    <!-- First Name -->
-                    <label for="first_name">Update First Name</label>
-                    <input type="text" name="first_name" placeholder="First Name" value="{{user.first_name}}" >
-                </div>
-                <div class="text-center m-1">
-                    <!-- Last Name -->
-                    <label for="last_name">Update Last Name</label>
-                    <input type="text" name="last_name" placeholder="Last Name" value="{{user.last_name}}" >
-                </div>
-                <!-- <div class="text-center m-1"> -->
-                    <!-- cookie type -->
-                    <!-- <label for="user_name">Update User Name</label> -->
-                    <!-- <input type="text" name="user_name" placeholder="User Name" value="{{user.user_name}}" > -->
-                <!-- </div> -->
-                <div class="text-center m-1">
-                    <!-- number of boxes -->
-                    <label for="email">Update Email</label>
-                    <input type="email" name="email" placeholder="email" value="{{user.email}}">
-                </div>  
-                <div class="text-center">
-                    <!-- submit button -->
-                    <a href="/getoutside/athlete" class="btn btn-sm bg-success border border-1 border-dark" role="button">Return To Profile</a>
-                    <input class="btn btn-sm bg-warning border border-1 border-dark" type="submit" value="Update">
-                    <a href="/dashboard/delete" class="btn btn-sm bg-danger border border-1 border-dark" role="button">Delete Profile</a>
-                </div>
-            </form>
+            </p>
+            <input type="file" name="file" autocomplete="off" required class="form-control">
+            <div class="text-center m-1">
 
-
-            <form  class="border border-2 border-success rounded rounded-2 w-25 m-auto mt-5 p-3 bg-gradient bg-dark bg-opacity-10" action="#">
-                <label for="profile_image">Update Profile Image</label>
-                <input name="profile_image" placeholder="add image...">
-                <div class="text-center m-1">
-                    <!-- submit button -->
-                    <a href="/getoutside/athlete" class="btn btn-sm bg-success border border-1 border-dark" role="button">Return To Profile</a>
-                    <input class="btn btn-sm bg-warning border border-1 border-dark" type="submit" value="Add Image">
-                </div>
-            </form>
+                <input class="btn btn-sm bg-warning border border-1 border-dark" type="submit" value="Add Image">
+                <a href="/getoutside/athlete" class="btn btn-sm bg-success border border-1 border-dark" role="button">Return To Profile</a>
+            </div>
+        </form> -->
 
 
 

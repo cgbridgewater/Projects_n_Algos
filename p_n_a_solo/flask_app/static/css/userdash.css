@@ -47,6 +47,10 @@
     justify-content: space-evenly;
 }
 
+.profile_button {
+    width:150px;
+}
+
 .profile_info {
     margin: 1% 0;
     background-color: blanchedalmond;

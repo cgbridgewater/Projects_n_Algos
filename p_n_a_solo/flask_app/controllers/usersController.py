@@ -2,6 +2,8 @@ from flask_app import app
 from flask import render_template, request, redirect, session, flash
 from flask_app.models.users import User
 
+#file upload
+
 
 
 
@@ -31,8 +33,9 @@ def dashboard():
 
 
 
+
 ### ROUTE TO DELETE USER BY USER_ID (WORKING)
-@app.route('/dashboard/delete')
+@app.route('/getoutside/delete')
 def delete_user():
     if 'user_id' not in session:
         return redirect('/logout')
@@ -59,7 +62,7 @@ def edit_user():
 
 
 ### ROUTE TO PROCESS USER UPDATE FORM (WORKING)
-@app.route("/dashboard/editing", methods =['POST'])
+@app.route("/getoutside/athlete/editing", methods =['POST'])
 def update_user():
     if 'user_id' not in session:
         return redirect('/logout')
@@ -74,6 +77,32 @@ def update_user():
     User.update_user_by_id(data)
     return redirect("/getoutside/athlete") 
 
+
+
+# ### UPLOAD IMAGE ROUTE
+# @app.route("/getoutside/addimage", methods=['POST'])
+# def upload_image():
+#     if 'user_id' not in session:
+#         return redirect('/logout')
+#     data ={
+#         'id': session['user_id']
+#     }
+#     if 'file' not in request.files:
+#         flash('No file part')
+#         return redirect('/getoutside/athlete/update')
+#     file = request.files['file']
+#     if file.filename == '':
+#         flash('No image selected for uploading')
+#         return redirect('/getoutside/athlete/update')
+#     if file and allowed_file(file.filename):
+#         filename = secure_filename(file.filename)
+#         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+#         #print('upload_image filename: ' + filename)
+#         flash('Image successfully uploaded and displayed below')
+#         return render_template("user_update.html", user = User.get_user_by_id(data), filename = filename)
+#     else:
+#         flash('Allowed image types are - png, jpg, jpeg, gif')
+#         return redirect('/getoutside/athlete/update')
 
 
 
