@@ -26,11 +26,11 @@
             <!-- user image/name box -->
             <div class="image_box">
                 <!-- user name -->
-                <h1 class="user">{{user.first_name.upper()}}'s profile</h1>
+                <h1 class="user">{{user.first_name}}'s profile</h1>
                 <!--  Profile Image Container -->
                 <div class="image">
-                    <img class="profile_img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8bD_L4O4BBx-neYT154RDTsPUTIBSO5DWVg&usqp=CAU" alt="user icon">
-                    <!-- <img class="profile_img" src="https://cdn-icons-png.flaticon.com/512/20/20079.png" alt="user icon"> -->
+                    <img class="profile_img" src="..{{image_file}}" alt="user icon">
+                    <!-- <img class="profile_img" src="../static/images/profile_pics/default.png" alt="user icon"> -->
                 </div>
                 <!-- logout / update -->
                 <div class="button_flex">
@@ -100,7 +100,7 @@
             <div class="friend_left">
                 <!-- title and button -->
                 <div>
-                    <button  class="add_activity"><a href="#" class="text-decoration-none text-light">Add Activity</a></button>
+                    <button  class="add_activity"><a href="/getoutside/activities/new" class="text-decoration-none text-light">Add Activity</a></button>
                     <h4>Activities I'm Leading</h4>    
                 </div>
                 <!-- activity list -->
