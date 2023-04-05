@@ -119,7 +119,8 @@ class Activity:
             SELECT activities.id, activities.created_at, activities.updated_at, activity, location, date, 
             users.id as user_id, first_name, last_name, email, password, image_file, users.created_at as uc, users.updated_at as uu
             FROM activities
-            JOIN users on users.id = activities.user_id;
+            JOIN users on users.id = activities.user_id
+            ORDER BY date ASC;
         """
         results = connectToMySQL('test_app').query_db(query)
         pprint(results)
