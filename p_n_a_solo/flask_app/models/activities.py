@@ -93,7 +93,8 @@ class Activity:
             SELECT activities.id, activities.created_at, activities.updated_at, activity, location, date,
             users.id as user_id, first_name, last_name, email,password, image_file, users.created_at as uc, users.updated_at as uu FROM activities
             JOIN users ON activities.user_id = users.id
-            WHERE activities.id = %(id)s;
+            WHERE activities.id = %(id)s
+            ORDER BY date ASC;
         """
         results = connectToMySQL('test_app').query_db(query,data)
         pprint(results)
@@ -124,7 +125,7 @@ class Activity:
         """
         results = connectToMySQL('test_app').query_db(query)
         pprint(results)
-        all_activities = []
+        all_activities = [] # empty array to fill with each activity
         for row in results:# Create a Activity class instance from the information from each db row
             one_activity = cls(row)
             one_activity.creator = users.User({
