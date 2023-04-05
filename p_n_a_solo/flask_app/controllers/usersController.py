@@ -1,8 +1,9 @@
 from flask_app import app
 from flask import render_template, request, redirect, session, flash, url_for
 from flask_app.models.users import User
+from flask_app.models.activities import Activity
 
-#file upload
+
 
 
 
@@ -16,7 +17,7 @@ def home():
     data ={
         'id': session['user_id']
     }
-    return render_template("dashboard.html", user = User.get_user_by_id(data))
+    return render_template("dashboard.html", user = User.get_user_by_id(data), activities = Activity.all_activities())
 
 
 ### ROUTE FOR USER DASHBOARD -- READ BY USER_ID  (WORKING)
