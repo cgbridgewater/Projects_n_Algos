@@ -13,6 +13,7 @@ class User:
         self.id = data['id']
         self.first_name = data['first_name']
         self.last_name = data['last_name']
+        self.image_file = data['image_file']
         self.email = data['email']    
         self.password = data['password']    
         self.created_at = data['created_at']

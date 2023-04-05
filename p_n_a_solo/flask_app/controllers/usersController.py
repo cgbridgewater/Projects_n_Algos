@@ -1,5 +1,5 @@
 from flask_app import app
-from flask import render_template, request, redirect, session, flash
+from flask import render_template, request, redirect, session, flash, url_for
 from flask_app.models.users import User
 
 #file upload
@@ -25,10 +25,11 @@ def dashboard():
     if 'user_id' not in session:
         msg = "you must be logged in!"
         return redirect('/logout')
+    # image_file = url_for('static', filename='profile_pics/' + user.image_file)
     data ={
         'id': session['user_id']
     }
-    return render_template("user_dashboard.html", user = User.get_user_by_id(data))
+    return render_template("user_dashboard.html", user = User.get_user_by_id(data), image_file = url_for('static', filename='images/profile_pics/' + User.get_user_by_id(data).image_file))
 
 
 
