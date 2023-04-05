@@ -18,15 +18,14 @@
         <!-- logo bar -->
         <div>
             <img class="logo" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="getOUTSIDE">
-        </div>
-        
-        
+        </div>        
+
         <!-- welcome -->
         <div class="welcome">
                 <h6 class="time">It's time to</h6>
                 <h1 class="outside">Get OUTSIDE!</h1>
         </div>
- 
+
         <!-- main wrapper -->
         <div class="wrapper">
             <div class="flex">
@@ -34,22 +33,27 @@
                 <h5>Or view your <button class="bg-primary m-1 opacity-75"><a href="/getoutside/athlete" class="text-decoration-none text-light">Profile</a></button></h5>
             </div>
             <h6>(click activity to view details)</h6>
+
             <!-- table -->
             <table class="activity_table">
                 <!-- loop through activities -->
                 {% for a in activities %}
-                    <td><a class="activity_link" href="/getoutside/activity/{{a.id}}"> {{a.creator.first_name}} {{a.creator.last_name}} is going {{a.activity}} at {{a.location}} on {{a.date.strftime("%B %e, %Y")}} </a></td>
-                    <td> </td>
-                    <td>  </td>
-                    <td> </td>
+                    <!-- display data -->
+                    <td>
+                        <a class="activity_link" href="/getoutside/activity/{{a.id}}"> {{a.creator.first_name}} {{a.creator.last_name}} is going {{a.activity}} at {{a.location}} on {{a.date.strftime("%B %e, %Y")}} </a>
+                    </td>
+                    <!-- display join button -->
                     <td>
                         <button class="bg-success m-1"><a href="#" class="text-decoration-none text-light">Join!</a></button>
                     </td>
                 </tr>
                 {% endfor %}
-            </table><!-- Table END -->
+            </table>
+
+            <!-- Table END -->
         </div>
-        
+
+        <!-- end main wrapper -->
     </main>
 </body>
 
