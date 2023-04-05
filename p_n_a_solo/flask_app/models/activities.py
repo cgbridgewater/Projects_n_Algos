@@ -82,11 +82,7 @@ class Activity:
         return connectToMySQL('test_app').query_db(query,data) 
 
 
-    
-    
-    
-    
-    ### READ ONE ACTIVITY + CREATOR             testing!!!
+    ### READ ONE ACTIVITY + CREATOR (WORKING)
     @classmethod
     def one_activity_and_user(cls,data):
         query = """
@@ -94,7 +90,7 @@ class Activity:
             users.id as user_id, first_name, last_name, email,password, image_file, users.created_at as uc, users.updated_at as uu FROM activities
             JOIN users ON activities.user_id = users.id
             WHERE activities.id = %(id)s
-            ORDER BY date ASC;
+            WHERE date > CURRENT_DATE ORDER BY date ASC;
         """
         results = connectToMySQL('test_app').query_db(query,data)
         pprint(results)
@@ -121,7 +117,7 @@ class Activity:
             users.id as user_id, first_name, last_name, email, password, image_file, users.created_at as uc, users.updated_at as uu
             FROM activities
             JOIN users on users.id = activities.user_id
-            ORDER BY date ASC;
+            WHERE date > CURRENT_DATE ORDER BY date ASC;
         """
         results = connectToMySQL('test_app').query_db(query)
         pprint(results)
