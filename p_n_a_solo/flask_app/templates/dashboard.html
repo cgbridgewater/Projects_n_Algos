@@ -50,36 +50,6 @@
             </table><!-- Table END -->
         </div>
         
-        <!-- main wrapper -->
-        <div class="wrapper">
-            <div class="flex">
-                <h5>See what your friends are doing</h5>
-                <h5>Or view your <button class="bg-primary m-1 opacity-75"><a href="/getoutside/athlete" class="text-decoration-none text-light">Profile</a></button></h5>
-            </div>
-            <!-- table -->
-            <table class="activity_table">
-                <tr>
-                    <th>Name</th>
-                    <th>Activity</th>
-                    <th>Date</th>
-                    <th>Location</th>
-                    <th>Join?</th>
-                </tr>
-                <tr>
-                <!-- loop through activities -->
-                {% for a in activities %}
-                    <td> {{a.creator.first_name}} {{a.creator.last_name}} </td>
-                    <td> {{a.activity}} </td>
-                    <td> {{a.location}} </td>
-                    <td> {{a.date.strftime("%B %e, %Y")}} </td>
-                    <td>
-                        <button class="bg-success m-1"><a href="#" class="text-decoration-none text-light">Join!</a></button>
-                        <button class="bg-primary"><a href="/getoutside/activity/" class="text-decoration-none text-light">Details</a></button>
-                    </td>
-                </tr>
-                {% endfor %}
-            </table><!-- Table END -->
-        </div>
     </main>
 </body>
 
