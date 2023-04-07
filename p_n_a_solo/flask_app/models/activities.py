@@ -5,7 +5,6 @@ import datetime
 from pprint import pprint
 
 
-
 ### ACTIVITY CLASS
 class Activity:
     def __init__(self,data):
@@ -36,9 +35,7 @@ class Activity:
         if len(activity['activity']) < 1: ### activity check
             flash("Please select an activity", "activity")
             is_valid = False
-
         return is_valid ### if you make it this far, is good to go!
-
 
 
     ### Save activity WORKING
@@ -51,42 +48,9 @@ class Activity:
         return connectToMySQL('test_app').query_db(query,data)
 
 
-
-
-    ###Get activity by id                     (testing)
-    @classmethod
-    def get_one_activity(cls,data):
-        query = """
-            SELECT * FROM activities WHERE id = %(id)s;
-        """
-        result = connectToMySQL('test_app').query_db(query,data)
-        print(result)
-        if len(result) == 0: #if no activities found, return an empty list
-            return None
-        else: # if at least one activity is found
-            return cls(result[0])
-
-    ### UPDATE activity BY ID                        (testing)
-    @classmethod
-    def update_activity(cls,data):
-        query = """
-            UPDATE activities SET activity = %(activity)s , location = %(location)s , date = %(date)s WHERE id = %(id)s;
-        """
-        return connectToMySQL('test_app').query_db(query,data)
-
-
-    ### DELETE activity BY ID                            (testing)
-    @classmethod
-    def delete_activity(cls,data):
-        query = """
-            DELETE FROM activities WHERE id = %(id)s;
-        """
-        return connectToMySQL('test_app').query_db(query,data) 
-
-
     ### READ ONE ACTIVITY + CREATOR (WORKING)
     @classmethod
-    def one_activity_and_user(cls,data):
+    def one_activity_by_id_and_user(cls,data):
         query = """
             SELECT activities.id, activities.created_at, activities.updated_at, activity, location, date,
             users.id as user_id, first_name, last_name, email, password, image_file, users.created_at as uc, users.updated_at as uu FROM activities
@@ -109,8 +73,7 @@ class Activity:
         return one_activity
 
 
-
-    ### READ ALL ACTIVITIES + USER                TESTING!!!
+    ### READ ALL ACTIVITIES + USER  for home page!!               TESTING!!!   FIX ID CROSSING OTHERWISE WORKS!
     @classmethod
     def all_activities_with_joined_activities(cls,data): #get all activities and the creator
         query = """
@@ -138,7 +101,32 @@ class Activity:
         return all_activities
 
 
-
+    ### READ ALL ACTIVITIES + USERs JOINED  for USER Dashboard              TESTING!!!  FIX ID CROSSING OTHERWISE WORKS!!
+    @classmethod
+    def all_activities_joined(cls,data): #get all activities and the creator
+        query = """
+        SELECT * FROM users AS creator
+        JOIN activities ON creator.id = activities.user_id
+        LEFT JOIN join_activity ON activities.id = activity_id
+        WHERE date > CURRENT_DATE AND join_activity.user_id = %(id)s AND creator.id != 1 ORDER BY date ASC;
+        """
+        results = connectToMySQL('test_app').query_db(query, data)
+        pprint(results)
+        all_activities = [] # empty array to fill with each activity
+        for row in results:# Create a Activity class instance from the information from each db row
+            one_activity = cls(row)
+            one_activity.creator = users.User({
+                "id": row['user_id'],
+                "first_name": row['first_name'],
+                "last_name": row['last_name'],
+                "image_file": row['image_file'],
+                "email": row['email'],
+                "password": row['password'],
+                "created_at": row['created_at'],
+                "updated_at": row['updated_at'],
+            })
+            all_activities.append(one_activity)### Append the activity and creator to the array
+        return all_activities
 
 
     ### READ ALL ACTIVITIES + USER  WORKING!
@@ -170,12 +158,79 @@ class Activity:
         return all_activities
 
 
+#### JOIN WORKING
+    @classmethod
+    def join_activity(cls,data):
+        query = '''
+            INSERT INTO join_activity
+            (user_id, activity_id)
+            VALUES
+            (%(user_id)s, %(activity_id)s);
+            '''
+        connectToMySQL('test_app').query_db(query,data)    
+
+
+### UNJOIN WORKING
+    @classmethod
+    def unjoin_activity(cls,data):
+        query = '''
+            DELETE FROM join_activity WHERE user_id = %(user_id)s AND activity_id = %(activity_id)s;
+            '''
+        connectToMySQL('test_app').query_db(query,data)    
+
+
+    ### UPDATE activity BY ID                        (to be assigned)
+    @classmethod
+    def update_activity(cls,data):
+        query = """
+            UPDATE activities SET activity = %(activity)s , location = %(location)s , date = %(date)s WHERE id = %(id)s;
+        """
+        return connectToMySQL('test_app').query_db(query,data)
+
+
+    ### DELETE activity BY ID                            (to be assigned)
+    @classmethod
+    def delete_activity_by_id(cls,data):
+        query = """
+            DELETE FROM activities WHERE id = %(id)s;
+        """
+        return connectToMySQL('test_app').query_db(query,data) 
+
+
+
+# ### All Joined WORKING   do i need???
+#     @classmethod
+#     def all_joined(cls):
+#         query = "SELECT * FROM join_activity;"
+#         results = connectToMySQL("test_app").query_db(query)
+#         pprint(results)
+#         join_activity = []
+#         for j in results:
+#             join_activity.append((j))
+#         pprint("GET ALL JOINED!")
+#         return join_activity
 
 
 
 
 
-  
+
+    # ###Get activity by id                     (testing)
+    # @classmethod
+    # def get_one_activity(cls,data):
+    #     query = """
+    #         SELECT * FROM activities WHERE id = %(id)s;
+    #     """
+    #     result = connectToMySQL('test_app').query_db(query,data)
+    #     print(result)
+    #     if len(result) == 0: #if no activities found, return an empty list
+    #         return None
+    #     else: # if at least one activity is found
+    #         return cls(result[0])
+
+
+
+
     # @classmethod
     # def all_activities_joined(cls):
     #     query = '''
@@ -237,38 +292,10 @@ class Activity:
 
 
 
-#### JOIN WORKS
-    @classmethod
-    def join(cls,data):
-        query = '''
-            INSERT INTO join_activity
-            (user_id, activity_id)
-            VALUES
-            (%(user_id)s, %(activity_id)s);
-            '''
-        connectToMySQL('test_app').query_db(query,data)    
 
 
-### UNJOIN WORKS
-    @classmethod
-    def unjoin(cls,data):
-        query = '''
-            DELETE FROM join_activity WHERE user_id = %(user_id)s AND activity_id = %(activity_id)s;
-            '''
-        connectToMySQL('test_app').query_db(query,data)    
 
 
-### All Joined
-    @classmethod
-    def all_joined(cls):
-        query = "SELECT * FROM join_activity;"
-        results = connectToMySQL("test_app").query_db(query)
-        pprint(results)
-        join_activity = []
-        for j in results:
-            join_activity.append((j))
-        pprint("GET ALL JOINED!")
-        return join_activity
 
 
 # ### GET ALL JOINED                TESTING!!!

@@ -4,7 +4,7 @@ from flask_app.models.users import User
 from flask_app.models.activities import Activity
 
 
-### ROUTE FOR HOME PAGE -- READ BY USER_ID  (WORKING)
+### ROUTE FOR HOME PAGE  (WORKING)
 @app.route('/getoutside')
 def home():
     if 'user_id' not in session:
@@ -22,7 +22,7 @@ def home():
         # joined = Activity.all_joined()
 
 
-### ROUTE FOR USER DASHBOARD -- READ BY USER_ID  (WORKING)
+### ROUTE FOR ATHLETE DASHBOARD -- READ BY USER_ID  (WORKING)
 @app.route('/getoutside/athlete')
 def dashboard():
     if 'user_id' not in session:
@@ -32,7 +32,10 @@ def dashboard():
     data ={
         'id': session['user_id']
     }
-    return render_template("user_dashboard.html", user = User.get_user_by_id(data), image_file = url_for('static', filename='images/profile_pics/' + User.get_user_by_id(data).image_file),activities = Activity.all_activities(), joined = Activity.all_activities_joined())
+    return render_template("user_dashboard.html", 
+    user = User.get_user_by_id(data), 
+    image_file = url_for('static', filename='images/profile_pics/' + User.get_user_by_id(data).image_file),
+    activities = Activity.all_activities(), joined = Activity.all_activities_joined(data))
 
 
 ### ROUTE TO DELETE USER BY USER_ID (WORKING)
@@ -49,7 +52,7 @@ def delete_user():
 
     ### ROUTE TO EDIT USER FORM BY USER_ID (WORKING)
 @app.route('/getoutside/athlete/update')
-def edit_user():
+def edit_user_form():
     if 'user_id' not in session:
         return redirect('/logout')
     data ={
@@ -60,7 +63,7 @@ def edit_user():
 
 ### ROUTE TO PROCESS USER UPDATE FORM (WORKING)
 @app.route("/getoutside/athlete/editing", methods =['POST'])
-def update_user():
+def update_user_action():
     if 'user_id' not in session:
         return redirect('/logout')
     data = {

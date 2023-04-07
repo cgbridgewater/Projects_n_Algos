@@ -4,9 +4,6 @@ import re
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$') 
 
 
-
-
-
 ### USER CLASS
 class User:
     def __init__(self,data):
@@ -24,7 +21,7 @@ class User:
         self.activities = []
 
 
-### REGISTRATION VALIDATIONS
+### REGISTRATION VALIDATIONS (WORKING)
     @staticmethod
     def validate_registration(user):
         is_valid = True # we assume this is true
@@ -55,7 +52,7 @@ class User:
         return is_valid ### if you make it this far, is good to go!
 
 
-### LOGIN VALIDATIONS
+### LOGIN VALIDATIONS WORKING
     @staticmethod
     def validate_login(user):
         is_valid = True # we assume this is true
@@ -68,7 +65,7 @@ class User:
         return is_valid ### if you make it this far, is good to go!
 
 
-### UPDATE VALIDATIONS
+### UPDATE VALIDATIONS (WORKING)
     @staticmethod
     def validate_update(user):
         is_valid = True # we assume this is true
@@ -86,6 +83,7 @@ class User:
         #     is_valid = False 
         return is_valid ### if you make it this far, is good to go!
 
+
 ### CHECK FOR EXISTING EMAIL (WORKING)
     @classmethod 
     def email_exists(cls,data):
@@ -94,7 +92,6 @@ class User:
         if len(result) < 1:
             return False   #didn't find a matching user
         return cls(result[0])
-
 
 
 ### CREATE AND SAVE NEW USER (WORKING)
@@ -122,7 +119,6 @@ class User:
         return connectToMySQL('test_app').query_db(query,data) 
 
 
-
 ### UPDATE USER BY ID (WORKING)
     @classmethod
     def update_user_by_id(cls,data):
@@ -131,12 +127,7 @@ class User:
 
 
 
-
-
-
-#### check all below and save this just in case all users needed!!
-
-### GET FRIENDS (testing)
+### GET FRIENDS                  (NOT IN USE YET)
     @classmethod
     def get_friends(cls,data):
         query = "SELECT * FROM users WHERE id <> %(id)s;"
@@ -147,11 +138,8 @@ class User:
             users.append(cls(i))
         return users
 
+# use this query to search by partial and filter out user id
 
-
-
-
-
-
-
+	# SELECT * FROM users WHERE first_name LIKE "% %" 
+	# 		and last_name Like "% %" and id <> 3;
 

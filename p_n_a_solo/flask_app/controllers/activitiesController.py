@@ -5,19 +5,6 @@ from flask_app.models.users import User
 from flask_app.models.activities import Activity
 
 
-### ROUTE FOR FRIENDS PAGE                            /////////// save this for later!!
-# @app.route('/dashboard/friends')
-# def all_users():
-#     if 'user_id' not in session:
-#         msg = "you must be logged in!"
-#         return redirect('/logout')
-#     data ={
-#         'id': session['user_id']
-#     }
-#     return render_template("user_friends.html", friends = User.get_friends(data),user = User.get_user_by_id(data)) ### This should be a joined list and all friends by id
-
-
-
 ### ROUTE to the new activity form WORKING
 @app.route('/getoutside/activities/new')
 def new_activity_form():
@@ -32,7 +19,7 @@ def new_activity_form():
 
 ### Route to post new activity WORKING
 @app.route('/getoutside/activities/new', methods=["POST"])
-def save_activity():
+def save_activity_action():
     if 'user_id' not in session:
         msg = "you must be logged in!"
         return redirect('/logout')
@@ -41,10 +28,9 @@ def save_activity():
     Activity.save_activity(request.form) # else save form
     return redirect("/getoutside/athlete") 
 
-
-### Route To View One Activity
-@app.route('/getoutside/activity/<int:id>')
-def one_activity(id):
+### Route for creating update form page
+@app.route('/getoutside/activity/<int:id>/edit')
+def edit_activity_by_id(id):
     if 'user_id' not in session:
         msg = "you must be logged in!"
         return redirect('/logout')
@@ -54,34 +40,73 @@ def one_activity(id):
     user ={
         'id': session['user_id']
     }
-    return render_template("one_activity.html", activity = Activity.one_activity_and_user(data), user = User.get_user_by_id(user))
+    return render_template("edit_activity.html", activity = Activity.one_activity_by_id_and_user(data), user = User.get_user_by_id(user))
+
+### Route To View One Activity  WORKING
+@app.route('/getoutside/activity/<int:id>')
+def view_one_activity(id):
+    if 'user_id' not in session:
+        msg = "you must be logged in!"
+        return redirect('/logout')
+    data = {
+        'id': id,
+    }
+    user ={
+        'id': session['user_id']
+    }
+    return render_template("one_activity.html", activity = Activity.one_activity_by_id_and_user(data), user = User.get_user_by_id(user))
+# needs joined list!!
 
 
-
-### Join Activity                TESTING
-@app.route('/getoutside/activity/<int:id>/join', methods=["POST"])
-def join(id):
+### Join Activity WORKING
+@app.route('/getoutside/activity/<int:id>/join')
+def join_activity(id):
     if 'user_id' not in session:
         return redirect('/logout')
     data = {
         'activity_id' : id,
         'user_id' : session['user_id']
     }
-    Activity.join(data)
+    Activity.join_activity(data)
     return redirect("/getoutside")
 
 
-### UN Join Activity                  TESTING
-@app.route('/getoutside/activity/<int:id>/unjoin', methods=["POST"])
-def unjoin(id):
+### UN Join Activity WORKING
+@app.route('/getoutside/activity/<int:id>/unjoin')
+def unjoin_activity(id):
     if 'user_id' not in session:
         return redirect('/logout')
     data = {
         'activity_id' : id,
         'user_id' : session['user_id']
     }
-    Activity.unjoin(data)
+    Activity.unjoin_activity(data)
+    return redirect("/getoutside")
+
+
+### Delete Activity by id  WORKIMG
+@app.route('/getoutside/activity/<int:id>/delete')
+def delete_activity_by_id(id):
+    if 'user_id' not in session:
+        return redirect('/logout')
+    data = {
+        'id' : id,
+    }
+    Activity.delete_activity_by_id(data)
     return redirect("/getoutside")
 
 
 
+
+
+
+### ROUTE FOR FRIENDS PAGE                            /////////// save this for later!!
+# @app.route('/dashboard/friends')
+# def all_users():
+#     if 'user_id' not in session:
+#         msg = "you must be logged in!"
+#         return redirect('/logout')
+#     data ={
+#         'id': session['user_id']
+#     }
+#     return render_template("user_friends.html", friends = User.get_friends(data),user = User.get_user_by_id(data)) ### This should be a joined list and all friends by id
