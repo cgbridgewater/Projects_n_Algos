@@ -20,14 +20,16 @@
     width: 20%;
     min-width: 350px;
     padding:5px;
-    background-color: blanchedalmond;
-    opacity: 75%;
-    border: 3px solid green
+    background-color: honeydew;
+    opacity: 85%;
+    border: 3px solid green;
+    border-radius: 5px;
 }
 
 .user {
     text-align: center;
-    color:sienna
+    color:green;
+    font-weight: 700;
 }
 
 .image {
@@ -40,7 +42,7 @@
     width:200px;
     border: 3px solid black;
     border-radius: 100%;
-    background-color: whitesmoke;
+    background-color: #FFFFF5;
 }
 
 .button_flex {
@@ -49,19 +51,30 @@
 }
 
 .profile_button {
-    width:150px;
+    width:100px;
+    border-radius: 5px;
 }
 
 .profile_info {
     margin: 1% 0;
-    background-color: blanchedalmond;
-    opacity: 80%;
+    background-color: honeydew;
+    opacity: 85%;
     display: flex;
     justify-content: space-between;
     border: 3px solid green;
+    border-radius: 5px;
     padding:5px;
     width: 40%;
     min-width: 350px;
+}
+
+h4{
+    color:green;
+    font-weight: 700;
+}
+
+tr {
+    vertical-align:middle;
 }
 
 .friend_list_container {
@@ -70,16 +83,16 @@
     min-width: 25%;
     width: 20%;
     min-width: 350px;
-    background-color: blanchedalmond;
-    opacity: 75%;
+    background-color: honeydew;
+    opacity: 85%;
     border: 3px solid green;
+    border-radius: 5px;
     display: flex;
     justify-content: space-evenly;
 }
 
 .find_friend, .add_activity{
-    background-color: green;
-    padding: 10px;
+    padding: 8px;
     margin-right: 10px;
     margin-top: 5px;
     margin-bottom:5px;
@@ -106,9 +119,10 @@
     min-width: 350px;
     min-height: 150px;
     padding: 1%;
-    background-color: blanchedalmond;
-    opacity: 75%;
+    background-color: honeydew;
+    opacity: 85%;
     border: 3px solid green;
+    border-radius: 5px;
 }
 
 .activity_links {
@@ -117,17 +131,25 @@
     overflow-y:scroll;
     overflow-x: hidden;
     padding: 1%;
-    background-color: beige;
+    background-color:#FFFFF5;
+
 }
 
 .link {
     text-decoration: none;
-    color:sienna;
+    color:#857659;
+}
+.link:hover {
+    color: green;
+    text-shadow:0px 0px 30px green;
+    -moz-transition: all 0.2s ease-in;
+    -o-transition: all 0.2s ease-in;
+    -webkit-transition: all 0.2s ease-in;
+    transition: all 0.2s ease-in;
 }
 
 .all_activities{
-    background-color: green;
-    padding: 10px;
+    padding: 8px;
     margin-right: 10px;
     margin-top: 5px;
     margin-bottom:5px;

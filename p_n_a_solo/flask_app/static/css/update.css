@@ -17,3 +17,44 @@ main {
     color: darkred;
     font-weight: 800;
 }
+
+.title_text {
+    text-align: center;
+    font-weight: 600;
+    color: green;
+}
+
+.form_container {
+    width: 40%;
+    min-width:375px;
+    margin: 3% auto;
+    padding: 2% 3%;
+    border: 3px solid green;
+    border-radius: 5px;
+    background-color: honeydew;
+    opacity: 85%;
+}
+
+.input_control {
+display: flex;
+justify-content: space-between;
+margin: 2% auto;
+}
+
+label {
+    color: green;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+input {
+    background-color: #FFFFF5;
+    border: 2px solid green;
+    color: green;
+}
+
+.button_control {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 0 auto;
+}

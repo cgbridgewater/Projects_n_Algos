@@ -10,18 +10,16 @@
     height: 25vh;
 }
 
+.profile_button {
+    margin-left: 45%;
+}
+
 .content {
     min-width: 400px;    
     width: 70%;
     margin: 0 auto;
     /* width: 60%; */
 }
-
-/* .image_content {
-    border: 1px solid black;
-    width: 100%;
-} */
-
 
 .flex {
     display: flex;

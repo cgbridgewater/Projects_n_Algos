@@ -15,19 +15,22 @@
     <!-- logo bar -->
     <div>
         <img class="logo" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="getOUTSIDE">
-    </div>     
+    </div> 
+
     <!-- main wrapper -->
     <main>
 
+        <!-- content container -->
         <div class="content">
 
-        
-            <!-- welcome -->
+            <!-- welcome title -->
             <div class="welcome">
                 <H1>Welcome {{user.first_name}}, &nbsp; </H1>
                 <h6 class="time">It's time to</h6>
-                <h1 class="outside">Get OUTSIDE!</h1>
+                <h2 class="outside">Get OUTSIDE!</h2>    
             </div>
+            <button class="profile_button bg-danger"><a href="/logout" class="text-decoration-none text-light">Log Off and Get OUTSIDE</a></button>
+            <!-- end welcome title -->
             
             <!-- main wrapper -->
             <div class="wrapper">
@@ -52,32 +55,27 @@
                         <td>   
                             <a class="activity_link" href="/getoutside/activity/{{a.id}}"> {{a.creator.first_name}} {{a.creator.last_name}} is going {{a.activity}} at {{a.location}} on {{a.date.strftime("%B %e, %Y")}} </a>
                         </td>
-                        <ul>
+                        <!-- <ul>
                             <li> creator.id: {{a.creator.id}} </li>
                             <li> activity a.id:{{a.id}} </li>
                             <li> activity_id:{{a.activity_id}} </li>
                             <li> activities.id: {{a.activities.id}} </li>
                             <li> user_id: {{a.user_id}} </li>
-                            <li>  </li>
-                        </ul>
+                            <li> {{a}} </li>
+                        </ul> -->
 
 
                         <!-- display join button -->
                         <td>
-                       
                                 {% if session.user_id == a.activity_id  %}
-                                <form action="/getoutside/activity/{{a.id}}/unjoin" method="POST">
-                                    <input class="bg-danger m-1 p-1" type="submit" value="PASS!">
-                                </form>
+
+                                <a href="/getoutside/activity/{{a.id}}/unjoin">I'M OUT!</a>
 
                                 {% else   %}
-                                <form action="/getoutside/activity/{{a.id}}/join" method="POST">
-                                    <input class="bg-success m-1 p-1 " type="submit" value="JOIN!">
-                                </form>
-                                
-                                {% endif %}
-                            
 
+                                <a href="/getoutside/activity/{{a.id}}/join">JOIN!</a>
+
+                                {% endif %}
                         </td>
 
                     </tr>
