@@ -41,3 +41,47 @@ def save_activity():
     Activity.save_activity(request.form) # else save form
     return redirect("/getoutside/athlete") 
 
+
+### Route To View One Activity
+@app.route('/getoutside/activity/<int:id>')
+def one_activity(id):
+    if 'user_id' not in session:
+        msg = "you must be logged in!"
+        return redirect('/logout')
+    data = {
+        'id': id,
+    }
+    user ={
+        'id': session['user_id']
+    }
+    return render_template("one_activity.html", activity = Activity.one_activity_and_user(data), user = User.get_user_by_id(user))
+
+
+
+### Join Activity                TESTING
+@app.route('/getoutside/activity/<int:id>/join', methods=["POST"])
+def join(id):
+    if 'user_id' not in session:
+        return redirect('/logout')
+    data = {
+        'activity_id' : id,
+        'user_id' : session['user_id']
+    }
+    Activity.join(data)
+    return redirect("/getoutside")
+
+
+### UN Join Activity                  TESTING
+@app.route('/getoutside/activity/<int:id>/unjoin', methods=["POST"])
+def unjoin(id):
+    if 'user_id' not in session:
+        return redirect('/logout')
+    data = {
+        'activity_id' : id,
+        'user_id' : session['user_id']
+    }
+    Activity.unjoin(data)
+    return redirect("/getoutside")
+
+
+

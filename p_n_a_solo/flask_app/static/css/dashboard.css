@@ -10,6 +10,19 @@
     height: 25vh;
 }
 
+.content {
+    min-width: 400px;    
+    width: 70%;
+    margin: 0 auto;
+    /* width: 60%; */
+}
+
+/* .image_content {
+    border: 1px solid black;
+    width: 100%;
+} */
+
+
 .flex {
     display: flex;
     justify-content: space-between;
@@ -34,7 +47,7 @@
 }
 
 .wrapper {
-    width: 40%;
+    width: 65%;
     margin: 0 auto;
     margin-top: 3%;    
 
@@ -45,13 +58,14 @@
     border: 3px solid green;
     border-radius: 10px;
     background-color: lightgray;
-    opacity:85%;
+    opacity:90%;
     margin: 0 auto;
 }
 
 .activity_link {
     text-decoration: none;
     color: green;
+    margin:3px;
 }
 
 th,td {
@@ -59,6 +73,8 @@ th,td {
 }
 
 main {
+    display: flex;
+    flex-wrap: wrap;
     min-height: 100vh;
     height:100%;
     width: 100vw;

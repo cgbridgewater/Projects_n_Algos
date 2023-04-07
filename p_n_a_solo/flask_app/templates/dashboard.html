@@ -12,49 +12,94 @@
 </head>
 <body class="bg-secondary bg-gradient bg-opacity-10">
 
+    <!-- logo bar -->
+    <div>
+        <img class="logo" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="getOUTSIDE">
+    </div>     
     <!-- main wrapper -->
     <main>
 
-        <!-- logo bar -->
-        <div>
-            <img class="logo" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="getOUTSIDE">
-        </div>        
+        <div class="content">
 
-        <!-- welcome -->
-        <div class="welcome">
+        
+            <!-- welcome -->
+            <div class="welcome">
+                <H1>Welcome {{user.first_name}}, &nbsp; </H1>
                 <h6 class="time">It's time to</h6>
                 <h1 class="outside">Get OUTSIDE!</h1>
-        </div>
-
-        <!-- main wrapper -->
-        <div class="wrapper">
-            <div class="flex">
-                <h5>See what your friends are doing</h5>
-                <h5>Or view your <button class="bg-primary m-1 opacity-75"><a href="/getoutside/athlete" class="text-decoration-none text-light">Profile</a></button></h5>
             </div>
-            <h6>(click activity to view details)</h6>
+            
+            <!-- main wrapper -->
+            <div class="wrapper">
+                <div class="flex">
+                    <h5>See what your friends are doing</h5>
+                    <button class="bg-primary m-1 p-1 opacity-75"><a href="/getoutside/athlete" class="text-decoration-none text-light">View Profile</a></button>
+                </div>
+                <div class="flex">
+                    <h6>(click on activities to view details)</h6>
+                    <button class="bg-success m-1 p-1 opacity-75"><a href="/getoutside/friends" class="text-decoration-none text-light">Find Friends</a></button>
+                </div>
+                
+                <!-- table -->
+                <table class="activity_table">
+                    <!-- loop through activities -->
+                    <tr>
+                    {% for a in activities %}
 
-            <!-- table -->
-            <table class="activity_table">
-                <!-- loop through activities -->
-                {% for a in activities %}
-                    <!-- display data -->
-                    <td>
-                        <a class="activity_link" href="/getoutside/activity/{{a.id}}"> {{a.creator.first_name}} {{a.creator.last_name}} is going {{a.activity}} at {{a.location}} on {{a.date.strftime("%B %e, %Y")}} </a>
-                    </td>
-                    <!-- display join button -->
-                    <td>
-                        <button class="bg-success m-1"><a href="#" class="text-decoration-none text-light">Join!</a></button>
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
+                        <!-- filter out logged in user -->
+  
+                        <!-- display data -->
+                        <td>   
+                            <a class="activity_link" href="/getoutside/activity/{{a.id}}"> {{a.creator.first_name}} {{a.creator.last_name}} is going {{a.activity}} at {{a.location}} on {{a.date.strftime("%B %e, %Y")}} </a>
+                        </td>
+                        <ul>
+                            <li> creator.id: {{a.creator.id}} </li>
+                            <li> activity a.id:{{a.id}} </li>
+                            <li> activity_id:{{a.activity_id}} </li>
+                            <li> activities.id: {{a.activities.id}} </li>
+                            <li> user_id: {{a.user_id}} </li>
+                            <li>  </li>
+                        </ul>
 
-            <!-- Table END -->
+
+                        <!-- display join button -->
+                        <td>
+                       
+                                {% if session.user_id == a.activity_id  %}
+                                <form action="/getoutside/activity/{{a.id}}/unjoin" method="POST">
+                                    <input class="bg-danger m-1 p-1" type="submit" value="PASS!">
+                                </form>
+
+                                {% else   %}
+                                <form action="/getoutside/activity/{{a.id}}/join" method="POST">
+                                    <input class="bg-success m-1 p-1 " type="submit" value="JOIN!">
+                                </form>
+                                
+                                {% endif %}
+                            
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+                </table>
+                <!-- Table END -->
+            </div>
         </div>
-
+        
+        <!-- <div class="image_content">
+            
+            <img src="https://live.staticflickr.com/65535/52792350896_cdc4034904_z.jpg" alt="">
+    
+        </div> -->
         <!-- end main wrapper -->
+
     </main>
+
+
+
+
 </body>
 
 </html>

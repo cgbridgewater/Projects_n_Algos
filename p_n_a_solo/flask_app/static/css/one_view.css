@@ -5,92 +5,19 @@
     height: 25vh;
 }
 
-.top_wrapper {
-    width: 90%;
-    margin-left: 5%;
-    margin-top: 10px;
-    padding: 10px;
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-}
-
-.image_box {
-    margin: 1% 0;
-    width: 20%;
-    min-width: 350px;
-    padding:5px;
-    background-color: blanchedalmond;
-    opacity: 75%;
-    border: 3px solid green
-}
-
 .user {
     text-align: center;
-    color:sienna
+    color: green;
+    font-weight: 700;
 }
 
-.image {
-    width: 200px;
-    margin:0 auto;
+.green {
+    color:green;
+    font-weight: 700;
 }
 
-.profile_img {
-    margin: 2% 0;
-    width:200px;
-    border: 3px solid black;
-    border-radius: 100%;
-    background-color: whitesmoke;
-}
-
-.button_flex {
-    display: flex;
-    justify-content: space-evenly;
-}
-
-.profile_button {
-    width:150px;
-}
-
-.profile_info {
-    margin: 1% 0;
-    background-color: blanchedalmond;
-    opacity: 80%;
-    display: flex;
-    justify-content: space-between;
-    border: 3px solid green;
-    padding:5px;
-    width: 40%;
-    min-width: 350px;
-}
-
-.friend_list_container {
-    margin: 1% 0;
-    padding:1%;
-    min-width: 25%;
-    width: 20%;
-    min-width: 350px;
-    background-color: blanchedalmond;
-    opacity: 75%;
-    border: 3px solid green;
-    display: flex;
-    justify-content: space-evenly;
-}
-
-.find_friend, .add_activity{
-    background-color: green;
-    padding: 10px;
-    margin-right: 10px;
-    margin-top: 5px;
-    margin-bottom:5px;
-    width: 125px;
-}
-
-.spacer {
-    width: 80%;
-    margin:1% auto;
-    border: 5px solid green;
-    border-radius: 20%;
+.black {
+    color:black;
 }
 
 .activity_container {
@@ -100,18 +27,44 @@
     flex-wrap: wrap;
 }
 
-.friend_left, .friend_right {
+.left_box {
     margin: 1% 0;
-    width: 45%;
+    width: 25%;
     min-width: 350px;
     min-height: 150px;
     padding: 1%;
     background-color: blanchedalmond;
-    opacity: 75%;
+    opacity: 85%;
     border: 3px solid green;
 }
 
+.right_box {
+    margin: 1% 0;
+    width: 65%;
+    min-width: 350px;
+    min-height: 150px;
+    padding: 1%;
+    background-color: blanchedalmond;
+    opacity: 85%;
+    border: 3px solid green;
+}
+
+.join, .home {
+    background-color: green;
+    padding: 5px;
+}
+.edit {
+    background-color: blue;
+    padding: 5px;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+
 .activity_links {
+    margin-top: 2%;
     margin-left: 5%;
     height:200px;
     overflow-y:scroll;
@@ -125,13 +78,28 @@
     color:sienna;
 }
 
-.all_activities{
-    background-color: green;
-    padding: 10px;
-    margin-right: 10px;
-    margin-top: 5px;
-    margin-bottom:5px;
-    width: 200px;
+.bottom {
+    width: 90%;
+    margin: 0 auto;
+
+}
+
+iframe {
+    /* min-width:325px; */
+    width:100%;
+    height:300px;
+}
+
+.image_box {
+    display: flex;
+    justify-content: center;
+}
+
+.image {
+    aspect-ratio:1/1;
+    max-height: 200px ;
+    margin: 3% auto;
+    border: 2px solid green; 
 }
 
 main {

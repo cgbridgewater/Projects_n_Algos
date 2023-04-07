@@ -14,12 +14,11 @@
     <!-- main content box -->
     <main>
 
-
         <!-- OUTSIDE Logo -->
         <img class="outside" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="get_outside">
 
 
-
+        <!-- background -->
         <div class="background">
         
             <div class="login_container">
@@ -35,7 +34,7 @@
                             <!-- check if there are any messages -->
                             {% for message in messages %}
                             <!-- loop through the messages -->
-                                <p class="error">{{message}}</p> <!-- display each message in a paragraph tag -->
+                                <p class="error">{{message}}</p> <!-- display each message in a paragraph tag -->   
                             {% endfor %}
                         {% endif %}
                     {% endwith %}
@@ -63,6 +62,7 @@
                 </div>
             </div>
         </div>
+        <!-- end background -->
     </main>
 </body>
 

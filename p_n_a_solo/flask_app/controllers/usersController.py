@@ -4,10 +4,6 @@ from flask_app.models.users import User
 from flask_app.models.activities import Activity
 
 
-
-
-
-
 ### ROUTE FOR HOME PAGE -- READ BY USER_ID  (WORKING)
 @app.route('/getoutside')
 def home():
@@ -17,7 +13,13 @@ def home():
     data ={
         'id': session['user_id']
     }
-    return render_template("dashboard.html", user = User.get_user_by_id(data), activities = Activity.all_activities())
+    return render_template(
+        "dashboard.html", 
+        user = User.get_user_by_id(data), 
+        activities = Activity.all_activities_with_joined_activities(data)
+        )
+        # activities = Activity.all_activities(), 
+        # joined = Activity.all_joined()
 
 
 ### ROUTE FOR USER DASHBOARD -- READ BY USER_ID  (WORKING)
@@ -30,10 +32,7 @@ def dashboard():
     data ={
         'id': session['user_id']
     }
-    return render_template("user_dashboard.html", user = User.get_user_by_id(data), image_file = url_for('static', filename='images/profile_pics/' + User.get_user_by_id(data).image_file))
-
-
-
+    return render_template("user_dashboard.html", user = User.get_user_by_id(data), image_file = url_for('static', filename='images/profile_pics/' + User.get_user_by_id(data).image_file),activities = Activity.all_activities(), joined = Activity.all_activities_joined())
 
 
 ### ROUTE TO DELETE USER BY USER_ID (WORKING)
@@ -48,8 +47,6 @@ def delete_user():
     return redirect('/logout') 
 
 
-
-
     ### ROUTE TO EDIT USER FORM BY USER_ID (WORKING)
 @app.route('/getoutside/athlete/update')
 def edit_user():
@@ -59,8 +56,6 @@ def edit_user():
         'id': session['user_id']
     }
     return render_template("user_update.html", user = User.get_user_by_id(data))
-
-
 
 
 ### ROUTE TO PROCESS USER UPDATE FORM (WORKING)
@@ -78,7 +73,6 @@ def update_user():
         return redirect('/getoutside/athlete/update')
     User.update_user_by_id(data)
     return redirect("/getoutside/athlete") 
-
 
 
 # ### UPLOAD IMAGE ROUTE

@@ -70,7 +70,7 @@
             <div class="friend_list_container">
                 <!-- find friend button -->
                 <div>
-                    <button  class="find_friend"><a href="/dashboard/friends" class="text-decoration-none text-light">Find Friends</a></button>
+                    <button  class="find_friend"><a href="/getoutside/friends" class="text-decoration-none text-light">Find Friends</a></button>
                 </div>   
                 <!-- friends list -->
                 <div>
@@ -103,35 +103,19 @@
                     <button  class="add_activity"><a href="/getoutside/activities/new" class="text-decoration-none text-light">Add Activity</a></button>
                     <h4>Activities I'm Leading</h4>    
                 </div>
+                
                 <!-- activity list -->
                 <div class="activity_links">
-                    <h5>
-                        <a class="link" href="/#">Skiing At Mt. Bachelor on April 7th</a>
-                    </h5>
-                    <h5>
-                        <a class="link" href="/#">Hiking Smith Rock on May 7th</a>
-                    </h5>
-                    <h5>
-                        <a class="link" href="/#">Mountain Biking at Alsea Falls on June 2nd</a>
-                    </h5>
-                    <h5>
-                        <a class="link" href="/#">Skiing At Mt. Bachelor on April 7th</a>
-                    </h5>
-                    <h5>
-                        <a class="link" href="/#">Hiking Smith Rock on May 7th</a>
-                    </h5>
-                    <h5>
-                        <a class="link" href="/#">Mountain Biking at Alsea Falls on June 2nd</a>
-                    </h5>
-                    <h5>
-                        <a class="link" href="/#">Skiing At Mt. Bachelor on April 7th</a>
-                    </h5>
-                    <h5>
-                        <a class="link" href="/#">Hiking Smith Rock on May 7th</a>
-                    </h5>
-                    <h5>
-                        <a class="link" href="/#">Mountain Biking at Alsea Falls on June 2nd</a>
-                    </h5>
+                    <!-- loop through activities -->
+                    {% for a in activities %}
+                        <!-- filter for only logged in user -->
+                        {% if a.creator.id == session.user_id %}
+                        <!-- display data -->
+                            <h5>
+                                <a class="link" href="/getoutside/activity/{{a.id}}"> I'm going {{a.activity}} at {{a.location}} on {{a.date.strftime("%B %e, %Y")}} </a>
+                            </h5>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
             
@@ -142,35 +126,19 @@
                     <button  class="all_activities"><a href="/getoutside" class="text-decoration-none text-light">See All Friends Activities</a></button>
                     <h4>Activities I'm Joining</h4>
                 </div>
+
                 <!-- activity list -->
                 <div class="activity_links">
-                    <h5>
-                        <a class="link" href="#">Mike is going Hiking at Crescent Lake on June 15th</a>
-                    </h5>
-                    <h5>
-                        <a class="link" href="#">Steve is going Mountain Biking at Oakridge on June 17th</a>
-                    </h5>
-                    <h5>
-                        <a class="link" href="#">Mac is going Running at Pre's Trail on June 18th</a>
-                    </h5>
-                    <h5>
-                        <a class="link" href="#">Mike is going Hiking at Crescent Lake on June 15th</a>
-                    </h5>
-                    <h5>
-                        <a class="link" href="#">Steve is going Mountain Biking at Oakridge on June 17th</a>
-                    </h5>
-                    <h5>
-                        <a class="link" href="#">Mac is going Running at Pre's Trail on June 18th</a>
-                    </h5>
-                    <h5>
-                        <a class="link" href="#">Mike is going Hiking at Crescent Lake on June 15th</a>
-                    </h5>
-                    <h5>
-                        <a class="link" href="#">Steve is going Mountain Biking at Oakridge on June 17th</a>
-                    </h5>
-                    <h5>
-                        <a class="link" href="#">Mac is going Running at Pre's Trail on June 18th</a>
-                    </h5>
+                    <!-- loop through activities -->
+                    {% for a in joined %}
+                        <!-- filter for only logged in user -->
+                        {% if a.creator.id != session.user_id %}
+                        <!-- display data -->
+                            <h5>
+                                <a class="link" href="/getoutside/activity/{{a.id}}"> {{a.creator.first_name}} {{a.creator.last_name}} is going {{a.activity}} at {{a.location}} on {{a.date.strftime("%B %e, %Y")}} </a>
+                            </h5>
+                        {% endif %}
+                    {% endfor %}
                 </div>
                 <!-- end activity list -->
             </div>
