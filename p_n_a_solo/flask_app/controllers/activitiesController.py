@@ -38,7 +38,7 @@ def create_activity_form_action():
     if 'user_id' not in session:
         msg = "you must be logged in!"
         return redirect('/logout')
-    if not Activity.validate_activity(request.form):
+    if not Activity.activity_validation(request.form):
         return redirect('/getoutside/activities/new')  #redirect to where the form is rendered if validation fails
     Activity.create_activity_form_action(request.form) # else save form
     return redirect("/getoutside/athlete") 
@@ -72,9 +72,9 @@ def edit_activity_form_action(id):
         "date" : request.form["date"],
         }
 
-    if not Activity.validate_activity(data):
-        return redirect(f'/getoutside/activity/{id}/edit')  #redirect to where the form is rendered if validation fails
-    Activity.update_activity_form_action(data) # else save form
+    if not Activity.activity_validation(data):
+        return redirect(f'/getoutside/activity/{id}/edit') 
+    Activity.update_activity_form_action(data) 
     return redirect(f'/getoutside/activity/{id}') 
 
 
@@ -142,7 +142,3 @@ def delete_activity_by_id(id):
     }
     Activity.delete_activity_by_id(data)
     return redirect("/getoutside/athlete")
-
-
-
-

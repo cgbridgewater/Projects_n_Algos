@@ -52,7 +52,7 @@ def update_user_form_action():
         "last_name": request.form["last_name"],
         "email": request.form["email"]
         }
-    if not User.validate_update(data):
+    if not User.update_validation(data):
         return redirect('/getoutside/athlete/update')
     User.update_user_by_id(data)
     return redirect("/getoutside/athlete") 
@@ -79,26 +79,21 @@ def friend_search_page():
     return render_template("friends_find.html",user = User.get_user_by_id(data)) 
 
 
-
-
-# ## ROUTE FOR FRIENDS SEARCH ACTION PAGE   TESTING
-# @app.route('/getoutside/friends/search', methods = ['POST'])
-# def friend_search_action():
-#     if 'user_id' not in session:
-#         msg = "you must be logged in!"
-#         return redirect('/logout')
-
-#         request.form['first_name'],
-
-#     data = {
-#         'id': session['user_id'],
-#         'first_name':  request.form['first_name'],
-#         'last_name': request.form['last_name']
-#         }
-#     if not User.validate_search(data):
-#         return redirect ('/getoutside/friends')
-#     user = User.find_friends_by_name(data)
-#     return redirect("friends_result.html" ) 
+## ROUTE FOR FRIENDS SEARCH ACTION PAGE   TESTING
+@app.route('/getoutside/friends/search', methods = ['POST'])
+def friend_search_action():
+    if 'user_id' not in session:
+        msg = "you must be logged in!"
+        return redirect('/logout')
+    data = {
+        'id': session['user_id'],
+        'first_name':  request.form['first_name'],
+        'last_name': request.form['last_name']
+        }
+    if not User.search_validation(data):
+        return redirect ('/getoutside/friends')
+    user = User.find_friends_by_name(data)
+    return redirect("friends_result.html" ) 
 
 
 

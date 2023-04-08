@@ -15,15 +15,15 @@ class User:
         self.password = data['password']    
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
-        self.joined = []
-        self.joiners = []
-        self.joinerIds = []
-        self.activities = []
+        # self.joined = []NOT IN USE?
+        # self.joiners = []NOT IN USE?
+        # self.joinerIds = []NOT IN USE?
+        # self.activities = []    NOT IN USE?
 
 
 ### REGISTRATION VALIDATIONS (WORKING)
     @staticmethod
-    def validate_registration(user):
+    def registration_validations(user):
         is_valid = True # we assume this is true
         if len(user['first_name']) < 3: ### first name length check
             flash("First Name must be at least 3 characters.", "register")
@@ -54,7 +54,7 @@ class User:
 
 ### LOGIN VALIDATIONS WORKING
     @staticmethod
-    def validate_login(user):
+    def login_validation(user):
         is_valid = True # we assume this is true
         if len(user['email']) < 3:    ### email length check
             flash("Email must be a valid email.", "login")
@@ -67,7 +67,7 @@ class User:
 
 ### UPDATE VALIDATIONS (WORKING)
     @staticmethod
-    def validate_update(user):
+    def update_validation(user):
         is_valid = True # we assume this is true
         if len(user['first_name']) < 3: ### password length check
             flash("First name must be at least 3 charactors long.", "update")
@@ -86,7 +86,7 @@ class User:
 
 ### CHECK FOR EXISTING EMAIL (WORKING)
     @classmethod 
-    def email_exists(cls,data):
+    def check_for_email_exists(cls,data):
         query = "SELECT * FROM users WHERE email = %(email)s;"
         result = connectToMySQL("test_app").query_db(query,data)
         if len(result) < 1:
@@ -95,7 +95,7 @@ class User:
 
 ### Search VALIDATIONS TESTING
     @staticmethod
-    def validate_search(user):
+    def search_validation(user):
         is_valid = True # we assume this is true
         if len(user['first_name']) < 2: ### password length check
             flash("First name must be at least 2 charactors long.", "update")
@@ -110,7 +110,7 @@ class User:
 
 ### CREATE AND SAVE NEW USER (WORKING)
     @classmethod
-    def save(cls,data):
+    def create(cls,data):
         query = "INSERT INTO users (first_name, last_name, email, password) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s );"
         return connectToMySQL('test_app').query_db(query,data)
 

@@ -27,7 +27,7 @@ def register_page():
 @app.route('/register', methods= ['POST'])
 def register():
     # We call the staticmethod on User model to validate
-    if not User.validate_registration(request.form):
+    if not User.registration_validations(request.form):
         session["first_name"] = request.form["first_name"] ### HOLDING FORM DATA FOR RESUBMIT
         session["last_name"] = request.form["last_name"] ### HOLDING FORM DATA FOR RESUBMIT
         session["email"] = request.form["email"] ### HOLDING FORM DATA FOR RESUBMIT
@@ -40,7 +40,7 @@ def register():
         "email": request.form['email'],
         "password" : pw_hash
     }
-    user_id = User.save(data) ### save user
+    user_id = User.create(data) ### save user
     session.pop("first_name", None)  ### clear form place holder sessions
     session.pop("last_name", None)   ### clear form place holder sessions
     session.pop("email", None)       ### clear form place holder sessions
@@ -54,14 +54,14 @@ def login():
     # We call the staticmethod on User model to validate
     session["email2"] = request.form["email"] ### HOLDING FORM DATA FOR RESUBMIT
     data = { "email" : request.form["email"] } ###data list for checking email
-    user_in_db = User.email_exists(data) ###email exists in db check
+    user_in_db = User.check_for_email_exists(data) ###email exists in db check
     if not user_in_db:
         flash("Invalid Email/Password", "login")
         return redirect("/getoutside/login")  ### redirect if fails
     if not bcrypt.check_password_hash(user_in_db.password, request.form['password']): ###check hashed pw
         flash("Invalid Email/Password", "login")
         return redirect("/getoutside/login") ### redirect if fails
-    if not User.validate_login(request.form):
+    if not User.login_validation(request.form):
     # if there are errors:
         return redirect('/getoutside/login') # redirect to the route where the user form is rendered.
     session["user_id"] = user_in_db.id   ### create session to test logged in
