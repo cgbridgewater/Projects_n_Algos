@@ -19,16 +19,17 @@ def new_activity_form():
 
 ### Route to post new activity WORKING
 @app.route('/getoutside/activities/new', methods=["POST"])
-def save_activity_action():
+def create_activity_form_action():
     if 'user_id' not in session:
         msg = "you must be logged in!"
         return redirect('/logout')
     if not Activity.validate_activity(request.form):
         return redirect('/getoutside/activities/new')  #redirect to where the form is rendered if validation fails
-    Activity.save_activity(request.form) # else save form
+    Activity.create_activity_form_action(request.form) # else save form
     return redirect("/getoutside/athlete") 
 
-### Route for creating update form page
+
+### Route for creating update form page WORKING
 @app.route('/getoutside/activity/<int:id>/edit')
 def edit_activity_by_id(id):
     if 'user_id' not in session:
@@ -40,7 +41,27 @@ def edit_activity_by_id(id):
     user ={
         'id': session['user_id']
     }
-    return render_template("edit_activity.html", activity = Activity.one_activity_by_id_and_user(data), user = User.get_user_by_id(user))
+    return render_template("edit_activity.html", activity = Activity.one_activity_by_id(data), user = User.get_user_by_id(user))
+
+
+### Route to post new activity                                    TESTING
+@app.route('/getoutside/activity/<int:id>/edit', methods=["POST"])
+def edit_activity_form_action(id):
+    if 'user_id' not in session:
+        msg = "you must be logged in!"
+        return redirect('/logout')
+    data = {
+        "id" : id,
+        "activity" : request.form["activity"],
+        "location" : request.form["location"],
+        "date" : request.form["date"],
+        }
+
+    if not Activity.validate_activity(data):
+        return redirect(f'/getoutside/activity/{id}/edit')  #redirect to where the form is rendered if validation fails
+    Activity.update_activity_form_action(data) # else save form
+    return redirect(f'/getoutside/activity/{id}') 
+
 
 ### Route To View One Activity  WORKING
 @app.route('/getoutside/activity/<int:id>')
@@ -54,13 +75,12 @@ def view_one_activity(id):
     user ={
         'id': session['user_id']
     }
-    return render_template("one_activity.html", activity = Activity.one_activity_by_id_and_user(data), user = User.get_user_by_id(user))
-# needs joined list!!
+    return render_template("one_activity.html", activity = Activity.one_activity_by_id(data), user = User.get_user_by_id(user),attenders = Activity.get_all_attendees(data))
 
 
-### Join Activity WORKING
+### Join Activity return to main dash WORKING
 @app.route('/getoutside/activity/<int:id>/join')
-def join_activity(id):
+def join_activity_return_to_home_page(id):
     if 'user_id' not in session:
         return redirect('/logout')
     data = {
@@ -69,6 +89,19 @@ def join_activity(id):
     }
     Activity.join_activity(data)
     return redirect("/getoutside")
+
+
+### Join Activity return to user dash WORKING
+@app.route('/getoutside/activity/<int:id>/join2')
+def join_activity_return_to_activity_page(id):
+    if 'user_id' not in session:
+        return redirect('/logout')
+    data = {
+        'activity_id' : id,
+        'user_id' : session['user_id']
+    }
+    Activity.join_activity(data)
+    return redirect(f"/getoutside/activity/{id}")
 
 
 ### UN Join Activity WORKING

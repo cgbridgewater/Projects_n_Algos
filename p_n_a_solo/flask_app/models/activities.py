@@ -9,15 +9,16 @@ from pprint import pprint
 class Activity:
     def __init__(self,data):
         self.id = data['id']
-        self.activity = data['activity']
+        self.activity = data['activity'] #title of event
         self.location = data['location']
         self.date = data['date']    
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
-        self.activities = []
-        self.creator = None
-        self.joiners = []
-        self.joinerIds = []
+        self.activities = [] #this is catching this thing
+        self.creator = None #I may add a constructor here, all activities do have a creator
+        self.attendee = None #I may add a constructor here, all activities do have a creator
+        self.joiners = [] #attendees 
+        self.joinerIds = [] # don't really need, still thinking on it, may be used for ... 
 
 
 ### Activity FORM VALIDATIONS
@@ -40,7 +41,7 @@ class Activity:
 
     ### Save activity WORKING
     @classmethod
-    def save_activity(clas,data):
+    def create_activity_form_action(cls,data):
         query = """
             INSERT INTO activities (user_id, activity, location, date)
             VALUES ( %(user_id)s, %(activity)s, %(location)s, %(date)s )
@@ -48,54 +49,91 @@ class Activity:
         return connectToMySQL('test_app').query_db(query,data)
 
 
+    ### UPDATE activity BY ID                        (to be assigned)
+    @classmethod
+    def update_activity_form_action(cls,data):
+        query = """
+            UPDATE activities SET activity = %(activity)s , location = %(location)s , date = %(date)s WHERE id = %(id)s;
+        """
+        return connectToMySQL('test_app').query_db(query,data)
+
+
+
+
+
     ### READ ONE ACTIVITY + CREATOR (WORKING)
     @classmethod
-    def one_activity_by_id_and_user(cls,data):
+    def one_activity_by_id(cls,data):
         query = """
-            SELECT activities.id, activities.created_at, activities.updated_at, activity, location, date,
-            users.id as user_id, first_name, last_name, email, password, image_file, users.created_at as uc, users.updated_at as uu FROM activities
-            JOIN users ON activities.user_id = users.id
-            WHERE activities.id = %(id)s;
+            SELECT * FROM activities
+            JOIN users AS creators ON activities.user_id = creators.id
+            WHERE activities.id =  %(id)s;
         """
         results = connectToMySQL('test_app').query_db(query,data)
         pprint(results)
         one_activity = cls(results[0])# Prepare to make a User class instance, looking at the class in models/user.py
-        one_activity.creator = users.User({# Any fields that are used in BOTH tables will have their name changed, which depends on the order you put them in the JOIN query, use a print statement in your classmethod to show this.
-                "id": results[0]['user_id'],
+        one_activity.creator = users.User({
+                "id": results[0]['creators.id'],
                 "first_name": results[0]['first_name'],
                 "last_name": results[0]['last_name'],
                 "email": results[0]['email'],
                 "image_file": results[0]['image_file'],
-                "password": results[0]['password'],
-                "created_at": results[0]['uc'],
-                "updated_at": results[0]['uu'],
+                "password": None,
+                "created_at": results[0]['created_at'],
+                "updated_at": results[0]['updated_at'],
         })
         return one_activity
+
+    
 
 
     ### READ ALL ACTIVITIES + USER  for home page!!               TESTING!!!   FIX ID CROSSING OTHERWISE WORKS!
     @classmethod
     def all_activities_with_joined_activities(cls,data): #get all activities and the creator
         query = """
-            SELECT * FROM users AS creator
-            JOIN activities ON creator.id = activities.user_id
+            SELECT *
+            FROM users 
+            AS creator
+            JOIN activities 
+            ON creator.id = activities.user_id
             LEFT JOIN join_activity on activities.id = activity_id
-            WHERE date > CURRENT_DATE AND activities.user_id != %(id)s ORDER BY date ASC;
+            LEFT JOIN users 
+            AS attendee 
+            ON join_activity.user_id = attendee.id
+            WHERE date > CURRENT_DATE AND activities.user_id != %(id)s
+            ORDER BY date ASC;
         """
         results = connectToMySQL('test_app').query_db(query, data)
         pprint(results)
         all_activities = [] # empty array to fill with each activity
         for row in results:# Create a Activity class instance from the information from each db row
-            one_activity = cls(row)
+            one_activity = cls({
+                "id": row['activities.id'],
+                "activity" : row['activity'],
+                "location" : row['location'],
+                "date" : row['date'],    
+                "created_at" : row['activities.created_at'],
+                "updated_at" : row['activities.updated_at'],
+            })
             one_activity.creator = users.User({
-                "id": row['user_id'],
+                "id": row['id'],
                 "first_name": row['first_name'],
                 "last_name": row['last_name'],
                 "image_file": row['image_file'],
                 "email": row['email'],
-                "password": row['password'],
+                "password": None,
                 "created_at": row['created_at'],
                 "updated_at": row['updated_at'],
+            })
+            one_activity.attendee = users.User({
+                "id": row['attendee.id'],
+                "first_name": row['attendee.first_name'],
+                "last_name": row['attendee.last_name'],
+                "image_file": row['attendee.image_file'],
+                "email": row['attendee.email'],
+                "password": None,
+                "created_at": row['attendee.created_at'],
+                "updated_at": row['attendee.updated_at'],
             })
             all_activities.append(one_activity)### Append the activity and creator to the array
         return all_activities
@@ -108,13 +146,20 @@ class Activity:
         SELECT * FROM users AS creator
         JOIN activities ON creator.id = activities.user_id
         LEFT JOIN join_activity ON activities.id = activity_id
-        WHERE date > CURRENT_DATE AND join_activity.user_id = %(id)s AND creator.id != 1 ORDER BY date ASC;
+        WHERE date > CURRENT_DATE AND join_activity.user_id = %(id)s AND creator.id != %(id)s ORDER BY date ASC;
         """
         results = connectToMySQL('test_app').query_db(query, data)
         pprint(results)
         all_activities = [] # empty array to fill with each activity
         for row in results:# Create a Activity class instance from the information from each db row
-            one_activity = cls(row)
+            one_activity = cls({
+                "id": row['activities.id'],
+                "activity" : row['activity'],
+                "location" : row['location'],
+                "date" : row['date'],    
+                "created_at" : row['activities.created_at'],
+                "updated_at" : row['activities.updated_at'],
+            })
             one_activity.creator = users.User({
                 "id": row['user_id'],
                 "first_name": row['first_name'],
@@ -179,14 +224,6 @@ class Activity:
         connectToMySQL('test_app').query_db(query,data)    
 
 
-    ### UPDATE activity BY ID                        (to be assigned)
-    @classmethod
-    def update_activity(cls,data):
-        query = """
-            UPDATE activities SET activity = %(activity)s , location = %(location)s , date = %(date)s WHERE id = %(id)s;
-        """
-        return connectToMySQL('test_app').query_db(query,data)
-
 
     ### DELETE activity BY ID                            (to be assigned)
     @classmethod
@@ -197,18 +234,101 @@ class Activity:
         return connectToMySQL('test_app').query_db(query,data) 
 
 
+### All attenders      WORKING   
+    @classmethod
+    def get_all_attendees(cls, data):
+        query = """
+            SELECT * FROM join_activity
+            JOIN users ON join_activity.user_id = users.id
+            WHERE join_activity.activity_id =  %(id)s;
+        """
+        results = connectToMySQL("test_app").query_db(query, data)
+        pprint(results)
+        all_attendees = [] # empty array to fill with each activity
+        for row in results:# Create a Activity class instance from the information from each db row
+            one_attendee = (row)
+            one_attendee = users.User({
+                "id": row['user_id'],
+                "first_name": row['first_name'],
+                "last_name": row['last_name'],
+                "image_file": row['image_file'],
+                "email": row['email'],
+                "password": row['password'],
+                "created_at": row['created_at'],
+                "updated_at": row['updated_at'],
+            })
+            all_attendees.append(one_attendee)### Append the activity and creator to the array
+        return all_attendees
 
-# ### All Joined WORKING   do i need???
+
+
+
+
+################################################### TESTING
+
+#    ### READ ONE ACTIVITy + USERs JOINED  for view one page             TESTING!!! 
 #     @classmethod
-#     def all_joined(cls):
-#         query = "SELECT * FROM join_activity;"
-#         results = connectToMySQL("test_app").query_db(query)
+#     def all_users_joined_by_activity_id(cls,data): #get all activities and the creator
+#         query = """
+#            SELECT * FROM activities
+#             JOIN users as creator ON activities.user_id = creator.id
+# 			LEFT JOIN  join_activity ON join_activity.activity_id = activities.id
+#             LEFT JOIN users AS joiners ON join_activity.user_id = joiners.id
+#             WHERE activities.id =  %(id)s;
+#         """
+#         results = connectToMySQL('test_app').query_db(query, data)
 #         pprint(results)
-#         join_activity = []
-#         for j in results:
-#             join_activity.append((j))
-#         pprint("GET ALL JOINED!")
-#         return join_activity
+#         all_activities = [] # empty array to fill with each activity
+#         for row in results:# Create a Activity class instance from the information from each db row
+#             one_activity = cls({
+#                 "id": row['id'],
+#                 "activity" : row['activity'],
+#                 "location" : row['location'],
+#                 "date" : row['date'],    
+#                 "created_at" : row['created_at'],
+#                 "updated_at" : row['updated_at'],
+#             })
+#             one_activity.creator = users.User({
+#                 "id": row['creator.id'],
+#                 "first_name": row['first_name'],
+#                 "last_name": row['last_name'],
+#                 "image_file": row['image_file'],
+#                 "email": row['email'],
+#                 "password": None,
+#                 "created_at": row['creator.created_at'],
+#                 "updated_at": row['creator.updated_at'],
+#             })
+#             one_activity.joiners = users.User({
+#                 "id": row['joiners.id'],
+#                 "first_name": row['joiners.first_name'],
+#                 "last_name": row['joiners.last_name'],
+#                 "image_file": row['joiners.image_file'],
+#                 "email": row['joiners.email'],
+#                 "password": None,
+#                 "created_at": row['joiners.created_at'],
+#                 "updated_at": row['joiners.updated_at'],
+#             })
+#             all_activities.append(one_activity)### Append the activity and creator to the array
+#         return all_activities
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

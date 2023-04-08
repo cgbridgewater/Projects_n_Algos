@@ -6,7 +6,7 @@ from flask_app.models.activities import Activity
 
 ### ROUTE FOR HOME PAGE  (WORKING)
 @app.route('/getoutside')
-def home():
+def home_page():
     if 'user_id' not in session:
         msg = "you must be logged in!"
         return redirect('/logout')
@@ -14,17 +14,14 @@ def home():
         'id': session['user_id']
     }
     return render_template(
-        "dashboard.html", 
-        user = User.get_user_by_id(data), 
-        activities = Activity.all_activities_with_joined_activities(data)
-        )
+        "dashboard.html", user = User.get_user_by_id(data), activities = Activity.all_activities_with_joined_activities(data))
         # activities = Activity.all_activities(), 
         # joined = Activity.all_joined()
 
 
 ### ROUTE FOR ATHLETE DASHBOARD -- READ BY USER_ID  (WORKING)
 @app.route('/getoutside/athlete')
-def dashboard():
+def user_dashboard():
     if 'user_id' not in session:
         msg = "you must be logged in!"
         return redirect('/logout')
@@ -32,15 +29,12 @@ def dashboard():
     data ={
         'id': session['user_id']
     }
-    return render_template("user_dashboard.html", 
-    user = User.get_user_by_id(data), 
-    image_file = url_for('static', filename='images/profile_pics/' + User.get_user_by_id(data).image_file),
-    activities = Activity.all_activities(), joined = Activity.all_activities_joined(data))
+    return render_template("user_dashboard.html", user = User.get_user_by_id(data), image_file = url_for('static', filename='images/profile_pics/' + User.get_user_by_id(data).image_file),activities = Activity.all_activities(), joined = Activity.all_activities_joined(data))
 
 
 ### ROUTE TO DELETE USER BY USER_ID (WORKING)
 @app.route('/getoutside/delete')
-def delete_user():
+def delete_user_route():
     if 'user_id' not in session:
         return redirect('/logout')
     data ={
@@ -63,7 +57,7 @@ def edit_user_form():
 
 ### ROUTE TO PROCESS USER UPDATE FORM (WORKING)
 @app.route("/getoutside/athlete/editing", methods =['POST'])
-def update_user_action():
+def update_user_form_action():
     if 'user_id' not in session:
         return redirect('/logout')
     data = {
@@ -76,6 +70,15 @@ def update_user_action():
         return redirect('/getoutside/athlete/update')
     User.update_user_by_id(data)
     return redirect("/getoutside/athlete") 
+
+
+    ### ROUTE TO VIEW USER PROFILE PAGE BY "ID" TESTING
+@app.route('/getoutside/athlete/<int:id>')
+def show_one_user_page(id):
+    data = {
+    "id" : id
+    }
+    return render_template("user_oneview.html",  user = User.get_user_by_id(data), image_file = url_for('static', filename='images/profile_pics/' + User.get_user_by_id(data).image_file),activities = Activity.all_activities(), joined = Activity.all_activities_joined(data))
 
 
 # ### UPLOAD IMAGE ROUTE
@@ -119,15 +122,6 @@ def update_user_action():
 #     new_user_id = User.save(request.form)
 #     return redirect(f'/users/read/{new_user_id}')
 
-
-
-#     ### ROUTE TO VIEW USER PROFILE PAGE BY "ID" (WORKING)
-# @app.route('/users/read/<int:id>')
-# def show_one_user(id):
-#     data = {
-#     "id" : id
-#     }
-#     return render_template("read(one).html", user = User.get_one_user(data))
 
 
 
