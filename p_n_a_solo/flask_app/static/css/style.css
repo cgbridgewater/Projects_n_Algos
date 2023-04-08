@@ -35,6 +35,15 @@
     opacity: .85;
 }
 
+label, .title, input.input {
+    color:green;
+    font-weight: 700;
+}
+
+input.input:focus {
+    color:green;
+}
+
 .login,.register {
     margin-top: 20px;
     padding: 2%;

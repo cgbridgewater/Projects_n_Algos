@@ -58,3 +58,7 @@ input {
     justify-content: space-evenly;
     margin: 0 auto;
 }
+
+.btn {
+    width: 125px;
+}

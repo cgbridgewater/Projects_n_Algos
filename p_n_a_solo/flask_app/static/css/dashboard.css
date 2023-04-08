@@ -18,7 +18,6 @@
     min-width: 400px;    
     width: 70%;
     margin: 0 auto;
-    /* width: 60%; */
 }
 
 .flex {
@@ -54,9 +53,8 @@
 .activity_table {
     width: 100%;
     border: 3px solid green;
-    border-radius: 10px;
-    background-color: lightgray;
-    opacity:90%;
+    background-color: honeydew;
+    opacity:85%;
     margin: 0 auto;
 }
 

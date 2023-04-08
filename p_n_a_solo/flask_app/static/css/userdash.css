@@ -77,6 +77,11 @@ tr {
     vertical-align:middle;
 }
 
+.flex2 {
+    display: flex;
+    justify-content: end;
+}
+
 .friend_list_container {
     margin: 1% 0;
     padding:1%;
