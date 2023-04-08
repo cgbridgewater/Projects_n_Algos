@@ -48,7 +48,7 @@ input {
     color: green;
     font-weight: 600;
 }
-button {
+.click {
     width: 125px;
 }
 select, option {
