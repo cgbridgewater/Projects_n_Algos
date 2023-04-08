@@ -16,11 +16,7 @@
 
         <!-- Get OUTSIDE Logo -->
         <img class="outside" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="get_outside">
-
-
-
-        TESTING!!!!
-
+        
         <!-- TOPO Container -->
         <div class="background">
 
@@ -28,8 +24,8 @@
                 <div class="activity_form">
                     
                     <!-- header -->
-                    <h3>Create a new activity</h3>
-                    <h3>and Get OUTSIDE!</h3>
+                    <h3>Update your activity</h3>
+
                     
                     <!-- validation error return -->
                     {% with messages = get_flashed_messages(category_filter=["activity"]) %}
@@ -45,7 +41,7 @@
                     <!-- End validation error return -->
 
                     <!-- form start -->
-                    <form action='/getoutside/activities/new' method="POST">
+                    <form action='/getoutside/activity/{{activity.id}}/edit' method="POST">
                         
                         <!-- Input 1 -->
                         <input type="hidden" name="user_id" value="{{session['user_id']}}">
@@ -53,7 +49,7 @@
                             <label for="activity">Activity Type:</label>
                             <!-- dropdown menu -->
                             <select name="activity" value="{{activity.activity}}">
-                                <option value="{{activity.activity}}" selected disabled hidden >{{activity.activity}}</option>
+                                <option value="{{activity.activity}}" hidden selected >{{activity.activity}}</option>
                                 <option value="Climbing">Climbing</option>
                                 <option value="Cycling">Cycling</option>
                                 <option value="Mtn. Biking">Mtn. Biking</option>
@@ -81,16 +77,15 @@
                         <!-- Input  -->
                         <div class="form_control">
                             <label for="date">Date:</label>
-                            <!-- <input type="date" name="date" placeholder="4/12/2023"> -->
-                            <input placeholder="{{activity.date.strftime("%B %e, %Y")}}" class="textbox-n" type="text" onfocus="(this.type='date')" name="date" />
+                            <input type="date" name="date" value="{{activity.date.strftime("%Y-%m-%d")}}">
                         </div>
                         <div>
                         <!-- End Input 3 -->
 
                         <!-- Buttons -->
                         <div class="flex">
-                            <button type="submit" value="update" class="input mt-1 text-light bg-success bg-gradient rounded-1 ">Get OUTSIDE</button>
-                            <a href="/getoutside/activity/{{activity.id}}" class="btn btn-sm border-dark mt-1 text-light bg-danger bg-gradient rounded-1" role="button">Return Activity Page</a>
+                            <button type="submit" value="update" class="click input mt-1 text-light bg-success bg-gradient rounded-1 ">UPDATE</button>
+                            <a href="/getoutside/activity/{{activity.id}}" class="click btn btn-sm border-dark mt-1 text-light bg-danger bg-gradient rounded-1" role="button">CANCEL</a>
                         </div>
                     </form>
                     <!--form END -->

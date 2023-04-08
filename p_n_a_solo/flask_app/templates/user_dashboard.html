@@ -14,36 +14,29 @@
 
     <!-- main wrapper -->
     <main>
-
         <!-- logo bar -->
         <div>
             <img class="logo" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="getOUTSIDE">
         </div>
-        
         <!-- top wrapper -->
         <div class="top_wrapper">
-
             <!-- user image/name box -->
             <div class="image_box">
-
                 <!-- user name -->
                 <h1 class="user">{{user.first_name}}'s profile</h1>
-
                 <!--  Profile Image Container -->
                 <div class="image">
                     <img class="profile_img" src="..{{image_file}}" alt="user icon">
                     <!-- <img class="profile_img" src="../static/images/profile_pics/default.png" alt="user icon"> -->
                 </div>
- 
                 <!-- profile buttons -->
                 <div class="button_flex">
-                    <button class="profile_button bg-success mp-1"><a href="/getoutside" class="text-decoration-none text-light">Home</a></button>
-                    <button class="profile_button bg-primary mp-1"><a href="/getoutside/athlete/update" class="text-decoration-none text-light">Update</a></button>
-                    <button class="profile_button bg-danger mp-1"><a href="/logout" class="text-decoration-none text-light">Log Out</a></button>
+                    <button class="profile_button bg-success p-1"><a href="/getoutside" class="text-decoration-none text-light">HOME</a></button>
+                    <button class="profile_button bg-primary p-1"><a href="/getoutside/athlete/update" class="text-decoration-none text-light">EDIT</a></button>
+                    <button class="profile_button bg-danger p-1"><a href="/logout" class="text-decoration-none text-light">LOG OUT</a></button>
                 </div>
             </div>
             <!-- end user image/name box -->
-
             <!-- User Data -->
             <div class="profile_info">  
                 <table class="table">
@@ -52,7 +45,6 @@
                         <td><h4>Name:</h4></td>
                         <td><h4>{{ user.first_name }} {{ user.last_name }}</h4></td>
                     </tr>
-
                     <tr>
                         <td><h4>Email:</h4></td>
                         <td><h4>{{ user.email }}</h4></td>
@@ -65,19 +57,16 @@
                 </table>
             </div>  
             <!-- End User Data -->
-            
             <!-- Friend List container -->
             <div class="friend_list_container">
                 <!-- find friend button -->
                 <div>
-                    <button  class="find_friend profile_button bg-success mp-1"><a href="/getoutside/friends" class="text-decoration-none text-light">Find Friends</a></button>
+                    <button  class="find_friend profile_button bg-success p-1"><a href="/getoutside/friends" class="text-decoration-none text-light">FIND FRIENDS</a></button>
                 </div> 
-
                 <!-- friends list -->
                 <div>
                     <!-- title -->
                     <h4>My Friends</h4>
-                    
                     <!-- list  -->
                     <div>
                         <ul>
@@ -89,28 +78,22 @@
                         </ul>
                     </div>
                     <!-- end list  -->
-
                 </div> 
             </div>
             <!-- End Friend List Container -->
         </div>
         <!-- End Wrapper -->
-
         <!-- center page decoration spacer -->
         <hr class="spacer">
-
         <!-- Activities Container -->
         <div class="activity_container">
-
             <!-- Left Box -->
             <div class="friend_left">
-
                 <!-- title and button -->
                 <div>
-                    <button  class="add_activity profile_button bg-success mp-1 "><a href="/getoutside/activities/new" class="text-decoration-none text-light">Add Activity</a></button>
+                    <button  class="add_activity profile_button bg-success p-1 "><a href="/getoutside/activities/new" class="text-decoration-none text-light">ADD ACTIVITY</a></button>
                     <h4>Activities I'm Leading</h4>    
                 </div>
-                
                 <!-- activity list -->
                 <div class="activity_links">
                     <!-- loop through activities -->
@@ -125,16 +108,13 @@
                     {% endfor %}
                 </div>
             </div>
-            
             <!-- Right Box -->
             <div class="friend_right">
-
                 <!-- title and button-->
                 <div>
-                    <button  class="all_activities profile_button bg-success mp-1"><a href="/getoutside" class="text-decoration-none text-light">See All Friends Activities</a></button>
+                    <button  class="all_activities profile_button bg-success p-1"><a href="/getoutside" class="text-decoration-none text-light">SEE ALL ACTIVITIES</a></button>
                     <h4>Activities I'm Joining</h4>
                 </div>
-
                 <!-- activity list -->
                 <div class="activity_links">
                     <!-- loop through activities -->
@@ -151,7 +131,6 @@
             <!-- end right box -->
         </div>
         <!-- Activities Container -->
-
     </main>
     <!-- End Main -->
 </body>

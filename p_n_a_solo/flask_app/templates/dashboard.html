@@ -29,69 +29,50 @@
                 <h6 class="time">It's time to</h6>
                 <h2 class="outside">Get OUTSIDE!</h2>    
             </div>
-            <button class="profile_button bg-danger"><a href="/logout" class="text-decoration-none text-light">Log Off and Get OUTSIDE</a></button>
+            <button class="profile_button bg-danger p-1 rounded-2"><a href="/logout" class="text-decoration-none text-light">LOG OFF AND GET OUTSIDE</a></button>
             <!-- end welcome title -->
             
-            <!-- main wrapper -->
+        <!-- main wrapper -->
             <div class="wrapper">
                 <div class="flex">
                     <h5>See what your friends are doing</h5>
-                    <button class="bg-primary m-1 p-1 opacity-75"><a href="/getoutside/athlete" class="text-decoration-none text-light">View Profile</a></button>
+                    <button class="bg-primary m-1 p-1 opacity-75 rounded-2"><a href="/getoutside/athlete" class="text-decoration-none text-light">VIEW PROFILE</a></button>
                 </div>
                 <div class="flex">
                     <h6>(click on activities to view details)</h6>
-                    <button class="bg-success m-1 p-1 opacity-75"><a href="/getoutside/friends" class="text-decoration-none text-light">Find Friends</a></button>
+                    <button class="bg-success m-1 p-1 opacity-75 rounded-2"><a href="/getoutside/friends" class="text-decoration-none text-light">FIND FRIENDS</a></button>
                 </div>
                 
                 <!-- table -->
                 <table class="activity_table">
-                    <!-- loop through activities -->
                     <tr>
-                    {% for a in activities %}
+                    <!-- loop through activities -->
+                    {% for activity in activities %}
 
-                        <!-- filter out logged in user -->
-  
+                    <!-- filter logged in user -->
+                        {% if session.user_id  == activity.attendee.id or activity.attendee.id == None %}
+
                         <!-- display data -->
                         <td>   
-                            <a class="activity_link" href="/getoutside/activity/{{a.id}}"> {{a.creator.first_name}} {{a.creator.last_name}} is going {{a.activity}} at {{a.location}} on {{a.date.strftime("%B %e, %Y")}} </a>
-                        </td>
-                        <!-- <ul>
-                            <li> creator.id: {{a.creator.id}} </li>
-                            <li> activity a.id:{{a.id}} </li>
-                            <li> activity_id:{{a.activity_id}} </li>
-                            <li> activities.id: {{a.activities.id}} </li>
-                            <li> user_id: {{a.user_id}} </li>
-                            <li> {{a}} </li>
-                        </ul> -->
-
+                            <a class="activity_link" href="/getoutside/activity/{{activity.id}}"> {{activity.creator.first_name}} {{activity.creator.last_name}} is going {{activity.activity}} at {{activity.location}} on {{activity.date.strftime("%B %e, %Y")}} </a>
+                        </td> 
 
                         <!-- display join button -->
                         <td>
-                                {% if session.user_id == a.activity_id  %}
-
-                                <a href="/getoutside/activity/{{a.id}}/unjoin">I'M OUT!</a>
-
+                                {% if session.user_id == activity.activity_id  %}
+                                    <button class="bg-danger m-1 p-1 opacity-75 rounded-2"><a class="text-decoration-none text-light" href="/getoutside/activity/{{activity.id}}/unjoin">I'M OUT!</a></button>
                                 {% else   %}
-
-                                <a href="/getoutside/activity/{{a.id}}/join">JOIN!</a>
-
+                                    <button class="bg-success m-1 p-1 opacity-75 rounded-2"><a class="text-decoration-none text-light" href="/getoutside/activity/{{activity.id}}/join">JOIN!</a></button>
                                 {% endif %}
-                        </td>
-
-                    </tr>
+                            </td>
+                        </tr>
+                        {% endif %}
 
                     {% endfor %}
                 </table>
                 <!-- Table END -->
             </div>
         </div>
-        
-        <!-- <div class="image_content">
-            
-            <img src="https://live.staticflickr.com/65535/52792350896_cdc4034904_z.jpg" alt="">
-    
-        </div> -->
-        <!-- end main wrapper -->
 
     </main>
 

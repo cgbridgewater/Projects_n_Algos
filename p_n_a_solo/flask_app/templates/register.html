@@ -30,7 +30,7 @@
                     <!-- reg wrapper -->
                     <div class="register">
                         <!-- header -->
-                        <h3 class="text-success">Register to Get OUTSIDE</h3>
+                        <h3 class="title">Register to Get OUTSIDE</h3>
                             <!-- validation error return -->
                             {% with messages = get_flashed_messages(category_filter=["register"]) %}
                                 <!-- declare a variable called messages -->
@@ -48,13 +48,13 @@
                                 <label for="first_name" class="text-sm-start">First Name:</label>
                             </div>
                             <div>
-                                <input type="text" name="first_name" class="form-control bg-light" value="{{session['first_name']}}">
+                                <input type="text" name="first_name" class="input form-control bg-light" value="{{session['first_name']}}">
                             </div>
                             <div class="text-start">
                                 <label for="last_name" class="text-start">Last Name:</label>
                             </div>
                             <div>
-                                <input type="text" name="last_name" class="form-control bg-light" value="{{session['last_name']}}">
+                                <input type="text" name="last_name" class="input form-control bg-light" value="{{session['last_name']}}">
                             </div>
                             <!-- <div class="text-start">
                                 <label for="user_name" class="text-start">User Name:</label>
@@ -66,19 +66,19 @@
                                 <label for="email">Email:</label>
                             </div>
                             <div>
-                                <input type="text" name="email" class="form-control bg-light" value="{{session['email']}}">
+                                <input type="text" name="email" class="input form-control bg-light" value="{{session['email']}}">
                             </div>
                             <div class="text-start">
                                 <label for="password">Password:</label>
                             </div>
                             <div>
-                                <input type="password" name="password" class="form-control bg-light">
+                                <input type="password" name="password" class="input form-control bg-light">
                             </div>
                             <div class="text-start">
                                 <label for="confirm_password">Confirm Password:</label>
                             </div>
                             <div>
-                                <input type="password" name="confirm_password" class="form-control bg-light">
+                                <input type="password" name="confirm_password" class="input form-control bg-light">
                             </div>
                             
                             <div class="flex">
