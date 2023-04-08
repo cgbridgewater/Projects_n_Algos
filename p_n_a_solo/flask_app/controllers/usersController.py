@@ -4,20 +4,6 @@ from flask_app.models.users import User
 from flask_app.models.activities import Activity
 
 
-### ROUTE FOR HOME PAGE  (WORKING)
-@app.route('/getoutside')
-def home_page():
-    if 'user_id' not in session:
-        msg = "you must be logged in!"
-        return redirect('/logout')
-    data ={
-        'id': session['user_id']
-    }
-    return render_template(
-        "dashboard.html", user = User.get_user_by_id(data), activities = Activity.all_activities_with_joined_activities(data))
-        # activities = Activity.all_activities(), 
-        # joined = Activity.all_joined()
-
 
 ### ROUTE FOR ATHLETE DASHBOARD -- READ BY USER_ID  (WORKING)
 @app.route('/getoutside/athlete')
@@ -32,8 +18,8 @@ def user_dashboard():
     return render_template("user_dashboard.html", user = User.get_user_by_id(data), image_file = url_for('static', filename='images/profile_pics/' + User.get_user_by_id(data).image_file),activities = Activity.all_activities(), joined = Activity.all_activities_joined(data))
 
 
-### ROUTE TO DELETE USER BY USER_ID (WORKING)
-@app.route('/getoutside/delete')
+### ROUTE TO DELETE ATHLETE PROFILE
+@app.route('/getoutside/athlete/delete')
 def delete_user_route():
     if 'user_id' not in session:
         return redirect('/logout')
@@ -44,7 +30,7 @@ def delete_user_route():
     return redirect('/logout') 
 
 
-    ### ROUTE TO EDIT USER FORM BY USER_ID (WORKING)
+    ### ROUTE TO EDIT ATHLETE FORM BY ID 
 @app.route('/getoutside/athlete/update')
 def edit_user_form():
     if 'user_id' not in session:
@@ -55,7 +41,7 @@ def edit_user_form():
     return render_template("user_update.html", user = User.get_user_by_id(data))
 
 
-### ROUTE TO PROCESS USER UPDATE FORM (WORKING)
+### ATHLETE UPDATE POST ACTION
 @app.route("/getoutside/athlete/editing", methods =['POST'])
 def update_user_form_action():
     if 'user_id' not in session:
@@ -72,13 +58,50 @@ def update_user_form_action():
     return redirect("/getoutside/athlete") 
 
 
-    ### ROUTE TO VIEW USER PROFILE PAGE BY "ID" TESTING
+    ### ROUTE TO VIEW ATHLETE BY ID
 @app.route('/getoutside/athlete/<int:id>')
 def show_one_user_page(id):
     data = {
     "id" : id
     }
-    return render_template("user_oneview.html",  user = User.get_user_by_id(data), image_file = url_for('static', filename='images/profile_pics/' + User.get_user_by_id(data).image_file),activities = Activity.all_activities(), joined = Activity.all_activities_joined(data))
+    return render_template("user_one_view.html",  user = User.get_user_by_id(data), image_file = url_for('static', filename='images/profile_pics/' + User.get_user_by_id(data).image_file),activities = Activity.all_activities(), joined = Activity.all_activities_joined(data))
+
+
+## ROUTE FOR FRIENDS SEARCH FORM WORKING
+@app.route('/getoutside/friends')
+def friend_search_page():
+    if 'user_id' not in session:
+        msg = "you must be logged in!"
+        return redirect('/logout')
+    data ={
+        'id': session['user_id']
+    }
+    return render_template("friends_find.html",user = User.get_user_by_id(data)) 
+
+
+
+
+# ## ROUTE FOR FRIENDS SEARCH ACTION PAGE   TESTING
+# @app.route('/getoutside/friends/search', methods = ['POST'])
+# def friend_search_action():
+#     if 'user_id' not in session:
+#         msg = "you must be logged in!"
+#         return redirect('/logout')
+
+#         request.form['first_name'],
+
+#     data = {
+#         'id': session['user_id'],
+#         'first_name':  request.form['first_name'],
+#         'last_name': request.form['last_name']
+#         }
+#     if not User.validate_search(data):
+#         return redirect ('/getoutside/friends')
+#     user = User.find_friends_by_name(data)
+#     return redirect("friends_result.html" ) 
+
+
+
 
 
 # ### UPLOAD IMAGE ROUTE
@@ -105,25 +128,3 @@ def show_one_user_page(id):
 #     else:
 #         flash('Allowed image types are - png, jpg, jpeg, gif')
 #         return redirect('/getoutside/athlete/update')
-
-
-
-
-
-
-
-### delete below this line when ready!
-
-#######  EXAMPLE ROUTES
-
-# ### ROUTE TO CREATE NEW USER AND DIRECT TO USER PROFILE PAGE BY "ID" -- FORM AND SUBMISSION REQUIRED!!! (WORKING)
-# @app.route("/users/creating" , methods=['POST'])
-# def addUser():
-#     new_user_id = User.save(request.form)
-#     return redirect(f'/users/read/{new_user_id}')
-
-
-
-
-
-    

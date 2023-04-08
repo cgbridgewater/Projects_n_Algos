@@ -93,6 +93,20 @@ class User:
             return False   #didn't find a matching user
         return cls(result[0])
 
+### Search VALIDATIONS TESTING
+    @staticmethod
+    def validate_search(user):
+        is_valid = True # we assume this is true
+        if len(user['first_name']) < 2: ### password length check
+            flash("First name must be at least 2 charactors long.", "update")
+            is_valid = False
+        if len(user['last_name']) < 2: ### password length check
+            flash("Last name must be at least 2 charactors long.", "update")
+            is_valid = False
+        return is_valid ### if you make it this far, is good to go!
+
+
+
 
 ### CREATE AND SAVE NEW USER (WORKING)
     @classmethod
@@ -127,10 +141,12 @@ class User:
 
 
 
-### GET FRIENDS                  (NOT IN USE YET)
+### FIND FRIENDS SEARCH                 (NOT IN USE YET)
     @classmethod
-    def get_friends(cls,data):
-        query = "SELECT * FROM users WHERE id <> %(id)s;"
+    def find_friends_by_name(cls,data):
+        query = """SELECT * FROM users 
+            WHERE first_name LIKE  "%(first_name)s"
+            OR last_name LIKE "%(last_name)s%" AND id <> %(id)s;"""
         results = connectToMySQL('test_app').query_db(query,data)
         print(results)
         users = []
