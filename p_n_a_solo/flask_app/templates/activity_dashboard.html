@@ -16,13 +16,10 @@
     <div>
         <img class="logo" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="getOUTSIDE">
     </div> 
-
     <!-- main wrapper -->
     <main>
-
-        <!-- content container -->
+        <!-- content wrapper -->
         <div class="content">
-
             <!-- welcome title -->
             <div class="welcome">
                 <h1>Welcome {{user.first_name}}, &nbsp; </h1>
@@ -31,32 +28,29 @@
             </div>
             <button class="profile_button bg-danger p-1 rounded-2"><a href="/logout" class="text-decoration-none text-light">LOG OFF AND GET OUTSIDE</a></button>
             <!-- end welcome title -->
-            
-        <!-- main wrapper -->
+            <!-- main wrapper -->
             <div class="wrapper">
+                <!-- top row -->
                 <div class="flex">
                     <h5 class="green">See what everyone is up to!</h5>
                     <button class="bg-primary m-1 p-1 opacity-75 rounded-2"><a href="/getoutside/athlete" class="text-decoration-none text-light">VIEW PROFILE</a></button>
                 </div>
+                <!-- bottom row -->
                 <div class="flex">
                     <h6>(click on activities to view details)</h6>
                     <button class="bg-success m-1 p-1 opacity-75 rounded-2"><a href="/getoutside/friends" class="text-decoration-none text-light">FIND FRIENDS</a></button>
                 </div>
-                
                 <!-- table -->
                 <table class="activity_table">
                     <tr>
                     <!-- loop through activities -->
                     {% for activity in activities %}
-
                     <!-- filter logged in user -->
                         {% if session.user_id  == activity.attendee.id or activity.attendee.id == None %}
-
                         <!-- display data -->
                         <td>   
                             <a class="activity_link" href="/getoutside/activity/{{activity.id}}"> {{activity.creator.first_name}} {{activity.creator.last_name}} is going {{activity.activity}} at {{activity.location}} on {{activity.date.strftime("%B %e, %Y")}} </a>
                         </td> 
-
                         <!-- display join button -->
                         <td>
                                 {% if session.user_id == activity.activity_id  %}
@@ -67,18 +61,13 @@
                             </td>
                         </tr>
                         {% endif %}
-
                     {% endfor %}
                 </table>
                 <!-- Table END -->
             </div>
         </div>
-
+        <!-- End Contend Wrapper -->
     </main>
-
-
-
-
+    <!-- End Main Wrapper -->
 </body>
-
 </html>

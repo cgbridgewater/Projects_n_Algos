@@ -10,19 +10,14 @@
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </head>
 <body>
-
     <!-- main content box -->
     <main>
-
         <!-- OUTSIDE Logo -->
         <img class="outside" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="get_outside">
-
-
-        <!-- background -->
+        <!-- background image container -->
         <div class="background">
-        
+            <!-- login container -->
             <div class="login_container">
-
                 <!-- Login Form Wrapper -->
                 <div class="login">
                     <!-- header -->
@@ -40,30 +35,36 @@
                     {% endwith %}
                     <!-- form start -->
                     <form action='/login' method="POST">
+                        <!-- Email Section -->
                         <div class="text-start">
                             <label for="email">Email:</label>
                         </div>
                         <div>
                             <input type="text" name="email" class="input form-control bg-light" value="{{session['email2']}}">
                         </div>
+                        <!-- End Email Section -->
+                        <!-- Password Section -->
                         <div class="text-start">
                             <label for="password">Password:</label>
                         </div>
                         <div>
                             <input type="password" name="password" class="input form-control bg-light">
                         </div>
-
+                        <!-- Password Section -->
+                        <!-- submit and signup link -->
                         <div class="flex">
                             <button type="submit" value="Login" class="input mt-1 text-light bg-success bg-gradient rounded-2">Get OUTSIDE</button>
                             <p>Not a member yet? <a href="/getoutside/register">Sign Up!</a></p>
+                        <!-- End submit and signup link -->
                         </div>
                     </form>
-                <!--form END -->
+                    <!--form END -->
                 </div>
+                <!-- end login wrapper  -->
             </div>
+            <!--end login container  -->
         </div>
-        <!-- end background -->
+        <!-- end background container -->
     </main>
 </body>
-
 </html>

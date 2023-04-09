@@ -11,7 +11,6 @@
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </head>
 <body class="bg-secondary bg-gradient bg-opacity-10">
-
     <!-- main wrapper -->
     <main>
         <!-- logo bar -->
@@ -29,11 +28,11 @@
                             <h4 class="green">Who's already joined</h4> 
                             <!-- if attenders list is empty make a join button -->
                             {% if attenders is defined and attenders|length %}
-                            {% if activity.creator.id != session.user_id  %}
-                            
-                            {%else%}
-                            <button class="profile_button bg-success mp-1"><a href="/getoutside/activity/{{activity.id}}/join2" class="text-decoration-none text-light">JOIN!</a></button>
-                            {%endif%} 
+                                {% if activity.creator.id != session.user_id  %}
+                                
+                                {%else%}
+                                    <button class="profile_button bg-success mp-1"><a href="/getoutside/activity/{{activity.id}}/join2" class="text-decoration-none text-light">JOIN!</a></button>
+                                {%endif%} 
                             {%endif%} 
                         </div>
                         <div class="activity_links">
@@ -115,16 +114,16 @@
                         <!-- end top of details box --> 
                         <!-- bottom of details section -->
                         <div class="bottom">
-                                <!-- google MAP -->
-                                <iframe
-                                    style="border:2px solid green"
-                                    loading="lazy"
-                                    allowfullscreen
-                                    referrerpolicy="no-referrer-when-downgrade"
-                                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBaBIHsgFp640ZtHCw1l2j7SxP4nVPSFLE
-                                    &q={{activity.location}} ">
-                                </iframe>
-                                <!-- end google MAP -->
+                            <!-- google MAP -->
+                            <iframe
+                                style="border:2px solid green"
+                                loading="lazy"
+                                allowfullscreen
+                                referrerpolicy="no-referrer-when-downgrade"
+                                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBaBIHsgFp640ZtHCw1l2j7SxP4nVPSFLE
+                                &q={{activity.location}} ">
+                            </iframe>
+                            <!-- end google MAP -->
                         </div>
                         <!-- end bottom of details section -->
                     </div>

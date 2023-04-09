@@ -15,7 +15,7 @@ def user_dashboard():
     data ={
         'id': session['user_id']
     }
-    return render_template("user_dashboard.html", user = User.get_user_by_id(data), image_file = url_for('static', filename='images/profile_pics/' + User.get_user_by_id(data).image_file),activities = Activity.all_activities(), joined = Activity.all_activities_joined(data), followers = User.all_followers(data))
+    return render_template("user_dashboard.html", user = User.get_user_by_id(data), image_file = url_for('static', filename='images/profile_pics/' + User.get_user_by_id(data).image_file),activities = Activity.get_all_activities(), joined = Activity.get_all_activities_and_attendees(data), followers = User.all_followers(data))
 
 
 ### ROUTE TO DELETE ATHLETE PROFILE
@@ -52,7 +52,7 @@ def update_user_form_action():
         "last_name": request.form["last_name"],
         "email": request.form["email"]
         }
-    if not User.update_validation(data):
+    if not User.update_validation_check(data):
         return redirect('/getoutside/athlete/update')
     User.update_user_by_id(data)
     return redirect("/getoutside/athlete") 
@@ -64,7 +64,7 @@ def show_one_user_page(id):
     data = {
     "id" : id
     }
-    return render_template("user_one_view.html",  user = User.get_user_by_id(data),activities = Activity.all_activities(), joined = Activity.all_activities_joined(data))
+    return render_template("user_one_view.html",  user = User.get_user_by_id(data),activities = Activity.get_all_activities(), joined = Activity.get_all_activities_and_attendees(data))
 
 
 
@@ -77,7 +77,7 @@ def friend_search_page():
     data ={
         'id': session['user_id']
     }
-    return render_template("friends_search.html", allusers = User.get_all_users_without_logged_in_user(data)) 
+    return render_template("friends_search.html", allusers = User.get_all_users_excluding_logged_in_user(data)) 
 
 
 ### FRIEND / JOIN

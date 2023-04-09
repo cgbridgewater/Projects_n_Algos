@@ -9,19 +9,18 @@ from pprint import pprint
 class Activity:
     def __init__(self,data):
         self.id = data['id']
-        self.activity = data['activity'] # CHANGE TO TITLE!!
+        self.activity = data['activity']
         self.location = data['location']
-        self.date = data['date']    
+        self.date = data['date']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
-        self.creator = None #I may add a constructor here, all activities do have a creator
-        self.attendee = None #I may add a constructor here, all activities do have a creator
+        self.creator = None
+        self.attendee = None
 
 
-
-### Activity FORM VALIDATIONS
+### ACTIVITIES FORM VALIDATIONS CHECK (activitiesController)
     @staticmethod
-    def activity_validation(activity):
+    def activity_validation_check(activity):
         is_valid = True
         try:
             datetime.datetime.strptime(activity['date'], '%Y-%m-%d')
@@ -40,28 +39,30 @@ class Activity:
         return is_valid 
 
 
-    ### CREATE ACTIVITY 
+    ### CREATE ACTIVITY FORM ACTION (activitiesController)
     @classmethod
     def create_activity_form_action(cls,data):
         query = """
             INSERT INTO activities (user_id, activity, location, date)
-            VALUES ( %(user_id)s, %(activity)s, %(location)s, %(date)s )
+            VALUES (%(user_id)s, %(activity)s, %(location)s, %(date)s)
         """
         return connectToMySQL('test_app').query_db(query,data)
 
 
-    ### UPDATE ACTIVITY
+    ### UPDATE ACTIVITY FORM ACTION (activitiesController)
     @classmethod
     def update_activity_form_action(cls,data):
         query = """
-            UPDATE activities SET activity = %(activity)s , location = %(location)s , date = %(date)s WHERE id = %(id)s;
+            UPDATE activities 
+            SET activity = %(activity)s , location = %(location)s , date = %(date)s 
+            WHERE id = %(id)s;
         """
         return connectToMySQL('test_app').query_db(query,data)
 
 
-    ### GET ACTIVITY BY ID 
+    ### GET ACTIVITY BY ID  (activitiesController)
     @classmethod
-    def one_activity_by_id(cls,data):   ################### ADD GET
+    def get_one_activity_by_id(cls,data):
         query = """
             SELECT * FROM activities
             JOIN users AS creators ON activities.user_id = creators.id
@@ -88,13 +89,11 @@ class Activity:
     def all_activities_with_joined_activities(cls,data): #get all activities and the creator WITH ATTENDERS
         query = """
             SELECT *
-            FROM users 
-            AS creator
+            FROM users AS creator
             JOIN activities 
             ON creator.id = activities.user_id
             LEFT JOIN join_activity on activities.id = activity_id
-            LEFT JOIN users 
-            AS attendee 
+            LEFT JOIN users AS attendee 
             ON join_activity.user_id = attendee.id
             WHERE date > CURRENT_DATE AND activities.user_id != %(id)s
             ORDER BY date ASC;
@@ -135,9 +134,9 @@ class Activity:
         return all_activities
 
 
-    ### READ ALL ACTIVITIES + USERs JOINED  for USER Dashboard???
+    ### GET ALL ACTIVITIES AND ATTENDEES (usersController)
     @classmethod
-    def all_activities_joined(cls,data): #get all activities and the ATTENDEES
+    def get_all_activities_and_attendees(cls,data):
         query = """
         SELECT * FROM users AS creator
         JOIN activities ON creator.id = activities.user_id
@@ -170,9 +169,9 @@ class Activity:
         return all_activities
 
 
-    ### READ ALL ACTIVITIES + USER  WORKING!       IN USE????
+    ### GET ALL ACTIVITIES WITH CREATOR (usersController)
     @classmethod
-    def all_activities(cls): #get all activities and the creator
+    def get_all_activities(cls):
         query = """
             SELECT activities.id, activities.created_at, activities.updated_at, activity, location, date, 
             users.id as user_id, first_name, last_name, email, password, image_file, users.created_at as uc, users.updated_at as uu
@@ -182,8 +181,8 @@ class Activity:
         """
         results = connectToMySQL('test_app').query_db(query)
         pprint(results)
-        all_activities = [] # empty array to fill with each activity
-        for row in results:# Create a Activity class instance from the information from each db row
+        all_activities = []
+        for row in results:
             one_activity = cls(row)
             one_activity.creator = users.User({
                 "id": row['user_id'],
@@ -195,42 +194,43 @@ class Activity:
                 "created_at": row['uc'],
                 "updated_at": row['uu'],
             })
-            all_activities.append(one_activity)### Append the activity and creator to the array
+            all_activities.append(one_activity)
         return all_activities
 
 
-#### JOIN WORKING
+#### JOIN (activitiesController)
     @classmethod
-    def join_activity(cls,data):  ###attend activity
-        query = '''
-            INSERT INTO join_activity
-            (user_id, activity_id)
-            VALUES
-            (%(user_id)s, %(activity_id)s);
-            '''
-        connectToMySQL('test_app').query_db(query,data)    
+    def attend_activity(cls,data):
+        query = """
+            INSERT INTO join_activity (user_id, activity_id)
+            VALUES (%(user_id)s, %(activity_id)s);
+            """
+        connectToMySQL('test_app').query_db(query,data)
 
 
-### UNJOIN WORKING
+### UNATTEND (activitiesController)
     @classmethod
-    def unjoin_activity(cls,data):  ###unattend
-        query = '''
-            DELETE FROM join_activity WHERE user_id = %(user_id)s AND activity_id = %(activity_id)s;
-            '''
-        connectToMySQL('test_app').query_db(query,data)    
+    def unattend_activity(cls,data):
+        query = """
+            DELETE FROM join_activity 
+            WHERE user_id = %(user_id)s 
+            AND activity_id = %(activity_id)s;
+            """
+        connectToMySQL('test_app').query_db(query,data)
 
 
 
-    ### DELETE ACTIVITY BY ID
+    ### DELETE ACTIVITY BY ID   (activitiesController)
     @classmethod
     def delete_activity_by_id(cls,data):
         query = """
-            DELETE FROM activities WHERE id = %(id)s;
+            DELETE FROM activities 
+            WHERE id = %(id)s;
         """
         return connectToMySQL('test_app').query_db(query,data) 
 
 
-### All attenders      WORKING   IN USE????
+### GET ALL ATTENDIES TO EVENT  (activitiesController)
     @classmethod
     def get_all_attendees(cls, data):
         query = """

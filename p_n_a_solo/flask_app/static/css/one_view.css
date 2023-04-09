@@ -1,4 +1,4 @@
-/* style for index page */
+/* style for one view page */
 
 .logo {
     width: 100%;
@@ -19,11 +19,13 @@
 .black {
     color:black;
 }
+
 .profile_button {
     height:30px;
     width: 75px;
     border-radius: 5px;
 }
+
 .activity_container {
     padding: 0 5%;
     display: flex;
@@ -70,12 +72,9 @@
     background-color: #FFFFF5;
 }
 
-
-
 .bottom {
     width: 90%;
     margin: 0 auto;
-
 }
 
 iframe {

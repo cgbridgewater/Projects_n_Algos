@@ -37,7 +37,7 @@ def create_activity_form_action():
     if 'user_id' not in session:
         msg = "you must be logged in!"
         return redirect('/logout')
-    if not Activity.activity_validation(request.form):
+    if not Activity.activity_validation_check(request.form):
         return redirect('/getoutside/activities/new') 
     Activity.create_activity_form_action(request.form)
     return redirect("/getoutside/athlete") 
@@ -55,7 +55,7 @@ def edit_activity_by_id(id):
     user ={
         'id': session['user_id']
     }
-    return render_template("activity_edit_form.html", activity = Activity.one_activity_by_id(data), user = User.get_user_by_id(user))
+    return render_template("activity_edit_form.html", activity = Activity.get_one_activity_by_id(data), user = User.get_user_by_id(user))
 
 
 ### POST ACTION ROUTE TO UPDATE ACTIVITY
@@ -70,8 +70,7 @@ def edit_activity_form_action(id):
         "location" : request.form["location"],
         "date" : request.form["date"],
         }
-
-    if not Activity.activity_validation(data):
+    if not Activity.activity_validation_check(data):
         return redirect(f'/getoutside/activity/{id}/edit') 
     Activity.update_activity_form_action(data) 
     return redirect(f'/getoutside/activity/{id}') 
@@ -89,7 +88,7 @@ def view_one_activity_by_id(id):
     user ={
         'id': session['user_id']
     }
-    return render_template("activity_one_view.html", activity = Activity.one_activity_by_id(data), user = User.get_user_by_id(user),attenders = Activity.get_all_attendees(data))
+    return render_template("activity_one_view.html", activity = Activity.get_one_activity_by_id(data), user = User.get_user_by_id(user),attenders = Activity.get_all_attendees(data))
 
 
 ### ATTEND ACTIVITY ROUTE WITH HOMEPAGE RETURN
@@ -101,7 +100,7 @@ def attend_activity_return_to_home_page(id):
         'activity_id' : id,
         'user_id' : session['user_id']
     }
-    Activity.join_activity(data)
+    Activity.attend_activity(data)
     return redirect("/getoutside")
 
 
@@ -114,7 +113,7 @@ def attend_activity_return_to_activity_page(id):
         'activity_id' : id,
         'user_id' : session['user_id']
     }
-    Activity.join_activity(data)
+    Activity.attend_activity(data)
     return redirect(f"/getoutside/activity/{id}")
 
 
@@ -127,7 +126,7 @@ def unattend_activity(id):
         'activity_id' : id,
         'user_id' : session['user_id']
     }
-    Activity.unjoin_activity(data)
+    Activity.unattend_activity(data)
     return redirect("/getoutside")
 
 

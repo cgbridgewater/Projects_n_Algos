@@ -5,19 +5,19 @@ from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 
 
-### HOME ROUTE
+### REDIRECT TO DOMAIN CONTROL ROUTE
 @app.route('/')
 def index():
     return redirect("/getoutside/login")
 
 
-### LOGIN ROUTE
+### LOGIN FORM ROUTE
 @app.route('/getoutside/login')
 def login_page():
     return render_template("login.html")
 
 
-### LOGIN ROUTE
+### REGISTER FORM ROUTE
 @app.route('/getoutside/register')
 def register_page():
     return render_template("register.html")
@@ -26,13 +26,12 @@ def register_page():
 ### ROUTE FOR REGISTRATION
 @app.route('/register', methods= ['POST'])
 def register():
-    # We call the staticmethod on User model to validate
-    if not User.registration_validations(request.form):
-        session["first_name"] = request.form["first_name"] ### HOLDING FORM DATA FOR RESUBMIT
-        session["last_name"] = request.form["last_name"] ### HOLDING FORM DATA FOR RESUBMIT
-        session["email"] = request.form["email"] ### HOLDING FORM DATA FOR RESUBMIT
-        return redirect('/getoutside/register')# redirect to the route where the user form is rendered if there are errors:
-    pw_hash = bcrypt.generate_password_hash(request.form['password'])    ### hash password once validations are passed
+    if not User.registration_validation_check(request.form):
+        session["first_name"] = request.form["first_name"]
+        session["last_name"] = request.form["last_name"]
+        session["email"] = request.form["email"]
+        return redirect('/getoutside/register')
+    pw_hash = bcrypt.generate_password_hash(request.form['password'])
     print(pw_hash) 
     data = {
         "first_name": request.form['first_name'],
@@ -40,33 +39,32 @@ def register():
         "email": request.form['email'],
         "password" : pw_hash
     }
-    user_id = User.create(data) ### save user
-    session.pop("first_name", None)  ### clear form place holder sessions
-    session.pop("last_name", None)   ### clear form place holder sessions
-    session.pop("email", None)       ### clear form place holder sessions
-    session['user_id'] = user_id     ### start user id session to prove logged in
-    return redirect("/getoutside")    ### go to dashboard if no validation errors
+    user_id = User.create_user(data)
+    session.pop("first_name", None)
+    session.pop("last_name", None)
+    session.pop("email", None)
+    session['user_id'] = user_id
+    return redirect("/getoutside")
 
 
 ### ROUTE FOR LOGIN
 @app.route('/login', methods= ['POST'])
 def login():
-    # We call the staticmethod on User model to validate
-    session["email2"] = request.form["email"] ### HOLDING FORM DATA FOR RESUBMIT
-    data = { "email" : request.form["email"] } ###data list for checking email
-    user_in_db = User.check_for_email_exists(data) ###email exists in db check
+    session["email2"] = request.form["email"]
+    data = { "email" : request.form["email"] }
+    user_in_db = User.check_for_email_exists(data)
     if not user_in_db:
         flash("Invalid Email/Password", "login")
-        return redirect("/getoutside/login")  ### redirect if fails
-    if not bcrypt.check_password_hash(user_in_db.password, request.form['password']): ###check hashed pw
+        return redirect("/getoutside/login")
+    if not bcrypt.check_password_hash(user_in_db.password, request.form['password']):
         flash("Invalid Email/Password", "login")
-        return redirect("/getoutside/login") ### redirect if fails
-    if not User.login_validation(request.form):
+        return redirect("/getoutside/login")
+    if not User.login_validation_check(request.form):
     # if there are errors:
-        return redirect('/getoutside/login') # redirect to the route where the user form is rendered.
-    session["user_id"] = user_in_db.id   ### create session to test logged in
-    session.pop("email2", None)    ### pop log in session
-    return redirect("/getoutside")   ### else no validation errors:
+        return redirect('/getoutside/login')
+    session["user_id"] = user_in_db.id
+    session.pop("email2", None)
+    return redirect("/getoutside")
 
 
 ### ROUTE FOR LOGOUT 
