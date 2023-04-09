@@ -18,7 +18,7 @@ def register_page():
 
 
 ### REGISTRATION FORM POST ACTION
-@app.route('/register', methods= ['POST'])
+@app.route('/getoutside/register', methods= ['POST'])
 def register():
     if not User.registration_validation_check(request.form):
         session["first_name"] = request.form["first_name"]
@@ -48,7 +48,7 @@ def login_page():
 
 
 ### LOGIN FORM POST ACTION
-@app.route('/login', methods= ['POST'])
+@app.route('/getoutside/login', methods= ['POST'])
 def login():
     session["email2"] = request.form["email"]
     data = { "email" : request.form["email"] }
@@ -74,7 +74,7 @@ def logout():
     return redirect("/getoutside/login")
 
 
-### CATCH ALL DINO GAME  (WORKING)
+### CATCH ALL DINO GAME
 @app.route('/', defaults = {'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
