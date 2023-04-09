@@ -11,19 +11,13 @@ def index():
     return redirect("/getoutside/login")
 
 
-### LOGIN FORM ROUTE
-@app.route('/getoutside/login')
-def login_page():
-    return render_template("login.html")
-
-
-### REGISTER FORM ROUTE
+### REGISTER FORM 
 @app.route('/getoutside/register')
 def register_page():
     return render_template("register.html")
 
 
-### ROUTE FOR REGISTRATION
+### REGISTRATION FORM POST ACTION
 @app.route('/register', methods= ['POST'])
 def register():
     if not User.registration_validation_check(request.form):
@@ -47,7 +41,13 @@ def register():
     return redirect("/getoutside")
 
 
-### ROUTE FOR LOGIN
+### LOGIN FORM 
+@app.route('/getoutside/login')
+def login_page():
+    return render_template("login.html")
+
+
+### LOGIN FORM POST ACTION
 @app.route('/login', methods= ['POST'])
 def login():
     session["email2"] = request.form["email"]

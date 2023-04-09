@@ -5,7 +5,7 @@ from flask_app.models.users import User
 from flask_app.models.activities import Activity
 
 
-### ROUTE FOR ACTIVITY DASH BOARD
+###  ACTIVITY DASH BOARD
 @app.route('/getoutside')
 def activity_dashboard():
     if 'user_id' not in session:
@@ -18,8 +18,7 @@ def activity_dashboard():
         "activity_dashboard.html", user = User.get_user_by_id(data), activities = Activity.all_activities_with_joined_activities(data))
 
 
-
-### ROUTE TO NEW ACTIVITY FORM
+### NEW ACTIVITY FORM
 @app.route('/getoutside/activities/new')
 def new_activity_form_page():
     if 'user_id' not in session:
@@ -31,7 +30,7 @@ def new_activity_form_page():
     return render_template("activity_new_form.html")
 
 
-### NEW ACTIVITY POST ACTION ROUTE WORKING
+### NEW ACTIVITY POST ACTION 
 @app.route('/getoutside/activities/new', methods=["POST"])
 def create_activity_form_action():
     if 'user_id' not in session:
@@ -43,7 +42,7 @@ def create_activity_form_action():
     return redirect("/getoutside/athlete") 
 
 
-### ROUTE TO UPDATE ACTIVITY FORM
+### UPDATE ACTIVITY FORM
 @app.route('/getoutside/activity/<int:id>/edit')
 def edit_activity_by_id(id):
     if 'user_id' not in session:
