@@ -11,54 +11,83 @@ main {
 .logo {
     width: 100%;
     height: 30vh;
+	margin-bottom: 2%;
 }
 
-.error {
-    color: darkred;
-    font-weight: 800;
-}
-
-.title_text {
+h1 {
     text-align: center;
-    font-weight: 600;
     color: green;
 }
 
-.form_container {
-    width: 40%;
-    min-width:375px;
-    margin: 3% auto;
-    padding: 2% 3%;
-    border: 3px solid green;
-    border-radius: 5px;
-    background-color: honeydew;
+.formContainer {
+	width:20%;
+	min-width:300px;
+	margin:1% auto;
+	padding:15px;
+	border: 3px solid green;
+	border-radius: 5px;
+	background-color: honeydew;
     opacity: 85%;
 }
 
-.input_control {
-display: flex;
-justify-content: space-between;
-margin: 2% auto;
+.formation {
+	margin-bottom:5px;
+	display:flex;
+	justify-content:center;
+}
+
+.filter {
+	background-color:lightgrey;
+	border-color: green;
+	border-radius:5px;
+	min-width:260px;
+    color: green;
+    font-weight: 700;
 }
 
 label {
+	color:white;
+	min-width:100px;
+}
+
+.buttonContainer {
+	width:20%;
+	margin:0 auto;
+	margin-top:10px;
+}
+
+.button{
+	background-color:green;
+	color:white;
+	border:2px solid black;
+	border-radius:5px;
+	padding:5px;
+}
+
+.display_table {
+	width:20%;
+	min-width:300px;
+	margin: 3% auto;
+	border: 3px solid green;
+	text-align:center;
+}
+
+tr {
+	background-color: honeydew;
+    opacity: 85%;
+}
+
+a:link, a:visited,a:hover {
+    text-decoration: none;
     color: green;
-    font-weight: 700;
-    font-size: 18px;
+    font-weight: 600;
 }
 
-input {
-    background-color: #FFFFF5;
-    border: 2px solid green;
+a:hover{
     color: green;
-}
-
-.button_control {
-    display: flex;
-    justify-content: space-evenly;
-    margin: 0 auto;
-}
-
-.btn {
-    width: 125px;
+    text-shadow:0px 0px 30px darkgreen;
+    -moz-transition: all 0.2s ease-in;
+    -o-transition: all 0.2s ease-in;
+    -webkit-transition: all 0.2s ease-in;
+    transition: all 0.2s ease-in;
 }
