@@ -2,7 +2,7 @@ from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
 import re
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$') 
-
+from pprint import pprint
 
 ### USER CLASS
 class User:
@@ -15,10 +15,7 @@ class User:
         self.password = data['password']    
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
-        # self.joined = []NOT IN USE?
-        # self.joiners = []NOT IN USE?
-        # self.joinerIds = []NOT IN USE?
-        # self.activities = []    NOT IN USE?
+        self.friend = None
 
 
 ### REGISTRATION VALIDATIONS (WORKING)
@@ -140,22 +137,68 @@ class User:
         return connectToMySQL('test_app').query_db(query,data)
 
 
-
-### FIND FRIENDS SEARCH                 (NOT IN USE YET)
+### GET ALL USERS without LOGGED IN            ( TESTING )
     @classmethod
-    def find_friends_by_name(cls,data):
-        query = """SELECT * FROM users 
-            WHERE first_name LIKE  "%(first_name)s"
-            OR last_name LIKE "%(last_name)s%" AND id <> %(id)s;"""
+    def get_all_users_without_logged_in_user(cls,data):
+        query = "SELECT * FROM users WHERE id <> %(id)s ORDER BY users.first_name;"
         results = connectToMySQL('test_app').query_db(query,data)
-        print(results)
+        pprint(results)
         users = []
         for i in results:
             users.append(cls(i))
         return users
 
-# use this query to search by partial and filter out user id
 
-	# SELECT * FROM users WHERE first_name LIKE "% %" 
-	# 		and last_name Like "% %" and id <> 3;
 
+#### FOLLOW USER
+    @classmethod
+    def follow_user(cls,data): 
+        query = '''
+            INSERT INTO friends
+            (user_id, friend_id)
+            VALUES
+            (%(user_id)s, %(friend_id)s);
+            '''
+        connectToMySQL('test_app').query_db(query,data)    
+
+
+### UNFOLLOW USER
+    @classmethod
+    def unfollow_user(cls,data):  
+        query = '''
+            DELETE FROM friends WHERE user_id = %(user_id)s AND friend_id = %(friend_id)s;
+            '''
+        connectToMySQL('test_app').query_db(query,data)    
+
+
+
+    ### GET ALL USERS FRIENDS
+    @classmethod
+    def all_followers(cls,data): #get all activities and the creator
+        query = """
+            SELECT *
+            FROM users
+            JOIN friends ON friends.user_id = users.id
+            JOIN users AS friends_made ON friends.friend_id = friends_made.id
+            WHERE users.id = %(id)s 
+            ORDER BY friends_made.first_name
+        """
+        results = connectToMySQL('test_app').query_db(query,data)
+        pprint("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+        pprint(results)
+        pprint("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+        user_and_friends = [] # empty array to fill with each activity
+        for row in results:# Create a Activity class instance from the information from each db row
+            user = cls(row)
+            user.friend = cls({
+                "id": row['friends_made.id'],
+                "first_name": row['friends_made.first_name'],
+                "last_name": row['friends_made.last_name'],
+                "image_file": row['friends_made.image_file'],
+                "email": row['friends_made.email'],
+                "password": row['friends_made.password'],
+                "created_at": row['friends_made.created_at'],
+                "updated_at": row['friends_made.updated_at'],
+            })
+            user_and_friends.append(user)### Append the activity and creator to the array
+        return user_and_friends

@@ -25,6 +25,9 @@ class Activity:
         is_valid = True
         try:
             datetime.datetime.strptime(activity['date'], '%Y-%m-%d')
+            if datetime.datetime.strptime(activity['date'], '%Y-%m-%d') < datetime.datetime.now():
+                flash("Date must be in future", "activity")
+                is_valid = False
         except ValueError:
             flash("A date must be provided.", "activity")
             is_valid = False
@@ -255,7 +258,7 @@ class Activity:
 
 
 
-
+############################################## CUT LINE ############################################################
 
 ################################################### TESTING
 

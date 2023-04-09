@@ -16,8 +16,7 @@ def activity_dashboard():
     }
     return render_template(
         "activity_dashboard.html", user = User.get_user_by_id(data), activities = Activity.all_activities_with_joined_activities(data))
-        # activities = Activity.all_activities(), 
-        # joined = Activity.all_joined()
+
 
 
 ### ROUTE TO NEW ACTIVITY FORM
@@ -39,8 +38,8 @@ def create_activity_form_action():
         msg = "you must be logged in!"
         return redirect('/logout')
     if not Activity.activity_validation(request.form):
-        return redirect('/getoutside/activities/new')  #redirect to where the form is rendered if validation fails
-    Activity.create_activity_form_action(request.form) # else save form
+        return redirect('/getoutside/activities/new') 
+    Activity.create_activity_form_action(request.form)
     return redirect("/getoutside/athlete") 
 
 
