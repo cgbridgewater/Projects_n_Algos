@@ -69,13 +69,12 @@
                     <h4>My Friends</h4>
                     <!-- list  -->
                     <div>
+                        {% for follower in followers %}
                         <ul>
-                            <li><a class="link" href="#">Mike</a></li>
-                            <li><a class="link" href="#">Tim</a></li>
-                            <li><a class="link" href="#">John</a></li>
-                            <li><a class="link" href="#">Ronald</a></li>
-                            <li><a class="link" href="#">Frank</a></li>
+                            <a class="link" href="#">{{follower.friend.first_name}} {{follower.friend.last_name}}</a>
+
                         </ul>
+                        {% endfor %}
                     </div>
                     <!-- end list  -->
                 </div> 

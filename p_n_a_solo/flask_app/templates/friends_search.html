@@ -16,7 +16,6 @@
         <div>
             <img class="logo" src="https://live.staticflickr.com/65535/52792585959_75b5df6be8_h.jpg" alt="getOUTSIDE">
         </div>
-
         <!-- INPUT SECTION -->
         <h1>Find some friends to Get Outside!</h1>
         <div class="formContainer">
@@ -25,9 +24,12 @@
             </div>
         </div>
         <!-- END INPUT SECTION -->
+        <!-- HOME BUTTON -->
+        <div class="button_container">
+            <button  class="button profile_button bg-success p-1 "><a href="/getoutside" class="text-decoration-none text-light">HOME</a></button>
+        </div>
         <!-- Display Users -->
-    </div>
-    <table class="display_table" id="userTable">
+        <table class="display_table" id="userTable">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -36,10 +38,10 @@
             </thead>
             <tbody id="blog-list">
                 {% for user in allusers %}
-                <tr>
-                    <td><a href="/getoutside/athlete/{{user.id}}">{{user.first_name}} {{user.last_name}} </a></td>
-                    <td><button>FOLLOW</button> </td>
-                </tr>
+                    <tr>
+                        <td><a href="/getoutside/athlete/{{user.id}}">{{user.first_name}} {{user.last_name}} </a></td>
+                        <td><button  onclick="myalert()" class="profile_button bg-success p-1"><a href="/getoutside/athlete/{{user.id}}/follow" class="text-decoration-none text-light">FOLLOW</a></button></td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
@@ -48,4 +50,5 @@
 
 </body>
 <script src="{{ url_for('static', filename='js/search_script.js') }}"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </html>

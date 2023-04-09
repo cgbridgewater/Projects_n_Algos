@@ -29,7 +29,7 @@
                             <td>
                                 <div class="flex2">
                                     <button class="profile_button bg-success me-1 p-1"><a href="/getoutside" class="text-decoration-none text-light">HOME</a></button>
-                                    <button class="profile_button bg-warning p-1"><a href="#" class="text-decoration-none text-light">FOLLOW</a></button>
+                                    <button  onclick="myalert()" class="profile_button bg-warning p-1"><a href="/getoutside/athlete/{{user.id}}/follow" class="text-decoration-none text-light">FOLLOW</a></button>
                                 </div>
                             </td>
                         </tr>
@@ -54,19 +54,20 @@
                 <!-- activity list -->
                 <div class="activity_links">
                     <!-- loop through activities -->
-                    {% for a in activities %}
+                    {% for activity in activities %}
                         <!-- filter for only logged in user -->
-                        {% if a.creator.id == session.user_id %}
+                        {% if activity.creator.id == user.id %}
                         <!-- display data -->
                             <h5>
-                                <a class="link" href="/getoutside/activity/{{a.id}}"> {{ user.first_name }}'s going {{a.activity}} at {{a.location}} on {{a.date.strftime("%B %e, %Y")}} </a>
+                                <a class="link" href="/getoutside/activity/{{activity.id}}"> {{ user.first_name }}'s going {{activity.activity}} at {{activity.location}} on {{activity.date.strftime("%B %e, %Y")}} </a>
                             </h5>
                         {% endif %}
                     {% endfor %}
                 </div>
             </div>
+        </div>
     </main>
     <!-- End Main -->
 </body>
-
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </html>
