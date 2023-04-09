@@ -10,6 +10,11 @@
     height: 25vh;
 }
 
+.green{
+    color: green;
+    font-weight: 700;
+}
+
 .profile_button {
     margin-left: 45%;
 }
