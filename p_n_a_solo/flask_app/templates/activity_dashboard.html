@@ -41,26 +41,18 @@
                     <button class="bg-success m-1 p-1 opacity-75 rounded-2"><a href="/getoutside/friends" class="text-decoration-none text-light">FIND FRIENDS</a></button>
                 </div>
                 <!-- table -->
-                <table class="activity_table">
+                <table class="activity_table table table-hover">
                     <tr>
                     <!-- loop through activities -->
                     {% for activity in activities %}
                     <!-- filter logged in user -->
-                        {% if session.user_id  == activity.attendee.id or activity.attendee.id == None %}
+                    {% if session.user_id != activity.creator.id %}
                         <!-- display data -->
                         <td>   
                             <a class="activity_link" href="/getoutside/activity/{{activity.id}}"> {{activity.creator.first_name}} {{activity.creator.last_name}} is going {{activity.activity}} at {{activity.location}} on {{activity.date.strftime("%B %e, %Y")}} </a>
                         </td> 
-                        <!-- display join button -->
-                        <td>
-                                {% if session.user_id == activity.activity_id  %}
-                                    <button class="bg-danger m-1 p-1 opacity-75 rounded-2"><a class="text-decoration-none text-light" href="/getoutside/activity/{{activity.id}}/unjoin">I'M OUT!</a></button>
-                                {% else   %}
-                                    <button class="bg-success m-1 p-1 opacity-75 rounded-2"><a class="text-decoration-none text-light" href="/getoutside/activity/{{activity.id}}/join">JOIN!</a></button>
-                                {% endif %}
-                            </td>
-                        </tr>
-                        {% endif %}
+                    </tr>
+                    {% endif %}
                     {% endfor %}
                 </table>
                 <!-- Table END -->

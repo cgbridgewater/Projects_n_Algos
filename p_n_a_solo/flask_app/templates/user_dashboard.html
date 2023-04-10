@@ -70,7 +70,7 @@
                     <div>
                         {% for follower in followers %}
                         <ul>
-                            <a class="link" href="#">{{follower.friend.first_name}} {{follower.friend.last_name}}</a>
+                            <a class="link" href="/getoutside/athlete/{{follower.friend.id}}">{{follower.friend.first_name}} {{follower.friend.last_name}}</a>
                         </ul>
                         {% endfor %}
                     </div>

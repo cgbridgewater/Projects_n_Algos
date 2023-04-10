@@ -41,6 +41,7 @@
                         <!-- dropdown menu -->
                         <select name="activity">
                             <option value="">--Select Activity--</option>
+                            <option value="{{session['activity']}}" hidden selected >{{session['activity']}}</option>
                             <option value="Climbing">Climbing</option>
                             <option value="Cycling">Cycling</option>
                             <option value="Mtn. Biking">Mtn. Biking</option>
@@ -60,13 +61,13 @@
                     <!-- Input 2 -->
                     <div class="form_control">
                         <label for="location">Activity Location:</label>
-                        <input type="text" name="location">
+                        <input type="text" name="location" value="{{session['location']}}">
                     </div>
                     <!-- End Input 2 -->
                     <!-- Input  -->
                     <div class="form_control">
                         <label for="date">Date:</label>
-                        <input type="date" name="date">
+                        <input type="date" name="date" value="{{session['date']}}">
                     </div>
                     <div>
                     <!-- End Input 3 -->

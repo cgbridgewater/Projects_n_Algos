@@ -34,17 +34,41 @@
                                     <button class="profile_button bg-success mp-1"><a href="/getoutside/activity/{{activity.id}}/join2" class="text-decoration-none text-light">JOIN!</a></button>
                                 {%endif%} 
                             {%endif%} 
+
+
+            
+                            {% for attendee in activity.attenders if session.user_id == attendee.id -%}
+                                {% if loop.last -%}
+                                    {%if loop.index > 0 %} 
+                                            {%else%}
+                                        button?
+                                    {% endif %}
+                                    
+                                {% endif %}
+                            {% else %}
+                                <button class="profile_button bg-success mp-1"><a href="/getoutside/activity/{{activity.id}}/join2" class="text-decoration-none text-light">JOIN!</a></button>
+                            {%- endfor %}
+                               
+
+                                    
                         </div>
                         <div class="activity_links">
-                            {% for attendee in attenders %}
+
+                            {% for attendee in activity.attenders %}
+                                {% if attendee.id == session.user_id %}
                                 <p>
-                                    {{attendee.first_name}} {{attendee.last_name}}     
-                                    <!-- if attendee is same as session give PASS btn -->
-                                    {% if attendee.id == session.user_id  %}
-                                        <button class="profile_button bg-success mp-1"><a href="/getoutside/activity/{{activity.id}}/unjoin" class="text-decoration-none text-light">PASS!</a></button>
-                                    {% endif %}
+                                    {{attendee.first_name}} {{attendee.last_name}}
+                                    <button class="profile_button bg-success mp-1"><a href="/getoutside/activity/{{activity.id}}/unjoin" class="text-decoration-none text-light">PASS!</a></button>
                                 </p>
+                                {% else %}
+                                <p>
+                                    <a href="/getoutside/athlete/{{attendee.id}}"> {{attendee.first_name}} {{attendee.last_name}} </a>
+                                </p>    
+
+                                {% endif %}
+
                             {% endfor %}
+
                         </div>
                         <!-- image container of all images by sport -->
                         <div class="image_box"> 
