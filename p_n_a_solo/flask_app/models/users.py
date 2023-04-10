@@ -42,7 +42,7 @@ class User:
         if len(user['email']) < 3:
             flash("Email must be a valid email.", "register")
             is_valid = False
-        if User.email_exists(user):
+        if User.check_for_email_exists(user):
             flash("This email is already taken!", "register")
             is_valid = False
         return is_valid

@@ -15,8 +15,8 @@ def activity_dashboard():
         'id': session['user_id']
     }
     return render_template(
-        "activity_dashboard.html", user = User.get_user_by_id(data), activities = Activity.all_activities_with_joined_activities(data))
-
+        "activity_dashboard.html", user = User.get_user_by_id(data), activities = Activity.get_all_activities())
+# all_activities_with_joined_attenders(data)
 
 ### NEW ACTIVITY FORM
 @app.route('/getoutside/activities/new')
@@ -37,8 +37,14 @@ def create_activity_form_action():
         msg = "you must be logged in!"
         return redirect('/logout')
     if not Activity.activity_validation_check(request.form):
+        session["activity"] = request.form["activity"]
+        session["location"] = request.form["location"]
+        session["date"] = request.form["date"]
         return redirect('/getoutside/activities/new') 
     Activity.create_activity_form_action(request.form)
+    session.pop("activity", None)
+    session.pop("location", None)
+    session.pop("date", None)
     return redirect("/getoutside/athlete") 
 
 
@@ -87,7 +93,7 @@ def view_one_activity_by_id(id):
     user ={
         'id': session['user_id']
     }
-    return render_template("activity_one_view.html", activity = Activity.get_one_activity_by_id(data), user = User.get_user_by_id(user),attenders = Activity.get_all_attendees(data))
+    return render_template("activity_one_view.html", activity = Activity.get_one_activity_by_id(data), user = User.get_user_by_id(user))
 
 
 ### ATTEND ACTIVITY ROUTE WITH HOMEPAGE RETURN
@@ -126,7 +132,7 @@ def unattend_activity(id):
         'user_id' : session['user_id']
     }
     Activity.unattend_activity(data)
-    return redirect("/getoutside")
+    return redirect(f"/getoutside/activity/{id}")
 
 
 ### DELETE ACTIVITY BY ID

@@ -16,6 +16,7 @@ class Activity:
         self.updated_at = data['updated_at']
         self.creator = None
         self.attendee = None
+        self.attenders = []
 
 
 ### ACTIVITIES FORM VALIDATIONS CHECK (activitiesController)
@@ -65,14 +66,16 @@ class Activity:
     def get_one_activity_by_id(cls,data):
         query = """
             SELECT * FROM activities
-            JOIN users AS creators ON activities.user_id = creators.id
+            JOIN users AS creator ON activities.user_id = creator.id
+            LEFT JOIN join_activity ON activities.id = join_activity.activity_id
+            LEFT JOIN users AS attendee ON join_activity.user_id = attendee.id
             WHERE activities.id =  %(id)s;
         """
         results = connectToMySQL('test_app').query_db(query,data)
         pprint(results)
         one_activity = cls(results[0])
         one_activity.creator = users.User({
-                "id": results[0]['creators.id'],
+                "id": results[0]['creator.id'],
                 "first_name": results[0]['first_name'],
                 "last_name": results[0]['last_name'],
                 "email": results[0]['email'],
@@ -81,46 +84,8 @@ class Activity:
                 "created_at": results[0]['created_at'],
                 "updated_at": results[0]['updated_at'],
         })
-        return one_activity
-
-
-    ### READ ALL ACTIVITIES + USER  for home page!!               TESTING!!!   THIS IS A HAWT MESS!
-    @classmethod
-    def all_activities_with_joined_activities(cls,data): #get all activities and the creator WITH ATTENDERS
-        query = """
-            SELECT *
-            FROM users AS creator
-            JOIN activities 
-            ON creator.id = activities.user_id
-            LEFT JOIN join_activity on activities.id = activity_id
-            LEFT JOIN users AS attendee 
-            ON join_activity.user_id = attendee.id
-            WHERE date > CURRENT_DATE AND activities.user_id != %(id)s
-            ORDER BY date ASC;
-        """
-        results = connectToMySQL('test_app').query_db(query, data)
-        pprint(results)
-        all_activities = []
         for row in results:
-            one_activity = cls({
-                "id": row['activities.id'],
-                "activity" : row['activity'],
-                "location" : row['location'],
-                "date" : row['date'],    
-                "created_at" : row['activities.created_at'],
-                "updated_at" : row['activities.updated_at'],
-            })
-            one_activity.creator = users.User({
-                "id": row['id'],
-                "first_name": row['first_name'],
-                "last_name": row['last_name'],
-                "image_file": row['image_file'],
-                "email": row['email'],
-                "password": None,
-                "created_at": row['created_at'],
-                "updated_at": row['updated_at'],
-            })
-            one_activity.attendee = users.User({
+                attendee = ({
                 "id": row['attendee.id'],
                 "first_name": row['attendee.first_name'],
                 "last_name": row['attendee.last_name'],
@@ -130,8 +95,96 @@ class Activity:
                 "created_at": row['attendee.created_at'],
                 "updated_at": row['attendee.updated_at'],
             })
-            all_activities.append(one_activity)
-        return all_activities
+                one_activity.attenders.append(users.User(attendee))
+        return one_activity
+
+
+    # ### READ ALL ACTIVITIES + USER  for home page!!               TESTING!!!   THIS IS A HAWT MESS!
+    # @classmethod
+    # def all_activities_with_joined_attenders(cls,data): #get all activities and the creator WITH ATTENDERS
+    #     query = """
+    #          SELECT  * FROM activities
+    #         JOIN users AS creator on activities.user_id = creator.id
+    #         LEFT JOIN join_activity ON activities.id = activity_id
+    #         LEFT JOIN users AS attendee ON join_activity.user_id = attendee.id
+    #         WHERE date > CURRENT_DATE AND activities.user_id != %(id)s
+    #         ORDER BY date ASC;
+    #     """
+    #     results = connectToMySQL('test_app').query_db(query, data)
+    #     pprint(results)
+    #     all_activities = []
+    #     for row in results:
+    #         one_activity = cls(row)
+        
+    #         one_activity.creator = users.User({
+    #             "id": row['id'],
+    #             "first_name": row['first_name'],
+    #             "last_name": row['last_name'],
+    #             "image_file": row['image_file'],
+    #             "email": row['email'],
+    #             "password": None,
+    #             "created_at": row['created_at'],
+    #             "updated_at": row['updated_at'],
+    #         })
+    #         attendee = users.User({
+    #             "id": row['attendee.id'],
+    #             "first_name": row['attendee.first_name'],
+    #             "last_name": row['attendee.last_name'],
+    #             "image_file": row['attendee.image_file'],
+    #             "email": row['attendee.email'],
+    #             "password": None,
+    #             "created_at": row['attendee.created_at'],
+    #             "updated_at": row['attendee.updated_at'],
+    #         })
+    #         all_activities.append(one_activity)
+    #         one_activity.attenders.append(attendee)
+    #     return all_activities
+
+
+
+
+
+    # ### READ ALL ACTIVITIES + USER  for home page!!               TESTING!!!   THIS IS A HAWT MESS!
+    # @classmethod
+    # def all_activities_with_joined_attenders(cls,data): #get all activities and the creator WITH ATTENDERS
+    #     query = """
+    #          SELECT  * FROM activities
+    #         JOIN users AS creator on activities.user_id = creator.id
+    #         LEFT JOIN join_activity ON activities.id = activity_id
+    #         LEFT JOIN users AS attendee ON join_activity.user_id = attendee.id
+    #         WHERE date > CURRENT_DATE AND activities.user_id != %(id)s
+    #         ORDER BY date ASC;
+    #     """
+    #     results = connectToMySQL('test_app').query_db(query, data)
+    #     pprint(results)
+    #     pprint("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    #     all_activities = []
+    #     pprint("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC")
+    #     for row in results:
+    #         one_activity = cls(row) 
+    #         one_activity.creator = users.User({
+    #             "id": row['creator.id'],
+    #             "first_name": row['first_name'],
+    #             "last_name": row['last_name'],
+    #             "image_file": row['image_file'],
+    #             "email": row['email'],
+    #             "password": None,
+    #             "created_at": row['creator.created_at'],
+    #             "updated_at": row['creator.updated_at'],
+    #         })
+    #         attendee = ({
+    #             "id": row['attendee.id'],
+    #             "first_name": row['attendee.first_name'],
+    #             "last_name": row['attendee.last_name'],
+    #             "image_file": row['attendee.image_file'],
+    #             "email": row['attendee.email'],
+    #             "password": None,
+    #             "created_at": row['attendee.created_at'],
+    #             "updated_at": row['attendee.updated_at'],
+    #         })
+    #         all_activities.append(one_activity)
+    #         one_activity.attenders.append(users.User(attendee))
+    #     return all_activities
 
 
     ### GET ALL ACTIVITIES AND ATTENDEES (usersController)
