@@ -72,6 +72,9 @@
 th,td {
     padding: 3px 8px;
 }
+tr {
+    border: 1px solid green;
+}
 
 main {
     display: flex;
