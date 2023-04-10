@@ -21,99 +21,8 @@
             <h1 class="user">Get OUTSIDE with {{activity.creator.first_name}} and go {{activity.activity}}!</h1>
                 <!-- Activities Container -->
                 <div class="activity_container">
-                    <!-- Left Box -->
-                    <div class="left_box">
-                        <!-- title and button -->
-                        <div class="flex">
-                            <h4 class="green">Who's already joined</h4> 
-                            <!-- if attenders list is empty make a join button -->
-                            {% if attenders is defined and attenders|length %}
-                                {% if activity.creator.id != session.user_id  %}
-                                
-                                {%else%}
-                                    <button class="profile_button bg-success mp-1"><a href="/getoutside/activity/{{activity.id}}/join2" class="text-decoration-none text-light">JOIN!</a></button>
-                                {%endif%} 
-                            {%endif%} 
 
-
-            
-                            {% for attendee in activity.attenders if session.user_id == attendee.id -%}
-                                {% if loop.last -%}
-                                    {%if loop.index > 0 %} 
-                                            {%else%}
-                                        button?
-                                    {% endif %}
-                                    
-                                {% endif %}
-                            {% else %}
-                                <button class="profile_button bg-success mp-1"><a href="/getoutside/activity/{{activity.id}}/join2" class="text-decoration-none text-light">JOIN!</a></button>
-                            {%- endfor %}
-                               
-
-                                    
-                        </div>
-                        <div class="activity_links">
-
-                            {% for attendee in activity.attenders %}
-                                {% if attendee.id == session.user_id %}
-                                <p>
-                                    {{attendee.first_name}} {{attendee.last_name}}
-                                    <button class="profile_button bg-success mp-1"><a href="/getoutside/activity/{{activity.id}}/unjoin" class="text-decoration-none text-light">PASS!</a></button>
-                                </p>
-                                {% else %}
-                                <p>
-                                    <a href="/getoutside/athlete/{{attendee.id}}"> {{attendee.first_name}} {{attendee.last_name}} </a>
-                                </p>    
-
-                                {% endif %}
-
-                            {% endfor %}
-
-                        </div>
-                        <!-- image container of all images by sport -->
-                        <div class="image_box"> 
-                            <!-- Activities image Container -->
-                            {% if activity.activity == "Climbing" %}
-                            <img class="image" src="" alt="https://images.squarespace-cdn.com/content/v1/571c6da9f8508283c1fb8d9f/1639115620769-MOEH3BRXM5EU2EMD8W3R/Smith+Beautiful+Silo.jpeg">
-                            
-                            {% elif activity.activity == "Cycling" %}
-                            <img class="image" src="https://images.immediate.co.uk/production/volatile/sites/21/2019/03/1340198123738-102yckxqtkev8-1000-100-a982bfa.jpg?quality=90&resize=768,574" alt="Cycling">
-                            
-                            {% elif activity.activity == "Mtn. Biking" %}
-                            <img class="image" src="https://traveloregon.com/wp-content/uploads/2020/06/2020_mtnbike_bend_bachelor_01.jpg" alt="Mtn. Biking">
-                            
-                            {% elif activity.activity == "Golfing" %}
-                            <img class="image" src="https://edgewoodtahoe.com/wp-content/uploads/2020/06/golf-group-hero.jpg" alt="Golfing">
-                            
-                            {% elif activity.activity == "Hiking" %}
-                            <img class="image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Hiking_to_the_Ice_Lakes._San_Juan_National_Forest%2C_Colorado.jpg/1200px-Hiking_to_the_Ice_Lakes._San_Juan_National_Forest%2C_Colorado.jpg" alt="Hiking">
-                            
-                            {% elif activity.activity == "Paddling" %}
-                            <img class="image" src="https://theworldpursuit.com/wp-content/uploads/2020/08/best-inflatable-sup-scaled.jpeg" alt="Paddling">
-                            
-                            {% elif activity.activity == "Rowing" %}
-                            <img class="image" src="https://hips.hearstapps.com/hmg-prod/images/u8a6460-1626876679.jpg" alt="Rowing">
-                            
-                            {% elif activity.activity == "Running" %}
-                            <img class="image" src="https://centralorthopedicgroup.com/wp-content/uploads/2018/03/outdoor-running.jpg" alt="Running">
-                            
-                            {% elif activity.activity == "Skiing" %}
-                            <img class="image" src="https://coresites-cdn-adm.imgix.net/mpora_new/wp-content/uploads/2016/07/SkiWords.jpg?fit=crop" alt="Skiing">
-                            
-                            {% elif activity.activity == "Snowboarding" %}
-                            <img class="image" src="https://kdvr.com/wp-content/uploads/sites/11/2021/11/1040x585-2021-1109-skiing-vs-snowboarding-which-is-best-for-beginners-135db8.jpg?w=1280" alt="Snowboarding">
-                            
-                            {% elif activity.activity == "Snowshoeing" %}
-                            <img class="image" src="https://www.milwaukeemag.com/wp-content/uploads/2023/01/0123-Explore-Snowshoe-GettyImages-519694857.jpg" alt="Swimming">
-                            
-                            {% elif activity.activity == "Swimming" %}
-                            <img class="image" src="https://images.unsplash.com/photo-1438029071396-1e831a7fa6d8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c3dpbW1pbmd8ZW58MHx8MHx8&w=1000&q=80" alt="Swimming">
-                            {% endif %}
-                        <!-- END Activities image Container -->
-                        </div>
-                    </div>
-                    <!-- End Left Box -->
-                    <!-- Details Box -->
+                    <!-- Right Box -->
                     <div class="right_box">
                         <!-- top of details box -->
                         <div class="top">
@@ -121,11 +30,11 @@
                             <div class="flex">
                                 <h4 class="green">Details</h4>
                                 <div>
-                                    <button class="profile_button bg-success mp-1"><a href="/getoutside" class="text-decoration-none text-light">HOME</a></button>
+                                    <a class="btn btn-success rounded-2 border-2 border-dark text-decoration-none text-light" href="/getoutside" role="button">HOME</a>
                                     {% if activity.creator.id == session.user_id %}
-                                    <button class="profile_button bg-primary mp-1"><a href="/getoutside/athlete" class="text-decoration-none text-light">PROFILE</a></button>
-                                    <button class="profile_button bg-secondary mp-1"><a href="/getoutside/activity/{{activity.id}}/edit" class="text-decoration-none text-light">EDIT</a></button>
-                                    <button class="profile_button bg-danger mp-1"><a href="/getoutside/activity/{{activity.id}}/delete" class="text-decoration-none text-light">DELETE</a></button>
+                                    <a class="btn btn-primary rounded-2 border-2 border-dark text-decoration-none text-light" href="/getoutside/athlete" role="button">PROFILE</a>
+                                    <a class="btn btn-secondary rounded-2 border-2 border-dark text-decoration-none text-light" href="/getoutside/activity/{{activity.id}}/edit" role="button">EDIT</a>
+                                    <a class="btn btn-danger rounded-2 border-2 border-dark text-decoration-none text-light" href="/getoutside/activity/{{activity.id}}/delete" role="button">DELETE</a>
                                     {% endif %}
                                 </div>
                             </div>
@@ -138,6 +47,47 @@
                         <!-- end top of details box --> 
                         <!-- bottom of details section -->
                         <div class="bottom">
+                            <!-- image container of all images by sport -->
+                            <div class="image_box"> 
+                                <!-- Activities image Container -->
+                                {% if activity.activity == "Climbing" %}
+                                <img class="image" src="" alt="https://images.squarespace-cdn.com/content/v1/571c6da9f8508283c1fb8d9f/1639115620769-MOEH3BRXM5EU2EMD8W3R/Smith+Beautiful+Silo.jpeg">
+                                
+                                {% elif activity.activity == "Cycling" %}
+                                <img class="image" src="https://images.immediate.co.uk/production/volatile/sites/21/2019/03/1340198123738-102yckxqtkev8-1000-100-a982bfa.jpg?quality=90&resize=768,574" alt="Cycling">
+                                
+                                {% elif activity.activity == "Mtn. Biking" %}
+                                <img class="image" src="https://traveloregon.com/wp-content/uploads/2020/06/2020_mtnbike_bend_bachelor_01.jpg" alt="Mtn. Biking">
+                                
+                                {% elif activity.activity == "Golfing" %}
+                                <img class="image" src="https://edgewoodtahoe.com/wp-content/uploads/2020/06/golf-group-hero.jpg" alt="Golfing">
+                                
+                                {% elif activity.activity == "Hiking" %}
+                                <img class="image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Hiking_to_the_Ice_Lakes._San_Juan_National_Forest%2C_Colorado.jpg/1200px-Hiking_to_the_Ice_Lakes._San_Juan_National_Forest%2C_Colorado.jpg" alt="Hiking">
+                                
+                                {% elif activity.activity == "Paddling" %}
+                                <img class="image" src="https://theworldpursuit.com/wp-content/uploads/2020/08/best-inflatable-sup-scaled.jpeg" alt="Paddling">
+                                
+                                {% elif activity.activity == "Rowing" %}
+                                <img class="image" src="https://hips.hearstapps.com/hmg-prod/images/u8a6460-1626876679.jpg" alt="Rowing">
+                                
+                                {% elif activity.activity == "Running" %}
+                                <img class="image" src="https://centralorthopedicgroup.com/wp-content/uploads/2018/03/outdoor-running.jpg" alt="Running">
+                                
+                                {% elif activity.activity == "Skiing" %}
+                                <img class="image" src="https://coresites-cdn-adm.imgix.net/mpora_new/wp-content/uploads/2016/07/SkiWords.jpg?fit=crop" alt="Skiing">
+                                
+                                {% elif activity.activity == "Snowboarding" %}
+                                <img class="image" src="https://kdvr.com/wp-content/uploads/sites/11/2021/11/1040x585-2021-1109-skiing-vs-snowboarding-which-is-best-for-beginners-135db8.jpg?w=1280" alt="Snowboarding">
+                                
+                                {% elif activity.activity == "Snowshoeing" %}
+                                <img class="image" src="https://www.milwaukeemag.com/wp-content/uploads/2023/01/0123-Explore-Snowshoe-GettyImages-519694857.jpg" alt="Swimming">
+                                
+                                {% elif activity.activity == "Swimming" %}
+                                <img class="image" src="https://images.unsplash.com/photo-1438029071396-1e831a7fa6d8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c3dpbW1pbmd8ZW58MHx8MHx8&w=1000&q=80" alt="Swimming">
+                                {% endif %}
+                            <!-- END Activities image Container -->
+                            </div>
                             <!-- google MAP -->
                             <iframe
                                 style="border:2px solid green"
@@ -151,7 +101,44 @@
                         </div>
                         <!-- end bottom of details section -->
                     </div>
-                    <!-- end right box -->
+                    <!-- end Left box -->
+                    <!-- Right Box -->
+                    <div class="left_box">
+                        <!-- title and button -->
+                        <div class="flex">
+                            <h4 class="green">Who's going:</h4> 
+                            <!-- if attenders list is empty make a join button -->
+                            {% for attendee in activity.attenders if session.user_id == attendee.id -%}
+                                {% if loop.last -%}
+                                    {%if loop.index > 0 %} 
+                                            {%else%}
+                                        button?
+                                    {% endif %}
+                                    
+                                {% endif %}
+                            {% else %}
+                                <a class="btn btn-success rounded-2 border-2 border-dark text-decoration-none text-light" href="/getoutside/activity/{{activity.id}}/join2" role="button">I'M IN!</a>
+                            {%- endfor %}        
+                        </div>
+                        <div class="activity_links">
+                            {% for attendee in activity.attenders %}
+                                {% if attendee.id == session.user_id %}
+                                <div class="flex">
+                                    <h5 class="green">{{attendee.first_name}} {{attendee.last_name}}</h5>
+                                    <a class="btn btn-success rounded-2 border-2 border-dark text-decoration-none text-light"  href="/getoutside/activity/{{activity.id}}/unjoin"   role="button">PASS</a>
+                                </div>
+                                {% else %}
+                                    {% if attendee.first_name == None %}
+                                    {%else%}
+                                <p>
+                                    <a class="green2" href="/getoutside/athlete/{{attendee.id}}"> {{attendee.first_name}} {{attendee.last_name}} </a>
+                                </p>    
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <!-- End Right Box -->
                 </div>
                 <!-- end activities container -->
             </main>

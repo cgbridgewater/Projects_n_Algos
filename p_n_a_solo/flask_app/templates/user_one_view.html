@@ -27,8 +27,8 @@
                             <td><h1 class="user">{{user.first_name}}'s Info</h1></td>
                             <td>
                                 <div class="flex2">
-                                    <button class="profile_button bg-success me-1 p-1"><a href="/getoutside" class="text-decoration-none text-light">HOME</a></button>
-                                    <button  onclick="myalert()" class="profile_button bg-warning p-1"><a href="/getoutside/athlete/{{user.id}}/follow" class="text-decoration-none text-light">FOLLOW</a></button>
+                                    <a class="profile_button btn btn-success m-1 p-1 rounded-2 border-2 border-dark " href="/getoutside"   role="button">HOME</a>
+                                    <a onclick="myalert()"  class="profile_button btn btn-primary m-1 p-1 rounded-2 border-2 border-dark " href="/getoutside/athlete/{{user.id}}/follow" role="button">Follow</a>
                                 </div>
                             </td>
                         </tr>

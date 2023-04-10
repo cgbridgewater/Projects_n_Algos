@@ -28,7 +28,7 @@ main {
     width: 40%;
     min-width:375px;
     margin: 3% auto;
-    padding: 2% 3%;
+    padding: 2%;
     border: 3px solid green;
     border-radius: 5px;
     background-color: honeydew;
@@ -60,5 +60,5 @@ input {
 }
 
 .btn {
-    width: 125px;
+    width: 118px;
 }

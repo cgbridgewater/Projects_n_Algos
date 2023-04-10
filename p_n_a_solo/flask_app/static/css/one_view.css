@@ -14,15 +14,22 @@
 .green {
     color:green;
     font-weight: 700;
+    margin-right: 5px;
+}
+.green2 {
+    color:green;
+    font-size:20px;
+    font-weight: 700;
+    margin-right: 5px;
+    text-decoration: none;
 }
 
 .black {
     color:black;
 }
 
-.profile_button {
-    height:30px;
-    width: 75px;
+.btn {
+    width: 90px;
     border-radius: 5px;
 }
 
@@ -68,30 +75,34 @@
     height:200px;
     overflow-y:scroll;
     overflow-x: hidden;
-    padding: 1%;
+    padding: 2%;
     background-color: #FFFFF5;
 }
 
 .bottom {
     width: 90%;
     margin: 0 auto;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 iframe {
-    /* min-width:325px; */
-    width:100%;
+    min-width:300px;
+    width:60%;
     height:300px;
     border-radius: 5px;
 }
 
-.image_box {
+/* .image_box {
     display: flex;
     justify-content: center;
-}
+} */
 
 .image {
     aspect-ratio:1/1;
-    max-height: 200px ;
+    max-height: 300px ;
     margin: 3% auto;
     border: 2px solid green; 
     border-radius: 5px;

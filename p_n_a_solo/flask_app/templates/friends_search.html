@@ -25,7 +25,7 @@
         <!-- END INPUT SECTION -->
         <!-- HOME BUTTON -->
         <div class="button_container">
-            <button  class="button profile_button bg-success p-1 "><a href="/getoutside" class="text-decoration-none text-light">HOME</a></button>
+            <a  class="home btn btn-success m-1 p-1 rounded-2 border-2 border-dark text-decoration-none text-light" href="/getoutside" role="button">HOME</a>
         </div>
         <!-- Display Users -->
         <table class="display_table" id="userTable">
@@ -38,8 +38,8 @@
             <tbody id="blog-list">
                 {% for user in allusers %}
                     <tr>
-                        <td><a href="/getoutside/athlete/{{user.id}}">{{user.first_name}} {{user.last_name}} </a></td>
-                        <td><button  onclick="myalert()" class="profile_button bg-success p-1"><a href="/getoutside/athlete/{{user.id}}/follow" class="text-decoration-none text-light">FOLLOW</a></button></td>
+                        <td><a href="/getoutside/athlete/{{user.id}}">{{user.first_name}} {{user.last_name}} </a></td>                        
+                        <td><a onclick="myalert()" class="btn btn-success m-1 p-1 rounded-2 border-2 border-dark text-decoration-none text-light"  href="/getoutside/athlete/{{user.id}}/follow"  role="button">FOLLOW</a></td>
                     </tr>
                 {% endfor %}
             </tbody>
