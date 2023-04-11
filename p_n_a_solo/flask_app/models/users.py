@@ -1,6 +1,8 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
+from flask_app.models import activities
 import re
+from pprint import pprint
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$') 
 
 ### USER CLASS
@@ -15,6 +17,7 @@ class User:
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
         self.friend = None
+        self.activities_list = []
 
 
 ### REGISTRATION VALIDATIONS (uiController)
@@ -102,10 +105,36 @@ class User:
 
 ### GET USER BY ID (usersController + Activities)
     @classmethod
+    def get_user_by_id_with_activities(cls,data):
+        query = """
+        SELECT * 
+        FROM users 
+        JOIN activities ON users.id = activities.user_id
+        WHERE activities.user_id = %(id)s;
+        """
+        results = connectToMySQL('test_app').query_db(query,data)
+        pprint(results)
+        one_user = cls(results[0])
+        for row in results:
+                activity =  ({
+                "id": row['activities.id'],
+                "activity": row['activity'],
+                "date": row['date'],
+                "location": row['location'],
+                "created_at": row['activities.created_at'],
+                "updated_at": row['activities.updated_at'],
+            })
+        one_user.activities_list.append(activities.Activity(activity))
+        return one_user
+        
+
+### GET USER BY ID (usersController + Activities)
+    @classmethod
     def get_user_by_id(cls,data):
         query = """
         SELECT * 
         FROM users 
+
         WHERE id = %(id)s;
         """
         result = connectToMySQL('test_app').query_db(query,data)

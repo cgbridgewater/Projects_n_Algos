@@ -17,7 +17,7 @@ def user_dashboard():
     return render_template("user_dashboard.html", user = User.get_user_by_id(data), image_file = url_for('static', filename='images/profile_pics/' + User.get_user_by_id(data).image_file),activities = Activity.get_all_activities(), joined = Activity.get_all_activities_and_attendees(data), followers = User.all_followers(data))
 
 
-### UPDATE ATHLETE FORM
+### UPDATE ATHLETE FORM (protected)
 @app.route('/getoutside/athlete/update')
 def edit_user_form():
     if 'user_id' not in session:
@@ -25,10 +25,13 @@ def edit_user_form():
     data ={
         'id': session['user_id']
     }
+    user_check = User.get_user_by_id(data)
+    if session['user_id'] != user_check.id:
+        return redirect('/logout')
     return render_template("user_update.html", user = User.get_user_by_id(data))
 
 
-### ATHLETE UPDATE FORM POST ACTION
+### ATHLETE UPDATE FORM POST ACTION (protected)
 @app.route('/getoutside/athlete/update', methods =['POST'])
 def update_user_form_action():
     if 'user_id' not in session:
@@ -39,13 +42,16 @@ def update_user_form_action():
         "last_name": request.form["last_name"],
         "email": request.form["email"]
         }
+    user_check = User.get_user_by_id(data)
+    if session['user_id'] != user_check.id:
+        return redirect('/logout')
     if not User.update_validation_check(data):
         return redirect('/getoutside/athlete/update')
     User.update_user_by_id(data)
     return redirect("/getoutside/athlete") 
 
 
-### ATHLETUS DELETUS
+### ATHLETUS DELETUS (protected)
 @app.route('/getoutside/athlete/delete')
 def delete_user_route():
     if 'user_id' not in session:
@@ -53,17 +59,21 @@ def delete_user_route():
     data ={
         'id': session['user_id']
     }
+    user_check = User.get_user_by_id(data)
+    if session['user_id'] != user_check.id:
+        return redirect('/logout')
     User.delete_user(data)
     return redirect('/logout') 
 
 
-### GET ATHLETE BY ID
+### GET ATHLETE BY ID                 WHY DOESNT THE SINGLE METHOD WORK???
 @app.route('/getoutside/athlete/<int:id>')
 def get_user_by_id(id):
     data = {
     "id" : id
     }
-    return render_template("user_one_view.html",  user = User.get_user_by_id(data),activities = Activity.get_all_activities(), joined = Activity.get_all_activities_and_attendees(data))
+    return render_template("user_one_view.html", user = User.get_user_by_id(data),activities = Activity.get_all_activities())
+    # return render_template("user_one_view.html", user = User.get_user_by_id_with_activities(data))
 
 
 ### FOLLOW FRIEND 

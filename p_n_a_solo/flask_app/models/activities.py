@@ -1,6 +1,6 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app.models import users
-from flask import flash, session
+from flask import flash
 import datetime
 from pprint import pprint
 
@@ -61,9 +61,9 @@ class Activity:
         return connectToMySQL('test_app').query_db(query,data)
 
 
-    ### GET ACTIVITY BY ID  (activitiesController)
+    ### GET ACTIVITY BY ID with attendees  (activitiesController)
     @classmethod
-    def get_one_activity_by_id(cls,data):
+    def get_one_activity_by_id_with_attendees(cls,data):
         query = """
             SELECT * FROM activities
             JOIN users AS creator ON activities.user_id = creator.id
@@ -97,6 +97,29 @@ class Activity:
             })
                 one_activity.attenders.append(users.User(attendee))
         return one_activity
+
+
+### GET ONE ACTIVITY ID (WORKING)
+    @classmethod
+    def get_activity_by_id(cls,data):
+        query = """SELECT * FROM activities
+            LEFT JOIN users AS creator ON activities.user_id = creator.id
+            WHERE activities.id = %(id)s;"""
+        result = connectToMySQL('test_app').query_db(query,data)
+        pprint(result)
+        one_activity = cls(result[0])
+        one_activity.creator = users.User({
+            "id": result[0]['creator.id'],
+            "first_name": result[0]['first_name'],
+            "last_name": result[0]['last_name'],
+            "image_file": None,
+            "email": None,
+            "password": None,
+            "created_at": result[0]['creator.created_at'],
+            "updated_at": result[0]['creator.updated_at'],
+        })
+        return one_activity
+
 
 
     # ### READ ALL ACTIVITIES + USER  for home page!!               TESTING!!!   THIS IS A HAWT MESS!
