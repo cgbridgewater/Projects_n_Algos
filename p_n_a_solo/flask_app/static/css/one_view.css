@@ -1,20 +1,27 @@
 /* style for one view page */
+*{
+    margin: 0;
+    padding: 0;
+}
 
 .logo {
-    width: 100%;
+    width: 100vw;
     height: 25vh;
 }
 
+
 .user {
+    align-self: center;
     text-align: center;
     color: green;
-    font-weight: 700;
+    font-weight: 600;
+    min-width: 350px;
+    margin:1% 0;
 }
 
 .green {
     color:green;
     font-weight: 700;
-    margin-right: 5px;
 }
 .green2 {
     color:green;
@@ -34,7 +41,7 @@
 }
 
 .activity_container {
-    padding: 0 5%;
+    min-width: 360px;
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
@@ -67,6 +74,10 @@
 .flex {
     display: flex;
     justify-content: space-between;
+}
+
+.buttons {
+        margin-left: 10px;
 }
 
 .activity_links {
