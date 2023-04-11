@@ -16,7 +16,7 @@ def activity_dashboard():
     }
     return render_template(
         "activity_dashboard.html", user = User.get_user_by_id(data), activities = Activity.get_all_activities())
-# all_activities_with_joined_attenders(data)
+
 
 ### NEW ACTIVITY FORM
 @app.route('/getoutside/activities/new')
@@ -48,7 +48,7 @@ def create_activity_form_action():
     return redirect("/getoutside/athlete") 
 
 
-### UPDATE ACTIVITY FORM
+### UPDATE ACTIVITY FORM (Protected)
 @app.route('/getoutside/activity/<int:id>/edit')
 def edit_activity_by_id(id):
     if 'user_id' not in session:
@@ -60,10 +60,13 @@ def edit_activity_by_id(id):
     user ={
         'id': session['user_id']
     }
-    return render_template("activity_edit_form.html", activity = Activity.get_one_activity_by_id(data), user = User.get_user_by_id(user))
+    activity = Activity.get_activity_by_id(data)
+    if session['user_id'] != activity.creator.id:
+        return redirect('/logout')
+    return render_template("activity_edit_form.html", activity = Activity.get_one_activity_by_id_with_attendees(data))
 
 
-### POST ACTION ROUTE TO UPDATE ACTIVITY
+### POST ACTION ROUTE TO UPDATE ACTIVITY (Protected)
 @app.route('/getoutside/activity/<int:id>/edit', methods=["POST"])
 def edit_activity_form_action(id):
     if 'user_id' not in session:
@@ -75,6 +78,9 @@ def edit_activity_form_action(id):
         "location" : request.form["location"],
         "date" : request.form["date"],
         }
+    activity = Activity.get_activity_by_id(data)
+    if session['user_id'] != activity.creator.id:
+        return redirect('/logout')
     if not Activity.activity_validation_check(data):
         return redirect(f'/getoutside/activity/{id}/edit') 
     Activity.update_activity_form_action(data) 
@@ -93,7 +99,7 @@ def view_one_activity_by_id(id):
     user ={
         'id': session['user_id']
     }
-    return render_template("activity_one_view.html", activity = Activity.get_one_activity_by_id(data), user = User.get_user_by_id(user))
+    return render_template("activity_one_view.html", activity = Activity.get_one_activity_by_id_with_attendees(data))
 
 
 ### ATTEND ACTIVITY ROUTE WITH HOMEPAGE RETURN
@@ -135,7 +141,7 @@ def unattend_activity(id):
     return redirect(f"/getoutside/activity/{id}")
 
 
-### DELETE ACTIVITY BY ID
+### DELETE ACTIVITY BY ID (Protected)
 @app.route('/getoutside/activity/<int:id>/delete')
 def delete_activity_by_id(id):
     if 'user_id' not in session:
@@ -143,5 +149,8 @@ def delete_activity_by_id(id):
     data = {
         'id' : id,
     }
+    activity = Activity.get_activity_by_id(data)
+    if session['user_id'] != activity.creator.id:
+        return redirect('/logout')
     Activity.delete_activity_by_id(data)
     return redirect("/getoutside/athlete")
