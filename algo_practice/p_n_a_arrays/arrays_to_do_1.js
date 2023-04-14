@@ -4,20 +4,34 @@
 // Push Front
 // Given an array and an additional value, insert this value at the beginning of the array. You may use .push(), you are able do this without it though!
 
-// function pushFront(arr){
-//     arr.push(1)
+// function pushFront(arr,val){
+//     arr.push(val)
 //     for( var i= arr.length-1 ; i>0 ; i--)
-//         if( arr[i] == 1){
+//         if( arr[i] == val){
 //             temp = arr[i]
 //             arr[i] = arr[i-1]
 //             arr[i-1] = temp
 //         }
 //     return arr
 // }
-// // var result =  pushFront([5,7,2,3])
-// var result =  pushFront([2,3,4,5,6,7])
-// console.log(result);
+// console.log(result =  pushFront([6,7,5,3,0,9],8));
+// console.log(result =  pushFront([5,7,2,3],8));
 
+
+// function push(arr,val){
+//     for(let i = arr.length; i >= 0; i-- ){
+//         arr[i] = arr[i-1]
+//     }
+
+//     arr[0] = val
+
+//     return arr
+// }
+// console.log(push([5,7,2,3],8));
+
+// var arr = [1,2,3,4,5,6]
+// arr[6]= arr[5]
+// console.log(arr);
 
 
 // Pop Front
@@ -38,10 +52,20 @@
 //     return temp
 // }
 
-// console.log(result = popFront([0,5,10,15]));
-// console.log(result = popFront([4,5,7,9]));
+// console.log(popFront([0,5,10,15]));
+// console.log(popFront([4,5,7,9]));
 
-
+// function popFront(arr){
+//     let temp = arr[0];
+//     for (var i =0; i < arr.length-1; i++){
+//         arr[i] = arr[i+1];
+//     }
+//     arr.length= arr.length-1;
+//     console.log(arr);
+//     return temp
+// }
+// console.log(popFront([0,5,10,15]));
+// console.log(popFront([4,5,7,9]));
 
 
 // Insert At
@@ -63,10 +87,19 @@ function insertAt(arr, loc, val){
         }
         return arr
 }
-
 console.log(result= insertAt([100,200,5], 2, 311));
 console.log(result= insertAt([9,33,7], 1, 42));
 
+
+function insertedAt(arr,loc,val){
+    for(let i = arr.length; i >= loc; i--){
+        arr[i] = arr[i-1]
+    }
+    arr[loc] = val 
+    return arr
+}
+console.log(insertedAt([100,200,5], 2, 311));
+console.log(insertedAt([9,33,7], 1, 42));
 
 
 // BONUS: Remove At
@@ -94,6 +127,11 @@ console.log(result= insertAt([9,33,7], 1, 42));
 
 
 
+// for loop through arr length. 
+//  check number even or odd, 
+// if even store it in temp, 
+// move i+1 to i position then move temp to i+1
+
 
 
 
@@ -105,3 +143,30 @@ console.log(result= insertAt([9,33,7], 1, 42));
 
 // removeDupes([-2,-2,3.14,5,5,10]) => [-2,3.14,5,10]
 // removeDupes([9,19,19,19,19,19,29]) => [9,19,29]
+
+
+
+// NOT DONE
+
+
+// const memoryObj = {}
+// function removeDupes(s){
+//     for(let i=0; i<s.length; i++){
+//         // save numbers
+//         // compare the num to see if it exsists
+//         if(memoryObj[s[i]]){
+//         // exisits
+//         memoryObj[s[i]]++
+//         } else {
+//             // new num
+//             memoryObj[s[i]]=1
+//         }
+//     }
+//         for(let i=0; i<s.length;i++){
+//             if(memoryObj[s[i]] == 1){
+//                 return i
+//             }
+//         }
+//         return -1
+// }
+//     console.log(removeDupes([-2,-2,3.14,5,5,10]));
