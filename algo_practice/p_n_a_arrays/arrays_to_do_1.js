@@ -134,15 +134,18 @@
 // insertAt([1,2,3,4]) => [2,1,4,3]
 // insertAt(["Brendan",true,42]) => [true,"Brendan",42]
 
-
-
-
-// for loop through arr length. 
-//  check number even or odd, 
-// if even store it in temp, 
-// move i+1 to i position then move temp to i+1
-
-
+// function insertAt(arr){
+//     for (let i = 0; i<arr.length-1; i++){
+//         if (i % 2 == 0){
+//             var temp = arr[i]
+//             arr[i] = arr[i+1]
+//             arr[i+1] = temp
+//         }
+//     }
+//     return arr
+// }
+// console.log(insertAt([1,2,3,4]));
+// console.log(insertAt(["Brendan",true,42]));
 
 
 
@@ -158,25 +161,3 @@
 
 // NOT DONE
 
-
-// const memoryObj = {}
-// function removeDupes(s){
-//     for(let i=0; i<s.length; i++){
-//         // save numbers
-//         // compare the num to see if it exsists
-//         if(memoryObj[s[i]]){
-//         // exisits
-//         memoryObj[s[i]]++
-//         } else {
-//             // new num
-//             memoryObj[s[i]]=1
-//         }
-//     }
-//         for(let i=0; i<s.length;i++){
-//             if(memoryObj[s[i]] == 1){
-//                 return i
-//             }
-//         }
-//         return -1
-// }
-//     console.log(removeDupes([-2,-2,3.14,5,5,10]));
