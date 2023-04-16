@@ -77,29 +77,29 @@
 // insertAt([9,33,7], 1, 42) => [9,42,33,7]
 
 
-function insertAt(arr, loc, val){
-    arr.push(val)
-    for(var i = arr.length-1; i > loc; i-- )
-        if(i != loc){
-            temp = arr[i-1]
-            arr[i-1] = arr[i]
-            arr[i] = temp
-        }
-        return arr
-}
-console.log(result= insertAt([100,200,5], 2, 311));
-console.log(result= insertAt([9,33,7], 1, 42));
+// function insertAt(arr, loc, val){
+//     arr.push(val)
+//     for(var i = arr.length-1; i > loc; i-- )
+//         if(i != loc){
+//             temp = arr[i-1]
+//             arr[i-1] = arr[i]
+//             arr[i] = temp
+//         }
+//         return arr
+// }
+// console.log(result= insertAt([100,200,5], 2, 311));
+// console.log(result= insertAt([9,33,7], 1, 42));
 
 
-function insertedAt(arr,loc,val){
-    for(let i = arr.length; i >= loc; i--){
-        arr[i] = arr[i-1]
-    }
-    arr[loc] = val 
-    return arr
-}
-console.log(insertedAt([100,200,5], 2, 311));
-console.log(insertedAt([9,33,7], 1, 42));
+// function insertedAt(arr,loc,val){
+//     for(let i = arr.length; i >= loc; i--){
+//         arr[i] = arr[i-1]
+//     }
+//     arr[loc] = val 
+//     return arr
+// }
+// console.log(insertedAt([100,200,5], 2, 311));
+// console.log(insertedAt([9,33,7], 1, 42));
 
 
 // BONUS: Remove At
@@ -111,8 +111,18 @@ console.log(insertedAt([9,33,7], 1, 42));
 // removeAt([8,20,55,44,98], 3) => 44 returned, with [8,20,55,98] printed in the function
 // 
 
+// function removeAt(arr, idx){
+//     temp = arr[idx]
+//     for(let i = idx; i< arr.length; i++){
+//         arr[i] = arr[i+1]
+//     }
+//     arr.length--
+//     console.log(arr);
+//     return temp
+// }
 
-
+// console.log(removeAt([1000,3,204,77], 1));
+// console.log(removeAt([8,20,55,44,98], 3));
 
 
 
