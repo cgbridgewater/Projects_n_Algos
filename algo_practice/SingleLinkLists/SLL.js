@@ -46,24 +46,19 @@ class SLL{
     constructor(head = null){
         this.head = head // designates this as the head
     }
-    //
+
     addFront(val){
         let newNode = new Node(val)
         newNode.next = this.head // points to next head
         this.head = newNode // assigns new node to head
         return this // allows chaining functions
     }
-    // printList(){
-    //     while(this.head != null){
-    //         console.log(this.head.val)
-    //         this.head = this.head.next
-    //     }
-    //     return this
-    // }
+
     isEmpty(){
         // console.log('I work', this);
         return this.head === null
     }
+
     insertAtBack(val){
         let newNode = new Node(val)
         let runner = this.head
@@ -82,6 +77,7 @@ class SLL{
         }
         return this
     }
+    
     findSum() {
         let runner=this.head//assign start point
         let sum=0 // initialize sum
