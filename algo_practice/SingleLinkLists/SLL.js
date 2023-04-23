@@ -82,7 +82,18 @@ class SLL{
         }
         return this
     }
+    findSum() {
+        let runner=this.head//assign start point
+        let sum=0 // initialize sum
 
+        while(runner !== null){   //set stop point, using while list since end is unknown
+
+             sum+=runner.val//add runner val to the sum
+            
+            runner=runner.next//move to the next 
+        }
+        return sum
+    }
 
 }
 
@@ -105,3 +116,6 @@ SL2.insertAtBack(20)
 // SL2.printList()
 console.log("SL2 print value");
 SL2.printValue()
+
+let sum = SL.findSum()
+console.log("sum: ",sum);
